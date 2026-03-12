@@ -1,0 +1,48 @@
+# ==========================================
+# 1. Python & Environments
+# ==========================================
+# Ignore Python cache files (speeds up your computer, but not needed on GitHub)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore Virtual Environments (these are huge and should be generated locally)
+.venv/
+venv/
+env/
+Lib/
+Include/
+Scripts/
+
+# ==========================================
+# 2. Jupyter Notebooks
+# ==========================================
+# Ignore Jupyter autosaves and checkpoints
+.ipynb_checkpoints/
+
+# ==========================================
+# 3. Streamlit Specifics
+# ==========================================
+# If you ever add passwords/API keys later, this keeps them off the internet!
+.streamlit/secrets.toml
+
+# ==========================================
+# 4. OS & System Junk
+# ==========================================
+# Mac junk files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows junk files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ==========================================
+# 5. Data & Artifacts (PROJECT SPECIFIC)
+# ==========================================
+# Usually, data scientists ignore all CSV files by writing "*.csv". 
+# However, DO NOT add "*.csv" here! 
+# Streamlit Community Cloud NEEDS your Atlantic_France.csv file to run the dashboard.
