@@ -1,5 +1,9 @@
-# 🇫🇷 France Top 50 Music Intelligence Dashboard
+# Atlantic France Analytics Dashboard
 **Atlantic Recording Corporation | Market Strategy & Audience Analytics**
+
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](YOUR_APP_LINK_HERE)
+
+**[🔴 View the Live Dashboard](https://atlantic-france-analytics-4ypdl2xsqb8trh2j2vktyl.streamlit.app/)**
 
 An interactive Business Intelligence and Data Science dashboard designed to analyze audience preferences, content compliance, and structural track characteristics in the French music market.
 
@@ -43,5 +47,5 @@ To run this project locally on your machine:
 
 **1. Clone the repository**
 ```bash
-git clone [https://github.com/your-username/atlantic-france-analysis.git](https://github.com/your-username/atlantic-france-analysis.git)
+git clone [https://github.com/Garvitk001/atlantic-france-analysis.git](https://github.com/Garvitk001/atlantic-france-analysis.git)
 cd atlantic-france-analysis
