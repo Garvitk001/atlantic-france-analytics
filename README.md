@@ -1,4 +1,4 @@
-# 🇫🇷 Atlantic France Analytics Dashboard
+# Atlantic France Analytics Dashboard
 **Atlantic Recording Corporation | Market Strategy & Audience Analytics**
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](YOUR_APP_LINK_HERE)
