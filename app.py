@@ -150,7 +150,10 @@ if not df_master.empty:
             with s2:
                 st.subheader("Album Dilution Impact")
                 st.markdown('<p class="help-text">Downward trendlines indicate that massive albums hurt individual song popularity.</p>', unsafe_allow_html=True)
-                st.plotly_chart(px.scatter(df, x='total_tracks', y='popularity', trendline='ols', template='plotly_dark', color_discrete_sequence=['#ff4b4b']), use_container_width=True)
+                if len(df) > 1:
+                    st.plotly_chart(px.scatter(df, x='total_tracks', y='popularity', trendline='ols', template='plotly_dark', color_discrete_sequence=['#ff4b4b']))
+                else:
+                    st.warning("⚠️ Need at least 2 tracks to calculate a trendline. Please broaden your filters.")
 
         # TAB 4: ARTIST DEEP-DIVE (NEW FEATURE)
         with tabs[3]:
