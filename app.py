@@ -8,7 +8,7 @@ import os
 from datetime import datetime
 
 # ==============================================================================
-# 1. PAGE SETUP & SENIOR DATA ANALYST STYLING
+# 1. PAGE SETUP & ENHANCED EXECUTIVE STYLING
 # ==============================================================================
 st.set_page_config(
     page_title="Atlantic Records | France Market Strategy Intelligence",
@@ -30,6 +30,39 @@ st.markdown("""
     .stApp {
         background: radial-gradient(circle at 10% 10%, #0d1424 0%, #080b11 100%);
         color: #f3f4f6;
+    }
+
+    /* Enhanced Wide Sidebar Styling */
+    section[data-testid="stSidebar"] {
+        width: 380px !important;
+        min-width: 380px !important;
+        background: linear-gradient(180deg, #0e1424 0%, #090d16 100%) !important;
+        border-right: 1px solid rgba(0, 210, 255, 0.22) !important;
+        box-shadow: 6px 0 30px rgba(0, 0, 0, 0.45);
+    }
+    section[data-testid="stSidebar"] > div {
+        width: 380px !important;
+        padding-top: 20px;
+    }
+
+    /* Sidebar Containers */
+    .sidebar-card {
+        background: rgba(18, 26, 44, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 14px 16px;
+        margin-bottom: 16px;
+    }
+    .sidebar-section-title {
+        font-size: 11.5px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #00D2FF;
+        font-weight: 700;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
 
     /* Top Brand Ribbon */
@@ -92,14 +125,8 @@ st.markdown("""
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 14px;
         padding: 18px 22px;
-        margin-bottom: 20px;
+        margin-bottom: 14px;
         backdrop-filter: blur(10px);
-    }
-    .persona-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 16px;
-        margin: 15px 0;
     }
     .persona-card {
         background: rgba(15, 22, 38, 0.85);
@@ -109,15 +136,16 @@ st.markdown("""
         border-top: 1px solid rgba(255, 255, 255, 0.05);
         border-right: 1px solid rgba(255, 255, 255, 0.05);
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        height: 100%;
     }
     .persona-radio {
         border-left-color: #00e676;
     }
     .persona-title {
-        font-size: 15px;
+        font-size: 14.5px;
         font-weight: 700;
         color: #fff;
-        margin-bottom: 6px;
+        margin-bottom: 8px;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -205,29 +233,25 @@ st.markdown("""
         color: #ffffff;
     }
 
-    /* Top 3 Podium Visuals */
-    .podium-container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 18px;
-        margin: 15px 0 25px 0;
-    }
+    /* Podium Cards for Top 3 Hits */
     .podium-card {
         background: rgba(18, 24, 40, 0.85);
         border-radius: 16px;
-        padding: 18px;
+        padding: 20px 16px;
         border: 1px solid rgba(255, 255, 255, 0.08);
         text-align: center;
         position: relative;
         transition: all 0.3s ease;
         box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        margin-top: 15px;
+        height: 100%;
     }
     .podium-card:hover {
         transform: translateY(-5px);
     }
     .podium-1 {
-        border-color: rgba(255, 184, 0, 0.6);
-        box-shadow: 0 0 25px rgba(255, 184, 0, 0.18);
+        border-color: rgba(255, 184, 0, 0.65);
+        box-shadow: 0 0 25px rgba(255, 184, 0, 0.2);
     }
     .podium-2 {
         border-color: rgba(200, 208, 220, 0.5);
@@ -246,29 +270,31 @@ st.markdown("""
         font-weight: 800;
         letter-spacing: 0.5px;
         text-transform: uppercase;
+        white-space: nowrap;
     }
     .badge-gold { background: #FFB800; color: #000; box-shadow: 0 0 12px rgba(255, 184, 0, 0.6); }
     .badge-silver { background: #CBD5E1; color: #000; }
     .badge-bronze { background: #CD7F32; color: #fff; }
     .podium-img {
-        width: 130px;
-        height: 130px;
+        width: 140px;
+        height: 140px;
         border-radius: 12px;
         object-fit: cover;
-        margin: 10px auto;
+        margin: 12px auto;
         box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+        display: block;
     }
     .podium-song {
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 700;
         color: #fff;
-        margin: 6px 0 2px 0;
+        margin: 8px 0 2px 0;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
     .podium-artist {
-        font-size: 12.5px;
+        font-size: 13px;
         color: #94a3b8;
         margin-bottom: 8px;
         white-space: nowrap;
@@ -320,7 +346,7 @@ st.markdown("""
 
 
 # ==============================================================================
-# 2. DATA PIPELINE & ACCENT-SAFE RECOVERY
+# 2. DATA PIPELINE & BULLETPROOF CHARACTER RECOVERY
 # ==============================================================================
 @st.cache_data
 def load_and_prep_data():
@@ -328,10 +354,30 @@ def load_and_prep_data():
     if not os.path.exists(file_path):
         return pd.DataFrame()
 
-    # Read with latin-1 to cleanly recover French accents (é, è, ê, etc.)
-    df = pd.read_csv(file_path, encoding='latin-1')
+    # Read data with UTF-8 fallback
+    try:
+        df = pd.read_csv(file_path, encoding='utf-8')
+    except Exception:
+        df = pd.read_csv(file_path, encoding='latin-1')
+
     df.columns = df.columns.str.strip()
     
+    # Sanitization map to eradicate any Mojibake character corruptions
+    mojibake_map = {
+        'Ã©': 'é', 'Ã¨': 'è', 'Ãª': 'ê', 'Ã ': 'à',
+        'Ã§': 'ç', 'Ã´': 'ô', 'Ã®': 'î', 'Ã¯': 'ï',
+        'Fav\ufffd': 'Favé', 'Fav': 'Favé', 'Fav': 'Favé'
+    }
+    for col in ['song', 'artist']:
+        if col in df.columns:
+            for bad, good in mojibake_map.items():
+                df[col] = df[col].astype(str).str.replace(bad, good, regex=False)
+            # Fix Petit genie specifically if corrupted
+            df[col] = df[col].str.replace('Petit gnie', 'Petit génie', regex=False)
+            df[col] = df[col].str.replace('Petit gÃ©nie', 'Petit génie', regex=False)
+            df[col] = df[col].str.replace("C'est carr le S", "C'est carré le S", regex=False)
+            df[col] = df[col].str.replace("C'est carrÃ© le S", "C'est carré le S", regex=False)
+
     # Date parsing
     df['date'] = pd.to_datetime(df['date'], format='%d-%m-%Y', errors='coerce')
     df = df.dropna(subset=['date', 'song', 'artist'])
@@ -353,7 +399,6 @@ def load_and_prep_data():
     # Boolean & string cleaning
     df['is_explicit'] = df['is_explicit'].astype(str).str.upper().isin(['TRUE', '1', 'T'])
     df['album_type'] = df['album_type'].astype(str).str.lower().str.strip()
-    df['artist'] = df['artist'].str.replace('Fav\ufffd', 'Favé', regex=False)
     
     # Duration Categorization
     def categorize_dur(m):
@@ -394,14 +439,23 @@ def apply_dark_theme(fig, title="", height=380):
 
 
 # ==============================================================================
-# 3. SIDEBAR CONTROLS & STRATEGIC FILTERS
+# 3. ENHANCED & WIDE SIDEBAR CONTROLS
 # ==============================================================================
 with st.sidebar:
-    st.image("https://upload.wikimedia.org/wikipedia/commons/d/d4/Atlantic_Records_logo.svg", width=145)
+    # 100% Reliable Inline SVG Atlantic Logo (Never breaks or fails on external CDNs)
     st.markdown("""
-        <div style="margin-top: 4px; margin-bottom: 18px;">
-            <span style="font-weight: 700; color: #fff; font-size: 14.5px;">FRANCE MARKET INTEL</span><br/>
-            <span style="color: #64748b; font-size: 11.5px;">Audience Strategy & A&R Analytics</span>
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding: 6px 0;">
+            <svg width="46" height="46" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="48" fill="#121826" stroke="#00D2FF" stroke-width="4"/>
+                <circle cx="50" cy="50" r="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+                <circle cx="50" cy="50" r="16" fill="#ff3366"/>
+                <polygon points="50,22 68,76 32,76" fill="none" stroke="#00D2FF" stroke-width="6"/>
+                <line x1="39" y1="58" x2="61" y2="58" stroke="#00D2FF" stroke-width="6"/>
+            </svg>
+            <div>
+                <div style="font-weight: 800; font-size: 20px; letter-spacing: 1px; color: #ffffff; line-height: 1.1;">ATLANTIC</div>
+                <div style="font-weight: 700; font-size: 11px; letter-spacing: 2px; color: #00D2FF;">RECORDS FRANCE</div>
+            </div>
         </div>
     """, unsafe_allow_html=True)
 
@@ -409,11 +463,11 @@ with st.sidebar:
         min_date = df_master['date'].min().date()
         max_date = df_master['date'].max().date()
         
-        st.markdown("### 🎛️ Observation Parameters")
+        st.markdown('<div class="sidebar-section-title">🎛️ Observation Parameters</div>', unsafe_allow_html=True)
         
         # Date Filter
         date_selection = st.date_input(
-            "Time Window",
+            "Time Observation Window",
             value=[min_date, max_date],
             min_value=min_date,
             max_value=max_date
@@ -434,7 +488,7 @@ with st.sidebar:
         
         # Compliance
         content_filter = st.radio(
-            "Content Compliance (ARCOM)",
+            "Content Compliance (ARCOM Quota)",
             options=["All Content", "Clean Only 🟢", "Explicit Only 🔴"],
             index=0
         )
@@ -449,7 +503,20 @@ with st.sidebar:
         
         search_query = st.text_input("🔍 Search Track or Artist", placeholder="e.g. Werenoi, Ninho, Gazo")
 
-        st.markdown("---")
+        # Mini Repertoire Snapshot Card in Sidebar
+        st.markdown(f"""
+            <div class="sidebar-card">
+                <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #94a3b8; font-weight: 700; margin-bottom: 6px;">
+                    ⚡ Active Repertoire Pulse
+                </div>
+                <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.6;">
+                    • <b>Tracking Window:</b> {start_date} to {end_date}<br/>
+                    • <b>Format Scope:</b> {', '.join([f.capitalize() for f in format_filter])}<br/>
+                    • <b>Compliance Filter:</b> {content_filter}
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
         with st.expander("ℹ️ Project Scope & Data Origin"):
             st.markdown("""
             **Dataset Overview:**
@@ -508,36 +575,35 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Problem & Audience Personas Expander (The "Why" of the Project)
-with st.expander("📌 The Business Problem & French Audience Personas (Click to expand context)", expanded=True):
-    st.markdown("""
-    <div class="story-card">
-        <h4 style="margin: 0 0 8px 0; color: #00D2FF;">🎯 The Industry Dilemma: The French Streaming vs. Radio Paradox</h4>
+# Problem & Audience Personas Expander (Clean native columns: Zero raw markdown glitches)
+with st.expander("📌 The Business Problem & French Audience Personas (Executive Context)", expanded=True):
+    st.markdown("""<div class="story-card">
+        <h4 style="margin: 0 0 8px 0; color: #00D2FF; font-size: 16px;">🎯 The Industry Dilemma: The French Streaming vs. Radio Paradox</h4>
         <p style="margin: 0; font-size: 13.5px; color: #cbd5e1; line-height: 1.6;">
             The French music market is governed by a sharp dual reality. On one hand, <b>ARCOM (French regulatory broadcast authority)</b> enforces severe penalties on explicit content and mandates a 40% French-language radio quota. On the other hand, <b>Spotify France streaming is heavily commanded by Gen-Z domestic hip-hop</b>, where over 56% of top chart tracks feature explicit lyrics.<br/>
             <b>Atlantic's Strategic Challenge:</b> If a track is overly sanitized, youth streaming ignores it; if it is unedited, it suffers zero radio reach and commercial brand sponsorship disqualification.
         </p>
-        
-        <div class="persona-container">
-            <div class="persona-card">
-                <div class="persona-title">🎧 Persona 1: The Gen-Z Urban Streamer (15–24)</div>
-                <p style="margin: 0; font-size: 12.5px; color: #94a3b8; line-height: 1.5;">
-                    • <b>Core Repertoire:</b> Werenoi, SDM, Gazo, PLK, Ninho.<br/>
-                    • <b>Content Sensitivity:</b> Zero stigma against explicit lyrics; craves raw street authenticity.<br/>
-                    • <b>Consumption Habit:</b> Mobile Spotify sessions, heavy repeat listening, highly sensitive to track lengths over 3:30 mins.
-                </p>
+    </div>""", unsafe_allow_html=True)
+    
+    col_p1, col_p2 = st.columns(2)
+    with col_p1:
+        st.markdown("""<div class="persona-card">
+            <div class="persona-title">🎧 Persona 1: The Gen-Z Urban Streamer (15–24)</div>
+            <div style="font-size: 12.5px; color: #94a3b8; line-height: 1.6;">
+                • <b>Core Repertoire:</b> Werenoi, SDM, Gazo, PLK, Ninho.<br/>
+                • <b>Content Sensitivity:</b> Zero stigma against explicit lyrics; craves raw street authenticity.<br/>
+                • <b>Consumption Habit:</b> Mobile Spotify sessions, heavy repeat listening, highly sensitive to track lengths over 3:30 mins.
             </div>
-            <div class="persona-card persona-radio">
-                <div class="persona-title" style="color: #00e676;">📻 Persona 2: The Mainstream Radio Commuter (25–49)</div>
-                <p style="margin: 0; font-size: 12.5px; color: #94a3b8; line-height: 1.5;">
-                    • <b>Core Repertoire:</b> GIMS, Benson Boone, Dua Lipa, Clean Pop Urbaine.<br/>
-                    • <b>Content Sensitivity:</b> In-car family listening; sensitive to explicit swearing.<br/>
-                    • <b>Consumption Habit:</b> Terrestrial radio (NRJ, Skyrock, Fun Radio); critical for long-term catalog royalty income.
-                </p>
+        </div>""", unsafe_allow_html=True)
+    with col_p2:
+        st.markdown("""<div class="persona-card persona-radio">
+            <div class="persona-title" style="color: #00e676;">📻 Persona 2: The Mainstream Radio Commuter (25–49)</div>
+            <div style="font-size: 12.5px; color: #94a3b8; line-height: 1.6;">
+                • <b>Core Repertoire:</b> GIMS, Benson Boone, Dua Lipa, Clean Pop Urbaine.<br/>
+                • <b>Content Sensitivity:</b> In-car family listening; sensitive to explicit swearing.<br/>
+                • <b>Consumption Habit:</b> Terrestrial radio (NRJ, Skyrock, Fun Radio); critical for long-term catalog royalty income.
             </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+        </div>""", unsafe_allow_html=True)
 
 if df.empty:
     st.warning("⚠️ No records match your selected filters. Please adjust your parameters in the sidebar.")
@@ -629,9 +695,11 @@ with tabs[0]:
         p2 = podium_df.iloc[1]
         p3 = podium_df.iloc[2]
         
-        st.markdown(f"""
-        <div class="podium-container">
-            <div class="podium-card podium-2">
+        # Native 3 columns: 100% responsive, completely eradicates markdown parsing bugs
+        col_pod2, col_pod1, col_pod3 = st.columns(3)
+        
+        with col_pod2:
+            st.markdown(f"""<div class="podium-card podium-2">
                 <div class="podium-badge badge-silver">🥈 #2 Contender</div>
                 <img src="{p2['album_cover_url']}" class="podium-img" alt="{p2['song']}" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300';"/>
                 <div class="podium-song">{p2['song']}</div>
@@ -641,12 +709,13 @@ with tabs[0]:
                     <span class="pill pill-format">{p2['album_type'].upper()}</span>
                     <span class="pill" style="background: rgba(255,255,255,0.1); color: #fff;">⏱️ {p2['duration_formatted']}</span>
                 </div>
-                <div style="margin-top: 8px; font-size: 11.5px; color: #94a3b8;">
+                <div style="margin-top: 10px; font-size: 12px; color: #94a3b8;">
                     Peak: <b>#{p2['peak_position']}</b> • Charted: <b>{p2['chart_days']} Days</b>
                 </div>
-            </div>
+            </div>""", unsafe_allow_html=True)
 
-            <div class="podium-card podium-1">
+        with col_pod1:
+            st.markdown(f"""<div class="podium-card podium-1">
                 <div class="podium-badge badge-gold">🥇 #1 Market Leader</div>
                 <img src="{p1['album_cover_url']}" class="podium-img" alt="{p1['song']}" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300';"/>
                 <div class="podium-song" style="font-size: 17px; color: #FFB800;">{p1['song']}</div>
@@ -656,12 +725,13 @@ with tabs[0]:
                     <span class="pill pill-format">{p1['album_type'].upper()}</span>
                     <span class="pill" style="background: rgba(255,255,255,0.1); color: #fff;">⏱️ {p1['duration_formatted']}</span>
                 </div>
-                <div style="margin-top: 8px; font-size: 12px; color: #f1f5f9;">
+                <div style="margin-top: 10px; font-size: 12px; color: #f1f5f9;">
                     Days at #1: <b style="color: #FFB800;">{p1['days_at_1']} Days</b> • Total Charted: <b>{p1['chart_days']} Days</b>
                 </div>
-            </div>
+            </div>""", unsafe_allow_html=True)
 
-            <div class="podium-card podium-3">
+        with col_pod3:
+            st.markdown(f"""<div class="podium-card podium-3">
                 <div class="podium-badge badge-bronze">🥉 #3 Contender</div>
                 <img src="{p3['album_cover_url']}" class="podium-img" alt="{p3['song']}" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300';"/>
                 <div class="podium-song">{p3['song']}</div>
@@ -671,12 +741,10 @@ with tabs[0]:
                     <span class="pill pill-format">{p3['album_type'].upper()}</span>
                     <span class="pill" style="background: rgba(255,255,255,0.1); color: #fff;">⏱️ {p3['duration_formatted']}</span>
                 </div>
-                <div style="margin-top: 8px; font-size: 11.5px; color: #94a3b8;">
+                <div style="margin-top: 10px; font-size: 12px; color: #94a3b8;">
                     Peak: <b>#{p3['peak_position']}</b> • Charted: <b>{p3['chart_days']} Days</b>
                 </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+            </div>""", unsafe_allow_html=True)
 
     c1, c2 = st.columns(2)
     with c1:
@@ -710,15 +778,13 @@ with tabs[0]:
         apply_dark_theme(fig_pop, "Spotify Popularity Distribution by Tier", height=340)
         st.plotly_chart(fig_pop, use_container_width=True)
 
-    st.markdown("""
-    <div class="takeaway-card">
+    st.markdown("""<div class="takeaway-card">
         <div class="takeaway-title">💡 Executive Analyst Takeaway: French Market Stickiness</div>
         <div class="takeaway-body">
             • <b>Domestic Artist Concentration:</b> The top 5 French artists (Werenoi, PLK, SDM, Jul, Ninho) command nearly <b>30% of all charted positions</b> across 555 days.<br/>
             • <b>Low Churn Velocity:</b> Unlike US/UK streaming charts where viral TikTok singles surge and vanish within 3 weeks, French hits show sustained chart retention (average of <b>84+ days</b> in the Top 20 for proven singles).
         </div>
-    </div>
-    """, unsafe_allow_html=True)
+    </div>""", unsafe_allow_html=True)
 
 
 # ------------------------------------------------------------------------------
@@ -731,7 +797,6 @@ with tabs[1]:
     cc1, cc2 = st.columns([1, 1])
     with cc1:
         st.subheader("ARCOM Regulatory Exposure Index")
-        # Plotly circular gauge meter
         fig_gauge = go.Figure(go.Indicator(
             mode="gauge+number",
             value=round(explicit_pct, 1),
@@ -809,15 +874,13 @@ with tabs[1]:
         apply_dark_theme(fig_time, "Evolution of Explicit Streaming Volume", height=330)
         st.plotly_chart(fig_time, use_container_width=True)
 
-    st.markdown("""
-    <div class="takeaway-card">
+    st.markdown("""<div class="takeaway-card">
         <div class="takeaway-title">💡 Executive Analyst Takeaway: Navigating ARCOM Radio Quotas</div>
         <div class="takeaway-body">
             • <b>Top 10 Bias:</b> Explicit lyrics show their highest saturation in the <b>Top 10 tier (~56%)</b>, demonstrating that uncensored hip-hop is the primary engine of streaming consumption in France.<br/>
             • <b>Broadcast Penalty:</b> ARCOM regulations prohibit daytime radio broadcast of explicit songs without sanitization. <b>Atlantic Playbook:</b> For every urban single targeted at Top 20, release a simultaneous Clean Radio Master to capture French radio royalties (Skyrock, NRJ) without sacrificing DSP streaming momentum.
         </div>
-    </div>
-    """, unsafe_allow_html=True)
+    </div>""", unsafe_allow_html=True)
 
 
 # ------------------------------------------------------------------------------
@@ -896,7 +959,6 @@ with tabs[2]:
             opacity=0.6,
             template='plotly_dark'
         )
-        # In-chart annotation for explainability
         fig_ols.add_annotation(
             x=22, y=68,
             text="📉 Dilution Zone: Tracks on 20+ track albums suffer lower individual streams",
@@ -912,15 +974,13 @@ with tabs[2]:
     else:
         st.warning("⚠️ Insufficient album data in filtered view to compute OLS regression.")
 
-    st.markdown("""
-    <div class="takeaway-card">
+    st.markdown("""<div class="takeaway-card">
         <div class="takeaway-title">💡 Executive Analyst Takeaway: Format Architecture & The 'Lean LP' Rule</div>
         <div class="takeaway-body">
             • <b>Empirical Dilution:</b> The regression coefficient verifies that high-volume albums (>18 tracks) dilute listener attention and lower average track popularity.<br/>
             • <b>A&R Recommendation:</b> Favor a <b>10 to 14-track 'Lean LP'</b> format, pre-seeded with 2 standalone singles. This concentrates playlist placement and optimizes completion rates on Spotify algorithmic radios.
         </div>
-    </div>
-    """, unsafe_allow_html=True)
+    </div>""", unsafe_allow_html=True)
 
 
 # ------------------------------------------------------------------------------
@@ -946,7 +1006,6 @@ with tabs[3]:
             template='plotly_dark'
         )
         fig_dur.update_traces(textposition='outside')
-        # In-chart callout
         fig_dur.add_annotation(
             x="Radio Optimal (2.5–3.5m)", y=dur_dist['Count'].max() * 0.95,
             text="🎯 Streaming Sweet-Spot (64% of Hits)",
@@ -993,15 +1052,13 @@ with tabs[3]:
     apply_dark_theme(fig_dur_line, "Average Track Length (Minutes) Over Time", height=320)
     st.plotly_chart(fig_dur_line, use_container_width=True)
 
-    st.markdown("""
-    <div class="takeaway-card">
+    st.markdown("""<div class="takeaway-card">
         <div class="takeaway-title">💡 Executive Analyst Takeaway: The 2m45s–3m15s Formula</div>
         <div class="takeaway-body">
             • <b>Completion Rate Economics:</b> Over <b>64% of Top 10 tracks</b> strictly inhabit the 2m45s–3m15s corridor. Tracks longer than 3m30s experience higher mobile skip rates, penalizing algorithmic recommendation placement.<br/>
             • <b>A&R Rule:</b> Target 2:55 to 3:10 for lead singles, ensuring chorus hooks hit before the 0:25 second mark.
         </div>
-    </div>
-    """, unsafe_allow_html=True)
+    </div>""", unsafe_allow_html=True)
 
 
 # ------------------------------------------------------------------------------
@@ -1109,9 +1166,7 @@ with tabs[4]:
             st.metric("Unique Hits", comp_df['song'].nunique())
             st.metric("Explicit Ratio", f"{(comp_df['is_explicit'].sum() / len(comp_df) * 100):.1f}%")
 
-        # Radar / Spider Chart
         categories = ['Chart Longevity', 'Peak Position', 'Popularity', 'Catalog Breadth', 'Explicit Factor']
-        # Normalize between 0 and 100 for comparison
         max_days = max(len(art_df), len(comp_df), 1)
         v1 = [
             len(art_df) / max_days * 100,
@@ -1195,7 +1250,6 @@ with tabs[5]:
 
         score = max(min(score, 98), 35)
 
-        # Plotly circular gauge for Viability Score
         gauge_col = "#00e676" if score >= 80 else ("#FFB800" if score >= 65 else "#ff3366")
         fig_score = go.Figure(go.Indicator(
             mode="gauge+number",
