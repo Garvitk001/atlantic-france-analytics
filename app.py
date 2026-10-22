@@ -25,7 +25,7 @@ st.markdown("""
     /* Global Typography & Base Sizes */
     html, body, [class*="css"], .stMarkdown {
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
-        font-size: 15.5px !important;
+        font-size: 16px !important;
         color: #f8fafc !important;
     }
 
@@ -35,45 +35,68 @@ st.markdown("""
         color: #f8fafc;
     }
 
-    /* ==========================================
-       TABS AT THE VERY TOP: LARGE & HIGH VISIBILITY
-       ========================================== */
-    .stTabs {
-        margin-top: 6px !important;
-        margin-bottom: 24px !important;
+    /* ========================================================
+       7 TABS AT ABSOLUTE TOP: 20PX FONT & ULTRA HIGH VISIBILITY
+       ======================================================== */
+    [data-testid="stTabs"] {
+        margin-top: 0px !important;
+        margin-bottom: 22px !important;
     }
+    [data-testid="stTabs"] [data-baseweb="tab-list"],
     .stTabs [data-baseweb="tab-list"] {
-        border-bottom: 2px solid rgba(0, 210, 255, 0.25) !important;
-        gap: 10px !important;
-        padding-bottom: 8px !important;
+        border-bottom: 3px solid rgba(0, 210, 255, 0.35) !important;
+        gap: 12px !important;
+        padding-bottom: 10px !important;
+        background: transparent !important;
         display: flex !important;
         flex-wrap: wrap !important;
     }
+    [data-testid="stTabs"] button[data-baseweb="tab"],
     .stTabs [data-baseweb="tab"] {
-        background-color: rgba(18, 26, 44, 0.6) !important;
-        color: #cbd5e1 !important;
-        font-size: 16px !important;
-        font-weight: 700 !important;
-        padding: 12px 22px !important;
-        border-radius: 10px 10px 0 0 !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        border-bottom: none !important;
+        background-color: rgba(18, 26, 44, 0.75) !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.14) !important;
+        border-radius: 12px 12px 0 0 !important;
+        padding: 14px 24px !important;
         transition: all 0.25s ease-in-out !important;
-        letter-spacing: 0.2px !important;
     }
+    [data-testid="stTabs"] button[data-baseweb="tab"] p,
+    [data-testid="stTabs"] button[data-baseweb="tab"] div,
+    [data-testid="stTabs"] button[data-baseweb="tab"] span,
+    .stTabs [data-baseweb="tab"] p,
+    .stTabs [data-baseweb="tab"] div,
+    .stTabs [data-baseweb="tab"] span {
+        font-size: 19px !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.3px !important;
+        color: #f1f5f9 !important;
+        line-height: 1.3 !important;
+    }
+    [data-testid="stTabs"] button[data-baseweb="tab"]:hover,
     .stTabs [data-baseweb="tab"]:hover {
-        color: #00D2FF !important;
-        background-color: rgba(0, 210, 255, 0.12) !important;
-        border-color: rgba(0, 210, 255, 0.4) !important;
+        background-color: rgba(0, 210, 255, 0.18) !important;
+        border-color: rgba(0, 210, 255, 0.6) !important;
     }
-    .stTabs [aria-selected="true"] {
+    [data-testid="stTabs"] button[data-baseweb="tab"]:hover p,
+    [data-testid="stTabs"] button[data-baseweb="tab"]:hover div,
+    .stTabs [data-baseweb="tab"]:hover p {
         color: #00D2FF !important;
-        background: linear-gradient(180deg, rgba(0, 210, 255, 0.18) 0%, rgba(18, 26, 44, 0.95) 100%) !important;
-        border-bottom: 3.5px solid #00D2FF !important;
-        border-top: 1px solid rgba(0, 210, 255, 0.5) !important;
-        border-left: 1px solid rgba(0, 210, 255, 0.4) !important;
-        border-right: 1px solid rgba(0, 210, 255, 0.4) !important;
-        box-shadow: 0 -4px 16px rgba(0, 210, 255, 0.15) !important;
+    }
+    [data-testid="stTabs"] button[aria-selected="true"],
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(180deg, rgba(0, 210, 255, 0.26) 0%, rgba(18, 26, 44, 0.98) 100%) !important;
+        border: 2px solid rgba(0, 210, 255, 0.8) !important;
+        border-bottom: 4.5px solid #00D2FF !important;
+        box-shadow: 0 -4px 20px rgba(0, 210, 255, 0.25) !important;
+    }
+    [data-testid="stTabs"] button[aria-selected="true"] p,
+    [data-testid="stTabs"] button[aria-selected="true"] div,
+    [data-testid="stTabs"] button[aria-selected="true"] span,
+    .stTabs [aria-selected="true"] p,
+    .stTabs [aria-selected="true"] div,
+    .stTabs [aria-selected="true"] span {
+        color: #00D2FF !important;
+        font-weight: 800 !important;
+        text-shadow: 0 0 10px rgba(0, 210, 255, 0.45) !important;
     }
 
     /* Enhanced Wide Sidebar Styling (380px) */
@@ -120,14 +143,14 @@ st.markdown("""
         align-items: center;
         background: linear-gradient(135deg, rgba(16, 24, 42, 0.9) 0%, rgba(24, 34, 60, 0.7) 100%);
         border: 1px solid rgba(0, 210, 255, 0.3);
-        padding: 22px 28px;
+        padding: 20px 26px;
         border-radius: 16px;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
         backdrop-filter: blur(14px);
         box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4);
     }
     .brand-title {
-        font-size: 28px;
+        font-size: 27px;
         font-weight: 800;
         background: linear-gradient(90deg, #00D2FF 0%, #3a86ff 45%, #ff3366 100%);
         -webkit-background-clip: text;
@@ -578,33 +601,7 @@ single_share = (df['album_type'] == 'single').sum() / total_records * 100 if tot
 
 
 # ==============================================================================
-# 5. TOP BRAND HEADER
-# ==============================================================================
-st.markdown("""
-    <div class="brand-header">
-        <div>
-            <div class="brand-title">🇫🇷 Atlantic Records | France Market Strategy Intelligence</div>
-            <div class="brand-subtitle">Empirical Audience Sensitivity, Format Preference & Hit Architecture Analysis</div>
-        </div>
-        <div style="display: flex; align-items: center; gap: 14px;">
-            <div class="audio-wave">
-                <div class="audio-bar"></div>
-                <div class="audio-bar"></div>
-                <div class="audio-bar"></div>
-                <div class="audio-bar"></div>
-                <div class="audio-bar"></div>
-                <div class="audio-bar"></div>
-            </div>
-            <span class="pill" style="background: rgba(0, 210, 255, 0.18); color: #00D2FF; border: 1px solid rgba(0, 210, 255, 0.4); font-weight: 700;">
-                LIVE INTELLIGENCE RADAR
-            </span>
-        </div>
-    </div>
-""", unsafe_allow_html=True)
-
-
-# ==============================================================================
-# 6. TABS AT THE VERY TOP: PRIMARY NAVIGATION
+# 5. PRIMARY NAVIGATION: 7 TABS AT THE ABSOLUTE TOP OF THE MAIN AREA
 # ==============================================================================
 tabs = st.tabs([
     "🏆 Top Hits Radar",
@@ -621,6 +618,29 @@ tabs = st.tabs([
 # TAB 1: TOP HITS RADAR & EXECUTIVE MARKET PULSE
 # ------------------------------------------------------------------------------
 with tabs[0]:
+    # Top Brand Header
+    st.markdown("""
+        <div class="brand-header">
+            <div>
+                <div class="brand-title">🇫🇷 Atlantic Records | France Market Strategy Intelligence</div>
+                <div class="brand-subtitle">Empirical Audience Sensitivity, Format Preference & Hit Architecture Analysis</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <div class="audio-wave">
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                    <div class="audio-bar"></div>
+                </div>
+                <span class="pill" style="background: rgba(0, 210, 255, 0.18); color: #00D2FF; border: 1px solid rgba(0, 210, 255, 0.4); font-weight: 700;">
+                    LIVE INTELLIGENCE RADAR
+                </span>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
     # 1. High-Impact KPI Row at Top of Tab 1
     st.markdown(f"""
     <div class="metric-grid">
