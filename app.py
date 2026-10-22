@@ -8,7 +8,7 @@ import os
 from datetime import datetime
 
 # ==============================================================================
-# 1. PAGE SETUP & ENHANCED EXECUTIVE STYLING
+# 1. PAGE SETUP & HIGH-VISIBILITY HUMAN-CENTERED STYLING
 # ==============================================================================
 st.set_page_config(
     page_title="Atlantic Records | France Market Strategy Intelligence",
@@ -17,22 +17,66 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom High-End Modern Executive CSS
+# Custom High-Visibility Modern Executive CSS (Large, crisp, human-readable fonts)
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&display=swap');
 
-    html, body, [class*="css"] {
-        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Global Typography & Base Sizes */
+    html, body, [class*="css"], .stMarkdown {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        font-size: 15.5px !important;
+        color: #f8fafc !important;
     }
 
     /* Background & Main Canvas */
     .stApp {
         background: radial-gradient(circle at 10% 10%, #0d1424 0%, #080b11 100%);
-        color: #f3f4f6;
+        color: #f8fafc;
     }
 
-    /* Enhanced Wide Sidebar Styling */
+    /* ==========================================
+       TABS AT THE VERY TOP: LARGE & HIGH VISIBILITY
+       ========================================== */
+    .stTabs {
+        margin-top: 6px !important;
+        margin-bottom: 24px !important;
+    }
+    .stTabs [data-baseweb="tab-list"] {
+        border-bottom: 2px solid rgba(0, 210, 255, 0.25) !important;
+        gap: 10px !important;
+        padding-bottom: 8px !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+    }
+    .stTabs [data-baseweb="tab"] {
+        background-color: rgba(18, 26, 44, 0.6) !important;
+        color: #cbd5e1 !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        padding: 12px 22px !important;
+        border-radius: 10px 10px 0 0 !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-bottom: none !important;
+        transition: all 0.25s ease-in-out !important;
+        letter-spacing: 0.2px !important;
+    }
+    .stTabs [data-baseweb="tab"]:hover {
+        color: #00D2FF !important;
+        background-color: rgba(0, 210, 255, 0.12) !important;
+        border-color: rgba(0, 210, 255, 0.4) !important;
+    }
+    .stTabs [aria-selected="true"] {
+        color: #00D2FF !important;
+        background: linear-gradient(180deg, rgba(0, 210, 255, 0.18) 0%, rgba(18, 26, 44, 0.95) 100%) !important;
+        border-bottom: 3.5px solid #00D2FF !important;
+        border-top: 1px solid rgba(0, 210, 255, 0.5) !important;
+        border-left: 1px solid rgba(0, 210, 255, 0.4) !important;
+        border-right: 1px solid rgba(0, 210, 255, 0.4) !important;
+        box-shadow: 0 -4px 16px rgba(0, 210, 255, 0.15) !important;
+    }
+
+    /* Enhanced Wide Sidebar Styling (380px) */
     section[data-testid="stSidebar"] {
         width: 380px !important;
         min-width: 380px !important;
@@ -44,42 +88,46 @@ st.markdown("""
         width: 380px !important;
         padding-top: 20px;
     }
+    section[data-testid="stSidebar"] label, section[data-testid="stSidebar"] p {
+        font-size: 15px !important;
+        font-weight: 600 !important;
+    }
 
     /* Sidebar Containers */
     .sidebar-card {
-        background: rgba(18, 26, 44, 0.65);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(18, 26, 44, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 12px;
-        padding: 14px 16px;
+        padding: 16px;
         margin-bottom: 16px;
     }
     .sidebar-section-title {
-        font-size: 11.5px;
+        font-size: 13px;
         text-transform: uppercase;
         letter-spacing: 1px;
         color: #00D2FF;
-        font-weight: 700;
-        margin-bottom: 10px;
+        font-weight: 800;
+        margin-bottom: 12px;
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
     }
 
-    /* Top Brand Ribbon */
+    /* Top Brand Header */
     .brand-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: linear-gradient(135deg, rgba(16, 24, 42, 0.85) 0%, rgba(24, 34, 60, 0.65) 100%);
-        border: 1px solid rgba(0, 210, 255, 0.25);
+        background: linear-gradient(135deg, rgba(16, 24, 42, 0.9) 0%, rgba(24, 34, 60, 0.7) 100%);
+        border: 1px solid rgba(0, 210, 255, 0.3);
         padding: 22px 28px;
         border-radius: 16px;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
         backdrop-filter: blur(14px);
         box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4);
     }
     .brand-title {
-        font-size: 26px;
+        font-size: 28px;
         font-weight: 800;
         background: linear-gradient(90deg, #00D2FF 0%, #3a86ff 45%, #ff3366 100%);
         -webkit-background-clip: text;
@@ -88,9 +136,9 @@ st.markdown("""
         letter-spacing: -0.5px;
     }
     .brand-subtitle {
-        color: #94a3b8;
-        font-size: 13px;
-        margin-top: 4px;
+        color: #cbd5e1;
+        font-size: 14.5px;
+        margin-top: 5px;
         font-weight: 500;
     }
 
@@ -99,7 +147,7 @@ st.markdown("""
         display: flex;
         align-items: flex-end;
         gap: 3px;
-        height: 24px;
+        height: 26px;
     }
     .audio-bar {
         width: 4px;
@@ -121,56 +169,56 @@ st.markdown("""
 
     /* Executive Problem & Persona Cards */
     .story-card {
-        background: rgba(18, 26, 44, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(18, 26, 44, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 14px;
-        padding: 18px 22px;
-        margin-bottom: 14px;
+        padding: 20px 24px;
+        margin-bottom: 16px;
         backdrop-filter: blur(10px);
     }
     .persona-card {
-        background: rgba(15, 22, 38, 0.85);
+        background: rgba(15, 22, 38, 0.9);
         border-radius: 12px;
-        padding: 16px 20px;
+        padding: 18px 22px;
         border-left: 4px solid #00D2FF;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        border-right: 1px solid rgba(255, 255, 255, 0.05);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        border-right: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         height: 100%;
     }
     .persona-radio {
         border-left-color: #00e676;
     }
     .persona-title {
-        font-size: 14.5px;
-        font-weight: 700;
+        font-size: 16px;
+        font-weight: 800;
         color: #fff;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
         display: flex;
         align-items: center;
         gap: 8px;
     }
 
-    /* Modern KPI Stat Cards */
+    /* Large Modern KPI Stat Cards */
     .metric-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-        gap: 14px;
-        margin-bottom: 22px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
     }
     .metric-card {
-        background: rgba(18, 24, 40, 0.75);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 16px 18px;
+        background: rgba(18, 24, 42, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 14px;
+        padding: 18px 20px;
         transition: all 0.25s ease-in-out;
         position: relative;
         overflow: hidden;
     }
     .metric-card:hover {
         transform: translateY(-3px);
-        border-color: rgba(0, 210, 255, 0.4);
-        box-shadow: 0 8px 24px rgba(0, 210, 255, 0.12);
+        border-color: rgba(0, 210, 255, 0.5);
+        box-shadow: 0 8px 26px rgba(0, 210, 255, 0.15);
     }
     .metric-card::before {
         content: '';
@@ -178,71 +226,71 @@ st.markdown("""
         top: 0;
         left: 0;
         width: 100%;
-        height: 3px;
+        height: 3.5px;
         background: linear-gradient(90deg, #00D2FF, #ff3366);
     }
     .metric-label {
-        font-size: 11px;
+        font-size: 13px;
         text-transform: uppercase;
         color: #94a3b8;
-        font-weight: 600;
-        letter-spacing: 0.8px;
-        margin-bottom: 4px;
+        font-weight: 700;
+        letter-spacing: 0.9px;
+        margin-bottom: 6px;
     }
     .metric-value {
         font-family: 'JetBrains Mono', monospace;
-        font-size: 24px;
-        font-weight: 700;
+        font-size: 30px;
+        font-weight: 800;
         color: #ffffff;
-        margin-bottom: 2px;
+        margin-bottom: 4px;
     }
     .metric-desc {
-        font-size: 11px;
-        color: #64748b;
+        font-size: 13px;
+        color: #cbd5e1;
         font-weight: 500;
     }
 
-    /* Executive Takeaway Cards */
+    /* Large High-Contrast Takeaway Cards */
     .takeaway-card {
-        background: linear-gradient(135deg, rgba(20, 28, 48, 0.92) 0%, rgba(13, 18, 32, 0.95) 100%);
-        border-left: 4px solid #00D2FF;
-        border-top: 1px solid rgba(255, 255, 255, 0.07);
-        border-right: 1px solid rgba(255, 255, 255, 0.07);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 12px;
-        padding: 18px 22px;
-        margin: 18px 0;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        background: linear-gradient(135deg, rgba(20, 28, 48, 0.95) 0%, rgba(13, 18, 32, 0.98) 100%);
+        border-left: 5px solid #00D2FF;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 14px;
+        padding: 22px 26px;
+        margin: 22px 0;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     }
     .takeaway-title {
         display: flex;
         align-items: center;
         gap: 10px;
-        font-size: 15px;
-        font-weight: 700;
+        font-size: 18px;
+        font-weight: 800;
         color: #00D2FF;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
         letter-spacing: -0.2px;
     }
     .takeaway-body {
-        font-size: 13.5px;
-        line-height: 1.6;
-        color: #cbd5e1;
+        font-size: 15.5px;
+        line-height: 1.75;
+        color: #f1f5f9;
     }
     .takeaway-body b {
         color: #ffffff;
     }
 
-    /* Podium Cards for Top 3 Hits */
+    /* High-Visibility Podium Cards */
     .podium-card {
-        background: rgba(18, 24, 40, 0.85);
+        background: rgba(18, 24, 42, 0.9);
         border-radius: 16px;
-        padding: 20px 16px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 22px 18px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         text-align: center;
         position: relative;
         transition: all 0.3s ease;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.35);
         margin-top: 15px;
         height: 100%;
     }
@@ -250,53 +298,53 @@ st.markdown("""
         transform: translateY(-5px);
     }
     .podium-1 {
-        border-color: rgba(255, 184, 0, 0.65);
-        box-shadow: 0 0 25px rgba(255, 184, 0, 0.2);
+        border-color: rgba(255, 184, 0, 0.7);
+        box-shadow: 0 0 28px rgba(255, 184, 0, 0.22);
     }
     .podium-2 {
-        border-color: rgba(200, 208, 220, 0.5);
+        border-color: rgba(200, 208, 220, 0.55);
     }
     .podium-3 {
-        border-color: rgba(205, 127, 50, 0.5);
+        border-color: rgba(205, 127, 50, 0.55);
     }
     .podium-badge {
         position: absolute;
-        top: -12px;
+        top: -14px;
         left: 50%;
         transform: translateX(-50%);
-        padding: 4px 14px;
+        padding: 5px 16px;
         border-radius: 20px;
-        font-size: 11px;
+        font-size: 12.5px;
         font-weight: 800;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.6px;
         text-transform: uppercase;
         white-space: nowrap;
     }
-    .badge-gold { background: #FFB800; color: #000; box-shadow: 0 0 12px rgba(255, 184, 0, 0.6); }
+    .badge-gold { background: #FFB800; color: #000; box-shadow: 0 0 14px rgba(255, 184, 0, 0.6); }
     .badge-silver { background: #CBD5E1; color: #000; }
     .badge-bronze { background: #CD7F32; color: #fff; }
     .podium-img {
-        width: 140px;
-        height: 140px;
+        width: 145px;
+        height: 145px;
         border-radius: 12px;
         object-fit: cover;
         margin: 12px auto;
-        box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.5);
         display: block;
     }
     .podium-song {
-        font-size: 16px;
-        font-weight: 700;
+        font-size: 18px;
+        font-weight: 800;
         color: #fff;
-        margin: 8px 0 2px 0;
+        margin: 8px 0 3px 0;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
     .podium-artist {
-        font-size: 13px;
-        color: #94a3b8;
-        margin-bottom: 8px;
+        font-size: 14.5px;
+        color: #cbd5e1;
+        margin-bottom: 10px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -311,36 +359,15 @@ st.markdown("""
     /* Badges & Pills */
     .pill {
         display: inline-block;
-        padding: 3px 9px;
+        padding: 4px 10px;
         border-radius: 12px;
-        font-size: 10.5px;
-        font-weight: 600;
+        font-size: 11.5px;
+        font-weight: 700;
         letter-spacing: 0.3px;
     }
-    .pill-explicit { background: rgba(255, 51, 102, 0.15); color: #ff3366; border: 1px solid rgba(255, 51, 102, 0.3); }
-    .pill-clean { background: rgba(0, 230, 118, 0.15); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.3); }
-    .pill-format { background: rgba(0, 210, 255, 0.15); color: #00d2ff; border: 1px solid rgba(0, 210, 255, 0.3); }
-
-    /* Streamlit Tabs Styling */
-    .stTabs [data-baseweb="tab-list"] {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        gap: 8px;
-        padding-bottom: 6px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        background-color: transparent;
-        color: #94a3b8;
-        font-size: 13.5px;
-        font-weight: 600;
-        padding: 9px 16px;
-        border-radius: 8px 8px 0 0;
-        transition: all 0.2s ease;
-    }
-    .stTabs [aria-selected="true"] {
-        color: #00D2FF !important;
-        background: rgba(0, 210, 255, 0.08);
-        border-bottom: 3px solid #00D2FF !important;
-    }
+    .pill-explicit { background: rgba(255, 51, 102, 0.2); color: #ff3366; border: 1px solid rgba(255, 51, 102, 0.4); }
+    .pill-clean { background: rgba(0, 230, 118, 0.2); color: #00e676; border: 1px solid rgba(0, 230, 118, 0.4); }
+    .pill-format { background: rgba(0, 210, 255, 0.2); color: #00d2ff; border: 1px solid rgba(0, 210, 255, 0.4); }
 </style>
 """, unsafe_allow_html=True)
 
@@ -354,7 +381,6 @@ def load_and_prep_data():
     if not os.path.exists(file_path):
         return pd.DataFrame()
 
-    # Read data with UTF-8 fallback
     try:
         df = pd.read_csv(file_path, encoding='utf-8')
     except Exception:
@@ -362,7 +388,7 @@ def load_and_prep_data():
 
     df.columns = df.columns.str.strip()
     
-    # Sanitization map to eradicate any Mojibake character corruptions
+    # Sanitization map to eliminate any Mojibake character corruptions
     mojibake_map = {
         'Ã©': 'é', 'Ã¨': 'è', 'Ãª': 'ê', 'Ã ': 'à',
         'Ã§': 'ç', 'Ã´': 'ô', 'Ã®': 'î', 'Ã¯': 'ï',
@@ -372,21 +398,17 @@ def load_and_prep_data():
         if col in df.columns:
             for bad, good in mojibake_map.items():
                 df[col] = df[col].astype(str).str.replace(bad, good, regex=False)
-            # Fix Petit genie specifically if corrupted
             df[col] = df[col].str.replace('Petit gnie', 'Petit génie', regex=False)
             df[col] = df[col].str.replace('Petit gÃ©nie', 'Petit génie', regex=False)
             df[col] = df[col].str.replace("C'est carr le S", "C'est carré le S", regex=False)
             df[col] = df[col].str.replace("C'est carrÃ© le S", "C'est carré le S", regex=False)
 
-    # Date parsing
     df['date'] = pd.to_datetime(df['date'], format='%d-%m-%Y', errors='coerce')
     df = df.dropna(subset=['date', 'song', 'artist'])
     
-    # Numeric sanitization
     for col in ['position', 'popularity', 'duration_ms', 'total_tracks']:
         df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0)
     
-    # Duration conversion
     df['duration_minutes'] = df['duration_ms'] / 60000.0
     
     def format_duration(ms):
@@ -396,11 +418,9 @@ def load_and_prep_data():
         return f"{m}:{s:02d}"
     df['duration_formatted'] = df['duration_ms'].apply(format_duration)
 
-    # Boolean & string cleaning
     df['is_explicit'] = df['is_explicit'].astype(str).str.upper().isin(['TRUE', '1', 'T'])
     df['album_type'] = df['album_type'].astype(str).str.lower().str.strip()
     
-    # Duration Categorization
     def categorize_dur(m):
         if m < 2.5:
             return "Short (< 2.5m)"
@@ -410,7 +430,6 @@ def load_and_prep_data():
             return "Extended (> 3.5m)"
     df['duration_bucket'] = df['duration_minutes'].apply(categorize_dur)
     
-    # Rank Tiers
     df['rank_tier'] = pd.cut(
         df['position'],
         bins=[0, 10, 25, 50],
@@ -422,18 +441,18 @@ def load_and_prep_data():
 
 df_master = load_and_prep_data()
 
-# Plotly dark theme layout helper
-def apply_dark_theme(fig, title="", height=380):
+# Plotly dark theme layout helper with comfortable, large fonts
+def apply_dark_theme(fig, title="", height=400):
     fig.update_layout(
-        title=dict(text=title, font=dict(family='Plus Jakarta Sans', size=15, color='#f1f5f9')),
+        title=dict(text=title, font=dict(family='Plus Jakarta Sans', size=17, color='#f8fafc')),
         paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(18,24,40,0.45)',
-        font=dict(family='Plus Jakarta Sans', color='#94a3b8', size=12),
-        margin=dict(l=20, r=20, t=50, b=20),
+        plot_bgcolor='rgba(18,24,42,0.5)',
+        font=dict(family='Plus Jakarta Sans', color='#cbd5e1', size=13),
+        margin=dict(l=20, r=20, t=55, b=20),
         height=height,
-        hoverlabel=dict(bgcolor='#101726', font_size=12, font_family='Plus Jakarta Sans'),
-        xaxis=dict(gridcolor='rgba(255,255,255,0.06)', zerolinecolor='rgba(255,255,255,0.1)'),
-        yaxis=dict(gridcolor='rgba(255,255,255,0.06)', zerolinecolor='rgba(255,255,255,0.1)'),
+        hoverlabel=dict(bgcolor='#101726', font_size=13, font_family='Plus Jakarta Sans'),
+        xaxis=dict(gridcolor='rgba(255,255,255,0.08)', zerolinecolor='rgba(255,255,255,0.15)', tickfont=dict(size=12.5)),
+        yaxis=dict(gridcolor='rgba(255,255,255,0.08)', zerolinecolor='rgba(255,255,255,0.15)', tickfont=dict(size=12.5)),
     )
     return fig
 
@@ -442,10 +461,9 @@ def apply_dark_theme(fig, title="", height=380):
 # 3. ENHANCED & WIDE SIDEBAR CONTROLS
 # ==============================================================================
 with st.sidebar:
-    # 100% Reliable Inline SVG Atlantic Logo (Never breaks or fails on external CDNs)
     st.markdown("""
-        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding: 6px 0;">
-            <svg width="46" height="46" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px; padding: 4px 0;">
+            <svg width="48" height="48" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="50" cy="50" r="48" fill="#121826" stroke="#00D2FF" stroke-width="4"/>
                 <circle cx="50" cy="50" r="32" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
                 <circle cx="50" cy="50" r="16" fill="#ff3366"/>
@@ -453,8 +471,8 @@ with st.sidebar:
                 <line x1="39" y1="58" x2="61" y2="58" stroke="#00D2FF" stroke-width="6"/>
             </svg>
             <div>
-                <div style="font-weight: 800; font-size: 20px; letter-spacing: 1px; color: #ffffff; line-height: 1.1;">ATLANTIC</div>
-                <div style="font-weight: 700; font-size: 11px; letter-spacing: 2px; color: #00D2FF;">RECORDS FRANCE</div>
+                <div style="font-weight: 800; font-size: 21px; letter-spacing: 1.2px; color: #ffffff; line-height: 1.1;">ATLANTIC</div>
+                <div style="font-weight: 700; font-size: 11.5px; letter-spacing: 2px; color: #00D2FF;">RECORDS FRANCE</div>
             </div>
         </div>
     """, unsafe_allow_html=True)
@@ -465,7 +483,6 @@ with st.sidebar:
         
         st.markdown('<div class="sidebar-section-title">🎛️ Observation Parameters</div>', unsafe_allow_html=True)
         
-        # Date Filter
         date_selection = st.date_input(
             "Time Observation Window",
             value=[min_date, max_date],
@@ -479,21 +496,18 @@ with st.sidebar:
         else:
             start_date, end_date = min_date, max_date
             
-        # Chart Depth
         tier_filter = st.multiselect(
             "Chart Depth Tier",
             options=['Top 10', 'Top 25', 'Top 50'],
             default=['Top 10', 'Top 25', 'Top 50']
         )
         
-        # Compliance
         content_filter = st.radio(
             "Content Compliance (ARCOM Quota)",
             options=["All Content", "Clean Only 🟢", "Explicit Only 🔴"],
             index=0
         )
         
-        # Format
         available_formats = sorted(df_master['album_type'].unique())
         format_filter = st.multiselect(
             "Release Format",
@@ -503,13 +517,12 @@ with st.sidebar:
         
         search_query = st.text_input("🔍 Search Track or Artist", placeholder="e.g. Werenoi, Ninho, Gazo")
 
-        # Mini Repertoire Snapshot Card in Sidebar
         st.markdown(f"""
             <div class="sidebar-card">
-                <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #94a3b8; font-weight: 700; margin-bottom: 6px;">
+                <div style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.9px; color: #94a3b8; font-weight: 700; margin-bottom: 6px;">
                     ⚡ Active Repertoire Pulse
                 </div>
-                <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.6;">
+                <div style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6;">
                     • <b>Tracking Window:</b> {start_date} to {end_date}<br/>
                     • <b>Format Scope:</b> {', '.join([f.capitalize() for f in format_filter])}<br/>
                     • <b>Compliance Filter:</b> {content_filter}
@@ -527,7 +540,7 @@ with st.sidebar:
 
 
 # ==============================================================================
-# 4. FILTER EXECUTION
+# 4. FILTER EXECUTION & SLICE CREATION
 # ==============================================================================
 if df_master.empty:
     st.error("⚠️ DATASET NOT FOUND: Please ensure 'Atlantic_France.csv' is present in the repository.")
@@ -549,9 +562,23 @@ if search_query:
     q = search_query.strip().lower()
     df = df[df['song'].str.lower().str.contains(q, na=False) | df['artist'].str.lower().str.contains(q, na=False)]
 
+if df.empty:
+    st.warning("⚠️ No records match your selected parameters. Please adjust your filters in the sidebar.")
+    st.stop()
+
+# Key Summary Metrics
+total_records = len(df)
+unique_tracks = df['song'].nunique()
+unique_artists = df['artist'].nunique()
+explicit_count = df['is_explicit'].sum()
+explicit_pct = (explicit_count / total_records * 100) if total_records > 0 else 0
+clean_pct = 100 - explicit_pct
+avg_duration = df['duration_minutes'].mean()
+single_share = (df['album_type'] == 'single').sum() / total_records * 100 if total_records > 0 else 0
+
 
 # ==============================================================================
-# 5. HEADER & AUDIENCE DILEMMA STORYTELLING
+# 5. TOP BRAND HEADER
 # ==============================================================================
 st.markdown("""
     <div class="brand-header">
@@ -568,115 +595,102 @@ st.markdown("""
                 <div class="audio-bar"></div>
                 <div class="audio-bar"></div>
             </div>
-            <span class="pill" style="background: rgba(0, 210, 255, 0.15); color: #00D2FF; border: 1px solid rgba(0, 210, 255, 0.35); font-weight: 700;">
+            <span class="pill" style="background: rgba(0, 210, 255, 0.18); color: #00D2FF; border: 1px solid rgba(0, 210, 255, 0.4); font-weight: 700;">
                 LIVE INTELLIGENCE RADAR
             </span>
         </div>
     </div>
 """, unsafe_allow_html=True)
 
-# Problem & Audience Personas Expander (Clean native columns: Zero raw markdown glitches)
-with st.expander("📌 The Business Problem & French Audience Personas (Executive Context)", expanded=True):
-    st.markdown("""<div class="story-card">
-        <h4 style="margin: 0 0 8px 0; color: #00D2FF; font-size: 16px;">🎯 The Industry Dilemma: The French Streaming vs. Radio Paradox</h4>
-        <p style="margin: 0; font-size: 13.5px; color: #cbd5e1; line-height: 1.6;">
-            The French music market is governed by a sharp dual reality. On one hand, <b>ARCOM (French regulatory broadcast authority)</b> enforces severe penalties on explicit content and mandates a 40% French-language radio quota. On the other hand, <b>Spotify France streaming is heavily commanded by Gen-Z domestic hip-hop</b>, where over 56% of top chart tracks feature explicit lyrics.<br/>
-            <b>Atlantic's Strategic Challenge:</b> If a track is overly sanitized, youth streaming ignores it; if it is unedited, it suffers zero radio reach and commercial brand sponsorship disqualification.
-        </p>
-    </div>""", unsafe_allow_html=True)
-    
-    col_p1, col_p2 = st.columns(2)
-    with col_p1:
-        st.markdown("""<div class="persona-card">
-            <div class="persona-title">🎧 Persona 1: The Gen-Z Urban Streamer (15–24)</div>
-            <div style="font-size: 12.5px; color: #94a3b8; line-height: 1.6;">
-                • <b>Core Repertoire:</b> Werenoi, SDM, Gazo, PLK, Ninho.<br/>
-                • <b>Content Sensitivity:</b> Zero stigma against explicit lyrics; craves raw street authenticity.<br/>
-                • <b>Consumption Habit:</b> Mobile Spotify sessions, heavy repeat listening, highly sensitive to track lengths over 3:30 mins.
-            </div>
-        </div>""", unsafe_allow_html=True)
-    with col_p2:
-        st.markdown("""<div class="persona-card persona-radio">
-            <div class="persona-title" style="color: #00e676;">📻 Persona 2: The Mainstream Radio Commuter (25–49)</div>
-            <div style="font-size: 12.5px; color: #94a3b8; line-height: 1.6;">
-                • <b>Core Repertoire:</b> GIMS, Benson Boone, Dua Lipa, Clean Pop Urbaine.<br/>
-                • <b>Content Sensitivity:</b> In-car family listening; sensitive to explicit swearing.<br/>
-                • <b>Consumption Habit:</b> Terrestrial radio (NRJ, Skyrock, Fun Radio); critical for long-term catalog royalty income.
-            </div>
-        </div>""", unsafe_allow_html=True)
-
-if df.empty:
-    st.warning("⚠️ No records match your selected filters. Please adjust your parameters in the sidebar.")
-    st.stop()
-
-# Key Summary Metrics
-total_records = len(df)
-unique_tracks = df['song'].nunique()
-unique_artists = df['artist'].nunique()
-explicit_count = df['is_explicit'].sum()
-explicit_pct = (explicit_count / total_records * 100) if total_records > 0 else 0
-clean_pct = 100 - explicit_pct
-avg_duration = df['duration_minutes'].mean()
-single_share = (df['album_type'] == 'single').sum() / total_records * 100 if total_records > 0 else 0
-
-st.markdown(f"""
-<div class="metric-grid">
-    <div class="metric-card">
-        <div class="metric-label">Observed Entries</div>
-        <div class="metric-value">{total_records:,}</div>
-        <div class="metric-desc">Across {df['date'].nunique()} Chart Days</div>
-    </div>
-    <div class="metric-card">
-        <div class="metric-label">Repertoire Diversity</div>
-        <div class="metric-value">{unique_tracks} / {unique_artists}</div>
-        <div class="metric-desc">Unique Songs / Artists</div>
-    </div>
-    <div class="metric-card">
-        <div class="metric-label">Explicit Streaming Share</div>
-        <div class="metric-value" style="color: #ff3366;">{explicit_pct:.1f}%</div>
-        <div class="metric-desc">Top 50 Penetration</div>
-    </div>
-    <div class="metric-card">
-        <div class="metric-label">Radio Clean Dominance</div>
-        <div class="metric-value" style="color: #00e676;">{clean_pct:.1f}%</div>
-        <div class="metric-desc">Universal Broadcast Ready</div>
-    </div>
-    <div class="metric-card">
-        <div class="metric-label">Mean Song Duration</div>
-        <div class="metric-value" style="color: #00D2FF;">{avg_duration:.2f}m</div>
-        <div class="metric-desc">Optimal Runtime</div>
-    </div>
-    <div class="metric-card">
-        <div class="metric-label">Standalone Single Ratio</div>
-        <div class="metric-value" style="color: #ffb800;">{single_share:.1f}%</div>
-        <div class="metric-desc">Lean Release Market Share</div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
 
 # ==============================================================================
-# 6. CORE ANALYTICAL PILLARS (TABS)
+# 6. TABS AT THE VERY TOP: PRIMARY NAVIGATION
 # ==============================================================================
 tabs = st.tabs([
-    "🏆 Top Hits & Market Radar",
-    "⚖️ Content Compliance & Sensitivity",
-    "💿 Release Formats & Dilution",
-    "⏱️ Song Architecture & Duration",
-    "🎤 Artist & Track Intelligence Hub",
-    "🎯 Atlantic Release Strategy Simulator",
-    "📋 Data Explorer & Executive Export"
+    "🏆 Top Hits Radar",
+    "⚖️ Content Compliance",
+    "💿 Release Formats",
+    "⏱️ Song Duration",
+    "🎤 Artist Hub",
+    "🎯 Release Simulator",
+    "📋 Data Explorer"
 ])
 
 
 # ------------------------------------------------------------------------------
-# TAB 1: TOP HITS & MARKET RADAR
+# TAB 1: TOP HITS RADAR & EXECUTIVE MARKET PULSE
 # ------------------------------------------------------------------------------
 with tabs[0]:
+    # 1. High-Impact KPI Row at Top of Tab 1
+    st.markdown(f"""
+    <div class="metric-grid">
+        <div class="metric-card">
+            <div class="metric-label">Observed Entries</div>
+            <div class="metric-value">{total_records:,}</div>
+            <div class="metric-desc">Across {df['date'].nunique()} Chart Days</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Repertoire Diversity</div>
+            <div class="metric-value">{unique_tracks} / {unique_artists}</div>
+            <div class="metric-desc">Unique Songs / Artists</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Explicit Streaming Share</div>
+            <div class="metric-value" style="color: #ff3366;">{explicit_pct:.1f}%</div>
+            <div class="metric-desc">Top 50 Penetration</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Radio Clean Dominance</div>
+            <div class="metric-value" style="color: #00e676;">{clean_pct:.1f}%</div>
+            <div class="metric-desc">Universal Broadcast Ready</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Mean Song Duration</div>
+            <div class="metric-value" style="color: #00D2FF;">{avg_duration:.2f}m</div>
+            <div class="metric-desc">Optimal Runtime</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Standalone Single Ratio</div>
+            <div class="metric-value" style="color: #ffb800;">{single_share:.1f}%</div>
+            <div class="metric-desc">Lean Release Market Share</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # 2. Problem & Audience Personas Expander
+    with st.expander("📌 The Business Problem & French Audience Personas (Executive Context)", expanded=False):
+        st.markdown("""<div class="story-card">
+            <h4 style="margin: 0 0 8px 0; color: #00D2FF; font-size: 17px;">🎯 The Industry Dilemma: The French Streaming vs. Radio Paradox</h4>
+            <p style="margin: 0; font-size: 14.5px; color: #cbd5e1; line-height: 1.65;">
+                The French music market is governed by a sharp dual reality. On one hand, <b>ARCOM (French regulatory broadcast authority)</b> enforces severe penalties on explicit content and mandates a 40% French-language radio quota. On the other hand, <b>Spotify France streaming is heavily commanded by Gen-Z domestic hip-hop</b>, where over 56% of top chart tracks feature explicit lyrics.<br/>
+                <b>Atlantic's Strategic Challenge:</b> If a track is overly sanitized, youth streaming ignores it; if it is unedited, it suffers zero radio reach and commercial brand sponsorship disqualification.
+            </p>
+        </div>""", unsafe_allow_html=True)
+        
+        col_p1, col_p2 = st.columns(2)
+        with col_p1:
+            st.markdown("""<div class="persona-card">
+                <div class="persona-title">🎧 Persona 1: The Gen-Z Urban Streamer (15–24)</div>
+                <div style="font-size: 13.5px; color: #cbd5e1; line-height: 1.65;">
+                    • <b>Core Repertoire:</b> Werenoi, SDM, Gazo, PLK, Ninho.<br/>
+                    • <b>Content Sensitivity:</b> Zero stigma against explicit lyrics; craves raw street authenticity.<br/>
+                    • <b>Consumption Habit:</b> Mobile Spotify sessions, heavy repeat listening, highly sensitive to track lengths over 3:30 mins.
+                </div>
+            </div>""", unsafe_allow_html=True)
+        with col_p2:
+            st.markdown("""<div class="persona-card persona-radio">
+                <div class="persona-title" style="color: #00e676;">📻 Persona 2: The Mainstream Radio Commuter (25–49)</div>
+                <div style="font-size: 13.5px; color: #cbd5e1; line-height: 1.65;">
+                    • <b>Core Repertoire:</b> GIMS, Benson Boone, Dua Lipa, Clean Pop Urbaine.<br/>
+                    • <b>Content Sensitivity:</b> In-car family listening; sensitive to explicit swearing.<br/>
+                    • <b>Consumption Habit:</b> Terrestrial radio (NRJ, Skyrock, Fun Radio); critical for long-term catalog royalty income.
+                </div>
+            </div>""", unsafe_allow_html=True)
+
+    # 3. Top 3 Podium Showcase
     st.markdown("### 🏆 France Top Chart Podium & Repertoire Radar")
     st.caption("Spotlighting the market champions, catalog stickiness, and overall popularity velocity in France.")
 
-    # Top 3 Podium
     podium_df = (
         df.groupby(['song', 'artist', 'album_type', 'is_explicit', 'duration_formatted', 'album_cover_url'])
         .agg(
@@ -695,7 +709,6 @@ with tabs[0]:
         p2 = podium_df.iloc[1]
         p3 = podium_df.iloc[2]
         
-        # Native 3 columns: 100% responsive, completely eradicates markdown parsing bugs
         col_pod2, col_pod1, col_pod3 = st.columns(3)
         
         with col_pod2:
@@ -709,7 +722,7 @@ with tabs[0]:
                     <span class="pill pill-format">{p2['album_type'].upper()}</span>
                     <span class="pill" style="background: rgba(255,255,255,0.1); color: #fff;">⏱️ {p2['duration_formatted']}</span>
                 </div>
-                <div style="margin-top: 10px; font-size: 12px; color: #94a3b8;">
+                <div style="margin-top: 12px; font-size: 13.5px; color: #cbd5e1;">
                     Peak: <b>#{p2['peak_position']}</b> • Charted: <b>{p2['chart_days']} Days</b>
                 </div>
             </div>""", unsafe_allow_html=True)
@@ -718,14 +731,14 @@ with tabs[0]:
             st.markdown(f"""<div class="podium-card podium-1">
                 <div class="podium-badge badge-gold">🥇 #1 Market Leader</div>
                 <img src="{p1['album_cover_url']}" class="podium-img" alt="{p1['song']}" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300';"/>
-                <div class="podium-song" style="font-size: 17px; color: #FFB800;">{p1['song']}</div>
+                <div class="podium-song" style="font-size: 19px; color: #FFB800;">{p1['song']}</div>
                 <div class="podium-artist">{p1['artist']}</div>
                 <div class="podium-tags">
                     <span class="pill {'pill-explicit' if p1['is_explicit'] else 'pill-clean'}">{'EXPLICIT 🔴' if p1['is_explicit'] else 'CLEAN 🟢'}</span>
                     <span class="pill pill-format">{p1['album_type'].upper()}</span>
                     <span class="pill" style="background: rgba(255,255,255,0.1); color: #fff;">⏱️ {p1['duration_formatted']}</span>
                 </div>
-                <div style="margin-top: 10px; font-size: 12px; color: #f1f5f9;">
+                <div style="margin-top: 12px; font-size: 14px; color: #f1f5f9;">
                     Days at #1: <b style="color: #FFB800;">{p1['days_at_1']} Days</b> • Total Charted: <b>{p1['chart_days']} Days</b>
                 </div>
             </div>""", unsafe_allow_html=True)
@@ -741,7 +754,7 @@ with tabs[0]:
                     <span class="pill pill-format">{p3['album_type'].upper()}</span>
                     <span class="pill" style="background: rgba(255,255,255,0.1); color: #fff;">⏱️ {p3['duration_formatted']}</span>
                 </div>
-                <div style="margin-top: 10px; font-size: 12px; color: #94a3b8;">
+                <div style="margin-top: 12px; font-size: 13.5px; color: #cbd5e1;">
                     Peak: <b>#{p3['peak_position']}</b> • Charted: <b>{p3['chart_days']} Days</b>
                 </div>
             </div>""", unsafe_allow_html=True)
@@ -761,7 +774,7 @@ with tabs[0]:
             template='plotly_dark'
         )
         fig_art.update_layout(yaxis={'categoryorder': 'total ascending'}, coloraxis_showscale=False)
-        apply_dark_theme(fig_art, "Artist Repertoire Dominance (Days Charted)", height=340)
+        apply_dark_theme(fig_art, "Artist Repertoire Dominance (Days Charted)", height=350)
         st.plotly_chart(fig_art, use_container_width=True)
 
     with c2:
@@ -775,7 +788,7 @@ with tabs[0]:
             color_discrete_map={'Top 10': '#FFB800', 'Top 25': '#00D2FF', 'Top 50': '#8b5cf6'},
             template='plotly_dark'
         )
-        apply_dark_theme(fig_pop, "Spotify Popularity Distribution by Tier", height=340)
+        apply_dark_theme(fig_pop, "Spotify Popularity Distribution by Tier", height=350)
         st.plotly_chart(fig_pop, use_container_width=True)
 
     st.markdown("""<div class="takeaway-card">
@@ -800,8 +813,8 @@ with tabs[1]:
         fig_gauge = go.Figure(go.Indicator(
             mode="gauge+number",
             value=round(explicit_pct, 1),
-            number={'suffix': "%", 'font': {'color': '#ffffff', 'family': 'JetBrains Mono'}},
-            title={'text': "Explicit Lyric Density (Overall Repertoire)", 'font': {'size': 14, 'color': '#94a3b8'}},
+            number={'suffix': "%", 'font': {'color': '#ffffff', 'family': 'JetBrains Mono', 'size': 36}},
+            title={'text': "Explicit Lyric Density (Overall Repertoire)", 'font': {'size': 16, 'color': '#cbd5e1'}},
             gauge={
                 'axis': {'range': [0, 100], 'tickcolor': "#94a3b8"},
                 'bar': {'color': '#ff3366'},
@@ -817,7 +830,7 @@ with tabs[1]:
                 }
             }
         ))
-        apply_dark_theme(fig_gauge, "", height=320)
+        apply_dark_theme(fig_gauge, "", height=330)
         st.plotly_chart(fig_gauge, use_container_width=True)
 
     with cc2:
@@ -832,7 +845,7 @@ with tabs[1]:
             template='plotly_dark'
         )
         fig_box.update_xaxes(ticktext=['Clean Tracks 🟢', 'Explicit Tracks 🔴'], tickvals=[False, True])
-        apply_dark_theme(fig_box, "Popularity Spread by Compliance Category", height=320)
+        apply_dark_theme(fig_box, "Popularity Spread by Compliance Category", height=330)
         st.plotly_chart(fig_box, use_container_width=True)
 
     st.markdown("---")
@@ -853,7 +866,7 @@ with tabs[1]:
         )
         fig_tier.update_traces(textposition='outside')
         fig_tier.update_layout(coloraxis_showscale=False, yaxis_title="Explicit Share (%)")
-        apply_dark_theme(fig_tier, "Percentage of Explicit Songs by Chart Tier", height=330)
+        apply_dark_theme(fig_tier, "Percentage of Explicit Songs by Chart Tier", height=340)
         st.plotly_chart(fig_tier, use_container_width=True)
 
     with c_tier2:
@@ -871,7 +884,7 @@ with tabs[1]:
             template='plotly_dark'
         )
         fig_time.update_layout(yaxis_title="Explicit Share (%)", xaxis_title="Timeline (Month)")
-        apply_dark_theme(fig_time, "Evolution of Explicit Streaming Volume", height=330)
+        apply_dark_theme(fig_time, "Evolution of Explicit Streaming Volume", height=340)
         st.plotly_chart(fig_time, use_container_width=True)
 
     st.markdown("""<div class="takeaway-card">
@@ -965,11 +978,11 @@ with tabs[2]:
             showarrow=True,
             arrowhead=2,
             arrowcolor="#ff3366",
-            font=dict(color="#ffffff", size=11, family="Plus Jakarta Sans"),
-            bgcolor="rgba(255, 51, 102, 0.25)",
+            font=dict(color="#ffffff", size=12, family="Plus Jakarta Sans"),
+            bgcolor="rgba(255, 51, 102, 0.3)",
             bordercolor="#ff3366"
         )
-        apply_dark_theme(fig_ols, "Album Tracklist Size vs. Individual Track Popularity", height=410)
+        apply_dark_theme(fig_ols, "Album Tracklist Size vs. Individual Track Popularity", height=420)
         st.plotly_chart(fig_ols, use_container_width=True)
     else:
         st.warning("⚠️ Insufficient album data in filtered view to compute OLS regression.")
@@ -1012,8 +1025,8 @@ with tabs[3]:
             showarrow=True,
             arrowhead=2,
             arrowcolor="#00D2FF",
-            font=dict(color="#ffffff", size=11, family="Plus Jakarta Sans"),
-            bgcolor="rgba(0, 210, 255, 0.25)",
+            font=dict(color="#ffffff", size=12, family="Plus Jakarta Sans"),
+            bgcolor="rgba(0, 210, 255, 0.3)",
             bordercolor="#00D2FF"
         )
         apply_dark_theme(fig_dur, "Track Count by Runtime Category", height=350)
@@ -1049,7 +1062,7 @@ with tabs[3]:
         template='plotly_dark'
     )
     fig_dur_line.update_layout(yaxis_title="Average Duration (Mins)", xaxis_title="Timeline (Month)")
-    apply_dark_theme(fig_dur_line, "Average Track Length (Minutes) Over Time", height=320)
+    apply_dark_theme(fig_dur_line, "Average Track Length (Minutes) Over Time", height=330)
     st.plotly_chart(fig_dur_line, use_container_width=True)
 
     st.markdown("""<div class="takeaway-card">
@@ -1189,7 +1202,7 @@ with tabs[4]:
         fig_radar.update_layout(
             polar=dict(
                 bgcolor='rgba(18, 24, 40, 0.5)',
-                radialaxis=dict(visible=True, range=[0, 100], gridcolor='rgba(255,255,255,0.1)')
+                radialaxis=dict(visible=True, range=[0, 100], gridcolor='rgba(255,255,255,0.15)')
             ),
             showlegend=True,
             paper_bgcolor='rgba(0,0,0,0)'
@@ -1254,8 +1267,8 @@ with tabs[5]:
         fig_score = go.Figure(go.Indicator(
             mode="gauge+number",
             value=score,
-            number={'suffix': "/100", 'font': {'color': gauge_col, 'family': 'JetBrains Mono'}},
-            title={'text': "Calculated Market Viability Score", 'font': {'size': 14, 'color': '#94a3b8'}},
+            number={'suffix': "/100", 'font': {'color': gauge_col, 'family': 'JetBrains Mono', 'size': 38}},
+            title={'text': "Calculated Market Viability Score", 'font': {'size': 16, 'color': '#cbd5e1'}},
             gauge={
                 'axis': {'range': [0, 100], 'tickcolor': "#94a3b8"},
                 'bar': {'color': gauge_col},
@@ -1266,11 +1279,11 @@ with tabs[5]:
                 ]
             }
         ))
-        apply_dark_theme(fig_score, "", height=280)
+        apply_dark_theme(fig_score, "", height=300)
         st.plotly_chart(fig_score, use_container_width=True)
         
         st.markdown(f"""
-        <div style="background: rgba(18,24,40,0.8); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; font-size: 13px; line-height: 1.6;">
+        <div style="background: rgba(18,24,42,0.85); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 16px; font-size: 14.5px; line-height: 1.7; color: #f1f5f9;">
             {'<br/>'.join(reasons)}
         </div>
         """, unsafe_allow_html=True)
