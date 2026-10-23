@@ -511,19 +511,37 @@ theme_css = f"""
        ======================================================== */
     .metric-grid {{
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
-        gap: 14px;
+        grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+        gap: 12px;
         margin-bottom: 22px;
+        width: 100%;
+    }}
+    @media (max-width: 1050px) {{
+        .metric-grid {{
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            gap: 10px;
+        }}
+    }}
+    @media (max-width: 600px) {{
+        .metric-grid {{
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 8px;
+        }}
     }}
     .metric-card {{
         background: {'#ffffff' if is_light else '#101726'};
         border: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'};
         border-top: 3.5px solid {'#2563eb' if is_light else '#00D2FF'};
         border-radius: 10px;
-        padding: 16px 18px;
+        padding: 14px 12px;
         transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         box-shadow: {'0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.03)' if is_light else '0 4px 16px rgba(0, 0, 0, 0.4)'};
         position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 145px;
+        box-sizing: border-box;
     }}
     .metric-card:hover {{
         transform: translateY(-2px);
@@ -531,27 +549,32 @@ theme_css = f"""
         border-color: {'#2563eb' if is_light else '#00D2FF'};
     }}
     .metric-label {{
-        font-size: 12.5px;
+        font-size: 11px;
         text-transform: uppercase;
         color: {'#64748b' if is_light else '#94a3b8'};
         font-weight: 800;
-        letter-spacing: 0.07em;
+        letter-spacing: 0.05em;
         margin-bottom: 6px;
+        line-height: 1.25;
+        min-height: 28px;
     }}
     .metric-value {{
         font-family: 'JetBrains Mono', 'Plus Jakarta Sans', monospace;
-        font-size: 33px;
+        font-size: clamp(20px, 1.55vw, 26px);
         font-weight: 800;
         color: {'#090e17' if is_light else '#ffffff'};
         letter-spacing: -0.03em;
         margin-bottom: 4px;
         line-height: 1.15;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }}
     .metric-desc {{
-        font-size: 13.5px;
+        font-size: 11.5px;
         color: {'#475569' if is_light else '#94a3b8'};
         font-weight: 500;
-        line-height: 1.4;
+        line-height: 1.35;
     }}
 
     /* Business Context & Persona Cards */
