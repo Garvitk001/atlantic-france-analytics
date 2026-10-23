@@ -43,11 +43,38 @@ theme_css = f"""
     }}
 
     /* Global Typography - High-Definition Executive Legibility */
-    *, *::before, *::after, html, body, [class*="css"], .stMarkdown, p, span, div, label, button {{
-        font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    html, body, .stApp, p, label, button, input, select, textarea {{
+        font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         -webkit-font-smoothing: antialiased !important;
         -moz-osx-font-smoothing: grayscale !important;
         text-rendering: optimizeLegibility !important;
+    }}
+    .stMarkdown, .stMarkdown p, .stMarkdown li, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown span {{
+        font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
+    }}
+
+    /* Protect Streamlit Icons, SVGs & Expanders from being hijacked */
+    [data-testid="stIconMaterial"],
+    [data-testid="stExpanderToggleIcon"],
+    [data-testid="stExpanderToggleIcon"] *,
+    [data-testid="stIcon"],
+    .material-symbols-rounded,
+    .material-icons,
+    details summary span[aria-hidden="true"],
+    details summary svg,
+    svg {{
+        font-family: 'Material Symbols Rounded', 'Streamlit Symbols', sans-serif !important;
+    }}
+    details summary {{
+        font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
+        cursor: pointer !important;
+    }}
+    details summary p {{
+        font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        margin: 0 !important;
+        padding-left: 6px !important;
     }}
 
     /* Background Canvas - Calibrated Anti-Glare Light & Executive Dark */
@@ -923,13 +950,12 @@ with st.sidebar:
             </div>
         """, unsafe_allow_html=True)
 
-        with st.expander("ℹ️ About Dataset & Methodology"):
+        with st.expander("ℹ️ Dataset & Scope"):
             st.markdown("""
-            **Intelligence Architecture:**
-            - **Dataset:** 555 daily France Spotify Top 50 chart snapshots (27,800 recorded track positions).
-            - **Analytical Purpose:** Assist Atlantic Records A&R and commercial strategy teams in navigating French regulatory quotas (ARCOM broadcast rules), optimal album track counts, and duration sweet spots.
+            • **Dataset:** 555 daily Spotify France Top 50 charts (27,800 songs).  
+            • **Purpose:** Practical decision guide for album length, radio safety & duration sweet spots.
             """)
-        st.caption("Atlantic Records France | Commercial Strategy Terminal")
+        st.caption("Atlantic Records France • Commercial Terminal")
 
 
 # ==============================================================================
@@ -1082,35 +1108,7 @@ with tabs[0]:
     </div>
     """, unsafe_allow_html=True)
 
-    # 2. Executive Context Expander
-    with st.expander("Executive Summary & Market Context (Click to expand)", expanded=False):
-        st.markdown(f"""<div class="story-card">
-            <h4 style="margin: 0 0 10px 0; color: {'#0284c7' if is_light else '#00B4D8'}; font-size: 19px;">The Market Dilemma: French Streaming Appetite vs. Terrestrial Radio Quotas</h4>
-            <p style="margin: 0; font-size: 16px; color: {'#334155' if is_light else '#cbd5e1'}; line-height: 1.7;">
-                The French recorded music market is characterized by a strong domestic preference and a unique regulatory framework. On one side, <b>ARCOM (the French broadcast regulator)</b> enforces strict obscenity restrictions and mandates a 40% French-language music quota on terrestrial radio. On the other side, <b>streaming consumption on Spotify France is heavily driven by urban and hip-hop genres</b>, where over 56% of top-ranking tracks contain explicit lyrics.<br/><br/>
-                <b>Strategic Impact for Atlantic Records:</b> If an urban release is excessively censored, it risks losing credibility among streaming audiences. Conversely, if released without an alternative clean master, it is locked out of high-royalty daytime commercial radio rotations (NRJ, Skyrock).
-            </p>
-        </div>""", unsafe_allow_html=True)
-        
-        col_p1, col_p2 = st.columns(2)
-        with col_p1:
-            st.markdown(f"""<div class="persona-card">
-                <div class="persona-title">Segment 1: Youth / Hip-Hop Streaming Audience (15–24)</div>
-                <div style="font-size: 15px; color: {'#334155' if is_light else '#cbd5e1'}; line-height: 1.7;">
-                    • <b>Repertoire Focus:</b> Domestic hip-hop and trap (Werenoi, SDM, Gazo, PLK, Ninho).<br/>
-                    • <b>Content Preference:</b> High tolerance for explicit content; values authentic street narratives.<br/>
-                    • <b>Listening Pattern:</b> Mobile Spotify sessions, high replay frequency, sensitive to tracks exceeding 3.5 minutes.
-                </div>
-            </div>""", unsafe_allow_html=True)
-        with col_p2:
-            st.markdown(f"""<div class="persona-card persona-radio">
-                <div class="persona-title" style="color: #10b981;">Segment 2: Broad / Daytime Terrestrial Radio Audience (25–49)</div>
-                <div style="font-size: 15px; color: {'#334155' if is_light else '#cbd5e1'}; line-height: 1.7;">
-                    • <b>Repertoire Focus:</b> Mainstream pop, melodic pop-urbaine, international crossover (GIMS, Benson Boone, Dua Lipa).<br/>
-                    • <b>Content Preference:</b> Clean lyrics appropriate for shared family and in-car listening.<br/>
-                    • <b>Listening Pattern:</b> Morning and evening drive-time radio rotations; essential for driving long-tail publishing revenue.
-                </div>
-            </div>""", unsafe_allow_html=True)
+
 
     # 3. Top Chart Podium Showcase
     st.markdown("### Top Chart Repertoire Leaders")
@@ -1186,7 +1184,7 @@ with tabs[0]:
 
     c1, c2 = st.columns(2)
     with c1:
-        st.subheader("Top Artists by Cumulative Chart Appearances")
+        st.subheader("👑 Which Artists Dominate French Charts? (Most Chart-Topping Hits)")
         top_art = df['artist'].value_counts().head(8).reset_index()
         top_art.columns = ['Artist', 'Chart Appearances']
         fig_art = px.bar(
@@ -1212,14 +1210,14 @@ with tabs[0]:
         )
         apply_dark_theme(
             fig_art,
-            "Artist Repertoire Volume",
-            "Cumulative daily appearances in France Top 50 (measures streaming stickiness)",
+            "👑 Leading Artists by Chart Volume",
+            "Identifies which artists command the biggest streaming footprint and audience loyalty",
             height=370
         )
         st.plotly_chart(fig_art, use_container_width=True)
 
     with c2:
-        st.subheader("Popularity Score Distribution Across Tiers")
+        st.subheader("📊 Do Top 10 Hits Have Higher Popularity Scores? (Streaming Score by Tier)")
         fig_pop = px.box(
             df,
             x='rank_tier',
@@ -1239,17 +1237,17 @@ with tabs[0]:
         )
         apply_dark_theme(
             fig_pop,
-            "Popularity Benchmarks by Chart Tier",
-            "Median Spotify index per tier (Top 10 maintains 82+ threshold)",
+            "📊 Popularity Benchmarks by Chart Tier",
+            "Shows how listener scores compare between Top 10, Top 25, and Top 50",
             height=370
         )
         st.plotly_chart(fig_pop, use_container_width=True)
 
     st.markdown("""<div class="takeaway-card">
-        <div class="takeaway-title">Key Strategic Finding: French Market Stickiness & Catalog Retention</div>
+        <div class="takeaway-title">💡 Key Takeaway: Market Concentration</div>
         <div class="takeaway-body">
-            • <b>Domestic Artist Concentration:</b> The top 5 French artists (Werenoi, PLK, SDM, Jul, Ninho) account for nearly <b>30% of all charted chart-day positions</b> in this dataset.<br/>
-            • <b>High Retention:</b> In contrast to Anglo-American markets where viral social media tracks experience steep churn, proven hits in France demonstrate an average retention of <b>84+ days</b> in the Top 20 tier.
+            • <b>Domestic Power:</b> Top 5 French artists (Werenoi, PLK, SDM, Jul, Ninho) drive nearly <b>30% of all chart appearances</b>.<br/>
+            • <b>High Longevity:</b> Hits stay on French charts for an average of <b>84+ days</b>, showing loyal listener replay habits.
         </div>
     </div>""", unsafe_allow_html=True)
 
@@ -1258,17 +1256,17 @@ with tabs[0]:
 # TAB 2: CONTENT COMPLIANCE (ARCOM)
 # ------------------------------------------------------------------------------
 with tabs[1]:
-    st.markdown("### Content Compliance & ARCOM Broadcast Risk Profiling")
-    st.caption("Quantitative audit of explicit versus clean content performance, regulatory broadcast friction, and chart tier saturation.")
+    st.markdown("### ⚖️ Content Compliance: Explicit Lyrics vs. Radio-Safe Songs")
+    st.caption("Determines if a song needs a Clean Radio Edit to play on French FM radio (ARCOM broadcast rules).")
 
     cc1, cc2 = st.columns([1, 1])
     with cc1:
-        st.subheader("Repertoire Explicit Saturation Index")
+        st.subheader("📻 Explicit vs. Radio-Safe Hits (French Broadcast Quota Check)")
         fig_gauge = go.Figure(go.Indicator(
             mode="gauge+number",
             value=round(explicit_pct, 1),
             number={'suffix': "%", 'font': {'color': '#0f172a' if is_light else '#ffffff', 'family': 'JetBrains Mono', 'size': 38}},
-            title={'text': "Explicit Lyric Proportion (Overall Selection)", 'font': {'size': 17, 'color': '#475569' if is_light else '#cbd5e1'}},
+            title={'text': "Explicit Share vs 40% Radio Benchmark", 'font': {'size': 17, 'color': '#475569' if is_light else '#cbd5e1'}},
             gauge={
                 'axis': {'range': [0, 100], 'tickcolor': "#94a3b8", 'tickfont': {'size': 13}},
                 'bar': {'color': '#ef4444'},
@@ -1286,14 +1284,14 @@ with tabs[1]:
         ))
         apply_dark_theme(
             fig_gauge,
-            "Repertoire Explicit Ratio",
+            "📻 Explicit Content Saturation",
             "ARCOM daytime broadcast safe limit is 40%; higher levels require radio edits",
             height=340
         )
         st.plotly_chart(fig_gauge, use_container_width=True)
 
     with cc2:
-        st.subheader("Popularity Spread: Clean vs. Explicit Tracks")
+        st.subheader("🔥 Do Explicit Songs Get More Streams Than Clean Songs?")
         df_box_data = df.copy()
         df_box_data['compliance_label'] = df_box_data['is_explicit'].map({
             True: 'Explicit Tracks (Uncensored)',
@@ -1321,8 +1319,8 @@ with tabs[1]:
         )
         apply_dark_theme(
             fig_box,
-            "Popularity: Clean vs. Explicit",
-            "Explicit domestic hip-hop captures higher median streaming popularity in France",
+            "🔥 Popularity: Clean vs. Explicit Songs",
+            "Compares listener demand: French urban/rap streams higher even with explicit lyrics",
             height=340
         )
         st.plotly_chart(fig_box, use_container_width=True)
@@ -1330,7 +1328,7 @@ with tabs[1]:
     st.markdown("---")
     c_tier1, c_tier2 = st.columns(2)
     with c_tier1:
-        st.subheader("Chart Tier Saturation: Explicit Content Share")
+        st.subheader("🎯 Does Explicit Music Dominate the Top 10? (Risk vs. Reward)")
         tier_exp = df.groupby('rank_tier', observed=True)['is_explicit'].agg(['mean', 'count']).reset_index()
         tier_exp['pct'] = tier_exp['mean'] * 100
         tier_exp['label'] = tier_exp['pct'].apply(lambda x: f"{x:.1f}% Explicit")
@@ -1364,14 +1362,14 @@ with tabs[1]:
         )
         apply_dark_theme(
             fig_tier,
-            "Explicit Saturation by Chart Tier",
-            "Explicit density peaks at ~56% in Top 10, highlighting urban streaming dominance",
+            "🎯 Explicit Share Across Chart Tiers",
+            "Over 56% of Top 10 hits are explicit, showing strong appetite for authentic hip-hop",
             height=360
         )
         st.plotly_chart(fig_tier, use_container_width=True)
 
     with c_tier2:
-        st.subheader("Monthly Explicit Share Timeline (2024–2025)")
+        st.subheader("📈 Is Explicit Music Growing or Dropping Over Time? (Market Trend)")
         time_exp = df.groupby('year_month')['is_explicit'].mean().reset_index()
         time_exp['pct'] = time_exp['is_explicit'] * 100
         
@@ -1401,17 +1399,17 @@ with tabs[1]:
         )
         apply_dark_theme(
             fig_time,
-            "Monthly Explicit Share Timeline",
-            "Longitudinal stability of explicit content demand across 2024–2025",
+            "📈 Monthly Explicit Share Trend",
+            "Tracks whether explicit hip-hop demand is rising or steady month-by-month",
             height=360
         )
         st.plotly_chart(fig_time, use_container_width=True)
 
     st.markdown("""<div class="takeaway-card">
-        <div class="takeaway-title">Key Strategic Finding: Commercial Radio Execution & Clean Edits</div>
+        <div class="takeaway-title">💡 Key Takeaway: Radio vs. Streaming Strategy</div>
         <div class="takeaway-body">
-            • <b>Top-Tier Concentration:</b> Explicit tracks reach their highest density in the <b>Top 10 tier (~56%)</b>, confirming that uncensored domestic rap drives the core of French streaming growth.<br/>
-            • <b>Broadcast Friction:</b> Under ARCOM regulations, explicit lyrics cannot be broadcast on French daytime terrestrial radio. <b>Operational Recommendation:</b> For every urban commercial priority, mandate a simultaneous Clean Radio Master at release to capture commercial broadcast royalties without compromising streaming velocity.
+            • <b>Streaming Demands Explicit:</b> <b>56.3% of Top 10 hits are explicit</b>—uncensored rap drives maximum digital streams.<br/>
+            • <b>Radio Needs Clean Edits:</b> French daytime radio (NRJ, Skyrock) cannot play explicit tracks. <b>Action:</b> Always release a Clean Radio Edit alongside the explicit version to collect broadcast royalties.
         </div>
     </div>""", unsafe_allow_html=True)
 
@@ -1420,12 +1418,12 @@ with tabs[1]:
 # TAB 3: RELEASE FORMATS & DILUTION
 # ------------------------------------------------------------------------------
 with tabs[2]:
-    st.markdown("### Release Formats & Econometric Dilution Analysis")
-    st.caption("Assessing the market balance between Standalone Singles and Full Albums, and modeling the dilution effect of extended tracklists.")
+    st.markdown("### 💿 Release Formats: Singles vs. Full Albums Strategy")
+    st.caption("Answers: Should you release a Standalone Single or a Full Album, and how many songs should be on the album?")
 
     rf1, rf2 = st.columns(2)
     with rf1:
-        st.subheader("Format Market Share")
+        st.subheader("💿 What Release Format Wins the Most Streams? (Singles vs. Albums)")
         fmt_counts = df['album_type'].value_counts().reset_index()
         fmt_counts.columns = ['Format', 'Count']
         fmt_counts['Format'] = fmt_counts['Format'].str.capitalize()
@@ -1446,14 +1444,14 @@ with tabs[2]:
         )
         apply_dark_theme(
             fig_fmt,
-            "Chart Share by Release Format",
+            "💿 Market Share by Format",
             "Volume breakdown between standalone singles, albums, and compilations",
             height=360
         )
         st.plotly_chart(fig_fmt, use_container_width=True)
 
     with rf2:
-        st.subheader("Average Chart Rank by Format")
+        st.subheader("🏆 Do Standalone Singles Rank Higher Than Full Albums?")
         fmt_rank = df.groupby('album_type')['position'].agg(['mean', 'median', 'count']).reset_index()
         fmt_rank['album_type'] = fmt_rank['album_type'].str.capitalize()
         
@@ -1478,15 +1476,15 @@ with tabs[2]:
         )
         apply_dark_theme(
             fig_fr,
-            "Average Chart Rank by Format",
-            "Standalone singles achieve higher peak chart positions than deep album cuts",
+            "🏆 Average Chart Rank by Format",
+            "Singles reach higher peak positions because listener streams aren't split across 20 songs",
             height=360
         )
         st.plotly_chart(fig_fr, use_container_width=True)
 
     st.markdown("---")
-    st.subheader("Econometric Model: Album Track Count Dilution (OLS Regression)")
-    st.caption("Testing whether releasing albums with 20+ tracks statistically dilutes individual track popularity in France.")
+    st.subheader("📉 Does Adding Too Many Songs Hurt an Album? (Track Count Dilution)")
+    st.caption("Analyzes whether bloating an album with 20+ songs reduces listener attention and streams per song.")
 
     album_df = df[df['album_type'] == 'album']
     if len(album_df) > 5:
@@ -1499,9 +1497,9 @@ with tabs[2]:
         pval = model.pvalues['total_tracks']
 
         m_col1, m_col2, m_col3 = st.columns(3)
-        m_col1.metric("Regression Beta (Slope)", f"{slope:+.3f}", delta="Per Additional Track", delta_color="inverse")
-        m_col2.metric("Coefficient of Determination (R²)", f"{r2:.4f}", help="Variance explained by album size")
-        m_col3.metric("P-Value (Statistical Significance)", f"{pval:.3e}", delta="Statistically Significant (p < 0.05)" if pval < 0.05 else "Not Significant")
+        m_col1.metric("Stream Impact per Extra Track", f"{slope:+.2f} pts", delta="Drop in Popularity", delta_color="inverse")
+        m_col2.metric("Model Reliability (R²)", f"{r2:.2f}", help="Strength of the relationship between album length and track popularity")
+        m_col3.metric("Analysis Conclusion", "Dilution Confirmed" if pval < 0.05 else "Not Significant")
 
         fig_ols = px.scatter(
             album_df.sample(min(len(album_df), 1500), random_state=42),
@@ -1525,7 +1523,7 @@ with tabs[2]:
         )
         fig_ols.add_annotation(
             x=22, y=68,
-            text=f"Dilution Slope (Beta = {slope:.2f}): Albums with 20+ songs dilute per-track attention",
+            text=f"Dilution Alert: Albums with 20+ songs dilute streams per track (Drop: {slope:.2f} pts/song)",
             showarrow=True,
             arrowhead=2,
             arrowcolor="#ef4444",
@@ -1535,8 +1533,8 @@ with tabs[2]:
         )
         apply_dark_theme(
             fig_ols,
-            "Album Tracklist Size vs. Track Popularity",
-            "Regression confirms: LPs with >18 tracks suffer from internal tracklist cannibalization",
+            "📉 Album Size vs. Popularity",
+            "Confirms that albums with >18 tracks suffer from internal stream cannibalization",
             height=430
         )
         st.plotly_chart(fig_ols, use_container_width=True)
@@ -1544,10 +1542,10 @@ with tabs[2]:
         st.warning("Insufficient album entries in the current filter selection to estimate OLS regression.")
 
     st.markdown("""<div class="takeaway-card">
-        <div class="takeaway-title">Key Strategic Finding: Optimal Album Architecture</div>
+        <div class="takeaway-title">💡 Key Takeaway: Optimal Album Strategy</div>
         <div class="takeaway-body">
-            • <b>Empirical Dilution:</b> The regression coefficient indicates a statistically significant negative relationship between album track count and individual song popularity.<br/>
-            • <b>A&R Recommendation:</b> Favor a <b>10 to 14-track 'Lean LP' model</b>, accompanied by 2 pre-release standalone singles. This concentrates editorial playlist placement without diluting listener attention across non-focus cuts.
+            • <b>Quality Over Quantity:</b> Large albums (20+ tracks) dilute stream counts per song.<br/>
+            • <b>Recommended Blueprint:</b> Release a <b>10 to 14-track focused album</b> preceded by <b>2 standalone singles</b> for maximum chart impact.
         </div>
     </div>""", unsafe_allow_html=True)
 
@@ -1556,12 +1554,12 @@ with tabs[2]:
 # TAB 4: TRACK DURATION ANALYSIS
 # ------------------------------------------------------------------------------
 with tabs[3]:
-    st.markdown("### Track Duration & Streaming Retention Economics")
-    st.caption("Examining track runtime distributions, streaming completion rate corridors, and duration compression trends in France.")
+    st.markdown("### ⏱️ Song Duration: Finding the Sweet Spot for Hits")
+    st.caption("Identifies the ideal song length to get high repeat listens, playlist placement, and avoid listener skips.")
 
     d1, d2 = st.columns(2)
     with d1:
-        st.subheader("Distribution by Runtime Bracket")
+        st.subheader("⏱️ What Is the Ideal Song Length for Hits? (Sweet Spot Duration)")
         dur_dist = df['duration_bucket'].value_counts().reset_index()
         dur_dist.columns = ['Bucket', 'Count']
         dur_dist['label'] = dur_dist['Count'].apply(lambda x: f"{x:,} ({x/total_records*100:.1f}%)")
@@ -1587,14 +1585,14 @@ with tabs[3]:
         )
         apply_dark_theme(
             fig_dur,
-            "Track Volume by Duration Category",
-            "64% of charted hits concentrate in the 2.5 to 3.5 minute commercial runtime window",
+            "⏱️ Song Count by Runtime Bracket",
+            "Most chart hits land in the 2.5 to 3.5 minute range",
             height=370
         )
         st.plotly_chart(fig_dur, use_container_width=True)
 
     with d2:
-        st.subheader("Duration vs. Chart Rank Alignment")
+        st.subheader("⚡ Do Shorter Songs Get Better Chart Positions? (Length vs. Rank)")
         fig_scatter_dur = px.scatter(
             df.sample(min(len(df), 1200), random_state=42),
             x='duration_minutes',
@@ -1626,14 +1624,14 @@ with tabs[3]:
         )
         apply_dark_theme(
             fig_scatter_dur,
-            "Runtime vs. Chart Position Alignment",
-            "Highest peak hit concentration clusters inside the shaded 2:45–3:15 retention corridor",
+            "⚡ Song Length vs. Chart Rank",
+            "Top hits cluster tightly inside the 2:45–3:15 window for best replay rate",
             height=370
         )
         st.plotly_chart(fig_scatter_dur, use_container_width=True)
 
     st.markdown("---")
-    st.subheader("Monthly Duration Trendline (2024–2025)")
+    st.subheader("📅 Are Hit Songs Getting Shorter Over Time? (Attention Span Trend)")
     dur_timeline = df.groupby('year_month')['duration_minutes'].mean().reset_index()
     
     fig_dur_line = px.line(
@@ -1662,17 +1660,17 @@ with tabs[3]:
     )
     apply_dark_theme(
         fig_dur_line,
-        "Monthly Track Length Evolution",
-        "French streaming hits maintain a stable ~3.0-minute average runtime across 2024–2025",
+        "📅 Average Song Duration Over Time",
+        "Tracks whether French hits are getting shorter or remaining steady around ~3 minutes",
         height=350
     )
     st.plotly_chart(fig_dur_line, use_container_width=True)
 
     st.markdown("""<div class="takeaway-card">
-        <div class="takeaway-title">Key Strategic Finding: The 2m45s – 3m15s Retention Corridor</div>
+        <div class="takeaway-title">💡 Key Takeaway: Duration Sweet Spot</div>
         <div class="takeaway-body">
-            • <b>Completion Rate Factor:</b> Over <b>64% of Top 10 tracks</b> fall tightly within the 2m45s to 3m15s range. Tracks longer than 3m30s experience higher mobile skip rates, which depresses algorithmic recommendation placement.<br/>
-            • <b>A&R Guideline:</b> Target a runtime between 2:50 and 3:10 for lead singles, ensuring primary chorus hooks hit within the first 25 seconds.
+            • <b>The 3-Minute Sweet Spot:</b> Over <b>64% of Top 10 tracks</b> are between <b>2:45 and 3:15</b>.<br/>
+            • <b>Skip-Rate Risk:</b> Songs longer than 3:30 suffer higher mobile skip rates, which lowers algorithmic recommendations.
         </div>
     </div>""", unsafe_allow_html=True)
 
@@ -1681,8 +1679,8 @@ with tabs[3]:
 # TAB 5: ARTIST PROFILER
 # ------------------------------------------------------------------------------
 with tabs[4]:
-    st.markdown("### Artist Performance & Trajectory Tracker")
-    st.caption("Detailed catalog analysis, historical daily chart trajectory tracking, and side-by-side comparative profiling.")
+    st.markdown("### 🎤 Artist Hub: Track Hit History & Longevity")
+    st.caption("Look up any French artist to see how long their songs stay on the charts and compare artists head-to-head.")
 
     all_artists = sorted(df_master['artist'].unique())
     col_sel1, col_sel2 = st.columns([2, 1])
@@ -1721,7 +1719,7 @@ with tabs[4]:
             k_a4.metric("Explicit Ratio", f"{exp_rate:.1f}%")
 
         st.markdown("---")
-        st.subheader(f"Daily Chart Trajectory: {chosen_artist}")
+        st.subheader(f"🚀 Artist Chart Longevity: How Long Has {chosen_artist} Stayed on Top?")
         st.caption("Inverted rank trajectory over time (#1 at top).")
         
         fig_traj = px.line(
@@ -1743,13 +1741,13 @@ with tabs[4]:
         )
         apply_dark_theme(
             fig_traj,
-            f"Daily Chart Trajectory: {chosen_artist}",
+            f"🚀 Daily Chart Trajectory: {chosen_artist}",
             "Daily rank journeys across the observation window (#1 is top position)",
             height=400
         )
         st.plotly_chart(fig_traj, use_container_width=True)
 
-        st.subheader(f"Catalog Summary: {chosen_artist}")
+        st.subheader(f"📋 Song Catalog & Hit Performance: {chosen_artist}")
         catalog = (
             art_df.groupby('song')
             .agg(
@@ -1773,7 +1771,7 @@ with tabs[4]:
     # HEAD-TO-HEAD COMPARISON
     if compare_mode:
         st.markdown("---")
-        st.subheader("Comparative Artist Profiling (5-Dimension Radar)")
+        st.subheader("⚔️ Head-to-Head Artist Benchmark: Who Has More Hits & Retention?")
         other_artists = [a for a in all_artists if a != chosen_artist]
         comp_artist = st.selectbox("Select Comparison Artist:", other_artists, index=0)
         comp_df = df_master[df_master['artist'] == comp_artist]
@@ -1833,8 +1831,8 @@ with tabs[4]:
         )
         apply_dark_theme(
             fig_radar,
-            f"Comparative Profile: {chosen_artist} vs. {comp_artist}",
-            "Normalized 5-dimension benchmark (scale 0–100) comparing streaming footprint",
+            f"⚔️ Benchmark: {chosen_artist} vs. {comp_artist}",
+            "Compares chart peak, consistency, and popularity side by side",
             height=430
         )
         st.plotly_chart(fig_radar, use_container_width=True)
@@ -1844,20 +1842,20 @@ with tabs[4]:
 # TAB 6: RELEASE SCENARIO PLANNER
 # ------------------------------------------------------------------------------
 with tabs[5]:
-    st.markdown("### Pre-Release Strategy & Scenario Planner")
-    st.caption("A decision-support modeling tool: Test release parameters prior to launch to forecast commercial fit, playlist pitching alignment, and compliance needs.")
+    st.markdown("### 🎯 Release Simulator: Test Your Song Before Launch")
+    st.caption("Test your song's duration, format, and explicit status to see if it's ready for French streaming and radio broadcast.")
 
     sim_c1, sim_c2 = st.columns([1, 1])
     
     with sim_c1:
-        st.markdown("#### Release Specifications")
+        st.markdown("#### ⚙️ Release Parameters")
         sim_duration = st.slider("Planned Track Runtime (Minutes)", min_value=1.5, max_value=5.0, value=3.0, step=0.1)
         sim_explicit = st.radio("Lyric Content Status", ["Clean / Radio-Ready", "Explicit / Uncensored"], index=0)
         sim_format = st.selectbox("Release Format Type", ["Single (Standalone)", "Album Lead Track", "Album Deep Cut"])
         sim_target = st.selectbox("Commercial Chart Target", ["Top 10 Mainstream Priority", "Top 25 Heavy Rotator", "Top 50 Niche / Core"])
 
     with sim_c2:
-        st.markdown("#### Commercial Viability Assessment")
+        st.markdown("#### 🎯 Launch Readiness & Radio Approval Score")
         
         score = 80
         reasons = []
@@ -1897,7 +1895,7 @@ with tabs[5]:
             mode="gauge+number",
             value=score,
             number={'suffix': "/100", 'font': {'color': gauge_col, 'family': 'JetBrains Mono', 'size': 40}},
-            title={'text': "Commercial Readiness Index", 'font': {'size': 16, 'color': '#475569' if is_light else '#cbd5e1'}},
+            title={'text': "Launch Readiness Score", 'font': {'size': 16, 'color': '#475569' if is_light else '#cbd5e1'}},
             gauge={
                 'axis': {'range': [0, 100], 'tickcolor': "#94a3b8", 'tickfont': {'size': 13}},
                 'bar': {'color': gauge_col},
@@ -1910,7 +1908,7 @@ with tabs[5]:
         ))
         apply_dark_theme(
             fig_score,
-            "Modeled Market Fit Score",
+            "🎯 Launch Readiness & Radio Approval Score",
             "Synthesizes duration sweet spot, radio compliance, and album dilution risk",
             height=330
         )
@@ -1923,7 +1921,7 @@ with tabs[5]:
         """, unsafe_allow_html=True)
 
     st.markdown("---")
-    st.subheader("Commercial Strategy Action Checklist")
+    st.subheader("📋 Pre-Release Action Checklist")
     ac1, ac2, ac3 = st.columns(3)
     with ac1:
         st.markdown("""
@@ -1953,8 +1951,8 @@ with tabs[5]:
 # TAB 7: DATA EXPLORER & EXPORT
 # ------------------------------------------------------------------------------
 with tabs[6]:
-    st.markdown("### Data Explorer & Intelligence Export")
-    st.caption("Inspect, filter, and export curated intelligence records for executive reporting and custom analyses.")
+    st.markdown("### 📋 Data Explorer: Search & Export Records")
+    st.caption("Search through all 27,800 chart entries and export filtered data to CSV for reporting.")
 
     display_cols = ['date', 'position', 'song', 'artist', 'popularity', 'duration_formatted', 'album_type', 'is_explicit']
     df_display = df[display_cols].copy()
