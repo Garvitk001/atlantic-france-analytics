@@ -17,351 +17,355 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Professional Data Analyst CSS: Large Human-Readable Typography & Clean Layout
-st.markdown("""
+# ==============================================================================
+# THEME STATE & DYNAMIC DESIGN ENGINE (DARK & LIGHT MODES)
+# ==============================================================================
+if 'theme_mode' not in st.session_state:
+    st.session_state['theme_mode'] = 'Dark Mode'
+
+def on_theme_toggle():
+    val = st.session_state.get('theme_radio_widget', 'Dark Mode 🌙')
+    st.session_state['theme_mode'] = 'Light Mode' if 'Light' in val else 'Dark Mode'
+
+is_light = (st.session_state.get('theme_mode') == 'Light Mode')
+chart_template = 'plotly_white' if is_light else 'plotly_dark'
+
+# Professional Data Analyst CSS: Dynamic Theme System (Dark / Light) & Zero Empty Top Space
+theme_css = f"""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&display=swap');
 
+    /* Eliminate Default Streamlit Massive Top Padding (Covers Empty Space) */
+    .block-container {{
+        padding-top: 1rem !important;
+        padding-bottom: 2.5rem !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+        max-width: 100% !important;
+    }}
+    header[data-testid="stHeader"] {{
+        background: transparent !important;
+        height: 2.2rem !important;
+    }}
+
     /* Global Typography - Large, Crisp, Highly Readable */
-    html, body, [class*="css"], .stMarkdown {
+    html, body, [class*="css"], .stMarkdown {{
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
         font-size: 18px !important;
-        color: #f1f5f9 !important;
+        color: {'#1e293b' if is_light else '#f1f5f9'} !important;
         line-height: 1.7 !important;
-    }
+    }}
 
     /* Background Canvas */
-    .stApp {
-        background: #090d16 !important;
-        color: #f1f5f9 !important;
-    }
+    .stApp {{
+        background: {'#f8fafc' if is_light else '#090d16'} !important;
+        color: {'#1e293b' if is_light else '#f1f5f9'} !important;
+    }}
 
     /* Streamlit Main Headings Scale */
-    h1, .stMarkdown h1 {
+    h1, .stMarkdown h1 {{
         font-size: 32px !important;
         font-weight: 800 !important;
-        color: #ffffff !important;
+        color: {'#0f172a' if is_light else '#ffffff'} !important;
         line-height: 1.25 !important;
         letter-spacing: -0.5px !important;
         margin-top: 14px !important;
         margin-bottom: 12px !important;
-    }
-    h2, .stMarkdown h2 {
+    }}
+    h2, .stMarkdown h2 {{
         font-size: 26px !important;
         font-weight: 800 !important;
-        color: #ffffff !important;
+        color: {'#0f172a' if is_light else '#ffffff'} !important;
         line-height: 1.3 !important;
         margin-top: 16px !important;
         margin-bottom: 10px !important;
-    }
-    h3, .stMarkdown h3 {
+    }}
+    h3, .stMarkdown h3 {{
         font-size: 22px !important;
         font-weight: 700 !important;
-        color: #f8fafc !important;
+        color: {'#1e293b' if is_light else '#f8fafc'} !important;
         line-height: 1.35 !important;
         margin-top: 14px !important;
         margin-bottom: 8px !important;
-    }
-    h4, .stMarkdown h4 {
+    }}
+    h4, .stMarkdown h4 {{
         font-size: 19px !important;
         font-weight: 700 !important;
-        color: #e2e8f0 !important;
+        color: {'#334155' if is_light else '#e2e8f0'} !important;
         line-height: 1.4 !important;
-    }
-    p, .stMarkdown p, li, .stMarkdown li {
+    }}
+    p, .stMarkdown p, li, .stMarkdown li {{
         font-size: 18px !important;
+        color: {'#1e293b' if is_light else '#f1f5f9'} !important;
         line-height: 1.7 !important;
-    }
-    small, .stCaption, [data-testid="stCaptionContainer"] p {
+    }}
+    small, .stCaption, [data-testid="stCaptionContainer"] p {{
         font-size: 15.5px !important;
-        color: #94a3b8 !important;
+        color: {'#64748b' if is_light else '#94a3b8'} !important;
         line-height: 1.5 !important;
-    }
+    }}
 
     /* ========================================================
        TOP NAVIGATION TABS: 21PX BOLD, PROMINENT & INTUITIVE
        ======================================================== */
-    [data-testid="stTabs"] {
+    [data-testid="stTabs"] {{
         margin-top: 4px !important;
-        margin-bottom: 26px !important;
-    }
+        margin-bottom: 24px !important;
+    }}
     [data-testid="stTabs"] [data-baseweb="tab-list"],
-    .stTabs [data-baseweb="tab-list"] {
-        border-bottom: 2px solid #1e293b !important;
+    .stTabs [data-baseweb="tab-list"] {{
+        border-bottom: 2px solid {'#e2e8f0' if is_light else '#1e293b'} !important;
         gap: 8px !important;
         padding-bottom: 6px !important;
         background: transparent !important;
         display: flex !important;
         flex-wrap: wrap !important;
-    }
+    }}
     [data-testid="stTabs"] button[data-baseweb="tab"],
-    .stTabs [data-baseweb="tab"] {
-        background-color: #111827 !important;
-        border: 1px solid #1f2937 !important;
+    .stTabs [data-baseweb="tab"] {{
+        background-color: {'#ffffff' if is_light else '#111827'} !important;
+        border: 1px solid {'#e2e8f0' if is_light else '#1f2937'} !important;
         border-radius: 8px 8px 0 0 !important;
         padding: 14px 26px !important;
         transition: all 0.2s ease-in-out !important;
-    }
+    }}
     [data-testid="stTabs"] button[data-baseweb="tab"] p,
     [data-testid="stTabs"] button[data-baseweb="tab"] div,
     [data-testid="stTabs"] button[data-baseweb="tab"] span,
     .stTabs [data-baseweb="tab"] p,
     .stTabs [data-baseweb="tab"] div,
-    .stTabs [data-baseweb="tab"] span {
+    .stTabs [data-baseweb="tab"] span {{
         font-size: 21px !important;
         font-weight: 700 !important;
         letter-spacing: 0.2px !important;
-        color: #cbd5e1 !important;
+        color: {'#475569' if is_light else '#cbd5e1'} !important;
         line-height: 1.3 !important;
-    }
+    }}
     [data-testid="stTabs"] button[data-baseweb="tab"]:hover,
-    .stTabs [data-baseweb="tab"]:hover {
-        background-color: #1e293b !important;
-        border-color: #00B4D8 !important;
-    }
+    .stTabs [data-baseweb="tab"]:hover {{
+        background-color: {'#f1f5f9' if is_light else '#1e293b'} !important;
+        border-color: {'#0284c7' if is_light else '#00B4D8'} !important;
+    }}
     [data-testid="stTabs"] button[data-baseweb="tab"]:hover p,
-    .stTabs [data-baseweb="tab"]:hover p {
-        color: #00B4D8 !important;
-    }
+    .stTabs [data-baseweb="tab"]:hover p {{
+        color: {'#0284c7' if is_light else '#00B4D8'} !important;
+    }}
     [data-testid="stTabs"] button[aria-selected="true"],
-    .stTabs [aria-selected="true"] {
-        background-color: #1e293b !important;
-        border: 1px solid #00B4D8 !important;
-        border-bottom: 4px solid #00B4D8 !important;
-    }
+    .stTabs [aria-selected="true"] {{
+        background-color: {'#ffffff' if is_light else '#1e293b'} !important;
+        border: 1px solid {'#0284c7' if is_light else '#00B4D8'} !important;
+        border-bottom: 4px solid {'#0284c7' if is_light else '#00B4D8'} !important;
+    }}
     [data-testid="stTabs"] button[aria-selected="true"] p,
     [data-testid="stTabs"] button[aria-selected="true"] div,
     [data-testid="stTabs"] button[aria-selected="true"] span,
     .stTabs [aria-selected="true"] p,
     .stTabs [aria-selected="true"] div,
-    .stTabs [aria-selected="true"] span {
-        color: #00B4D8 !important;
+    .stTabs [aria-selected="true"] span {{
+        color: {'#0284c7' if is_light else '#00B4D8'} !important;
         font-weight: 800 !important;
-    }
+    }}
 
     /* Professional Sidebar Styling (380px wide) */
-    section[data-testid="stSidebar"] {
+    section[data-testid="stSidebar"] {{
         width: 380px !important;
         min-width: 380px !important;
-        background: #0d121d !important;
-        border-right: 1px solid #1e293b !important;
-    }
-    section[data-testid="stSidebar"] > div {
+        background: {'#ffffff' if is_light else '#0d121d'} !important;
+        border-right: 1px solid {'#e2e8f0' if is_light else '#1e293b'} !important;
+    }}
+    section[data-testid="stSidebar"] > div {{
         width: 380px !important;
-        padding-top: 24px;
+        padding-top: 18px;
         padding-left: 20px;
         padding-right: 20px;
-    }
+    }}
     section[data-testid="stSidebar"] label,
-    section[data-testid="stSidebar"] .stMarkdown p {
+    section[data-testid="stSidebar"] .stMarkdown p {{
         font-size: 17px !important;
         font-weight: 600 !important;
-        color: #f1f5f9 !important;
-    }
+        color: {'#0f172a' if is_light else '#f1f5f9'} !important;
+    }}
 
     /* Form Controls & Inputs */
-    .stSelectbox label, .stMultiSelect label, .stSlider label, .stRadio label, .stDateInput label {
+    .stSelectbox label, .stMultiSelect label, .stSlider label, .stRadio label, .stDateInput label {{
         font-size: 17px !important;
         font-weight: 600 !important;
-        color: #f1f5f9 !important;
-    }
-    div[data-baseweb="select"] *, div[data-baseweb="input"] input {
+        color: {'#0f172a' if is_light else '#f1f5f9'} !important;
+    }}
+    div[data-baseweb="select"] *, div[data-baseweb="input"] input {{
         font-size: 16px !important;
-    }
-    div[data-testid="stSlider"] * {
+        color: {'#0f172a' if is_light else '#f1f5f9'} !important;
+    }}
+    div[data-testid="stSlider"] * {{
         font-size: 15.5px !important;
-    }
-    div[role="radiogroup"] label * {
+    }}
+    div[role="radiogroup"] label * {{
         font-size: 16.5px !important;
-    }
-    .stButton button p, .stDownloadButton button p {
+        color: {'#0f172a' if is_light else '#f1f5f9'} !important;
+    }}
+    .stButton button p, .stDownloadButton button p {{
         font-size: 17px !important;
         font-weight: 700 !important;
-    }
+    }}
 
     /* Streamlit Metric Overrides */
-    [data-testid="stMetricLabel"] p, [data-testid="stMetricLabel"] {
+    [data-testid="stMetricLabel"] p, [data-testid="stMetricLabel"] {{
         font-size: 15px !important;
         font-weight: 700 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.8px !important;
-        color: #94a3b8 !important;
-    }
-    [data-testid="stMetricValue"] div, [data-testid="stMetricValue"] {
+        color: {'#64748b' if is_light else '#94a3b8'} !important;
+    }}
+    [data-testid="stMetricValue"] div, [data-testid="stMetricValue"] {{
         font-size: 38px !important;
         font-weight: 800 !important;
         font-family: 'JetBrains Mono', monospace !important;
-    }
-    [data-testid="stMetricDelta"] div, [data-testid="stMetricDelta"] {
+        color: {'#0f172a' if is_light else '#ffffff'} !important;
+    }}
+    [data-testid="stMetricDelta"] div, [data-testid="stMetricDelta"] {{
         font-size: 15px !important;
         font-weight: 600 !important;
-    }
+    }}
 
     /* Streamlit DataFrame / Table */
-    [data-testid="stDataFrame"] * {
+    [data-testid="stDataFrame"] * {{
         font-size: 15.5px !important;
-    }
+    }}
 
     /* Sidebar Cards */
-    .sidebar-card {
-        background: #111827;
-        border: 1px solid #1e293b;
+    .sidebar-card {{
+        background: {'#f8fafc' if is_light else '#111827'};
+        border: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
         border-radius: 8px;
         padding: 18px;
         margin-top: 14px;
         margin-bottom: 16px;
-    }
-    .sidebar-section-title {
+    }}
+    .sidebar-section-title {{
         font-size: 14.5px;
         text-transform: uppercase;
         letter-spacing: 1px;
-        color: #00B4D8;
+        color: {'#0284c7' if is_light else '#00B4D8'};
         font-weight: 700;
         margin-bottom: 12px;
-    }
-
-    /* Professional Header Ribbon */
-    .brand-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #111827;
-        border: 1px solid #1e293b;
-        padding: 24px 28px;
-        border-radius: 10px;
-        margin-bottom: 24px;
-    }
-    .brand-title {
-        font-size: 28px;
-        font-weight: 800;
-        color: #ffffff;
-        margin: 0;
-        letter-spacing: -0.5px;
-    }
-    .brand-subtitle {
-        color: #94a3b8;
-        font-size: 16.5px;
-        margin-top: 6px;
-        font-weight: 500;
-    }
-    .status-badge {
-        font-size: 14px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        padding: 7px 16px;
-        border-radius: 20px;
-        background: rgba(0, 180, 216, 0.12);
-        color: #00B4D8;
-        border: 1px solid rgba(0, 180, 216, 0.3);
-    }
+    }}
 
     /* Business Context & Persona Cards */
-    .story-card {
-        background: #111827;
-        border: 1px solid #1e293b;
+    .story-card {{
+        background: {'#ffffff' if is_light else '#111827'};
+        border: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
         border-radius: 10px;
         padding: 22px 26px;
         margin-bottom: 16px;
-    }
-    .persona-card {
-        background: #0f172a;
+        box-shadow: {'0 1px 3px rgba(0,0,0,0.05)' if is_light else 'none'};
+    }}
+    .story-card p {{
+        color: {'#334155' if is_light else '#cbd5e1'} !important;
+    }}
+    .persona-card {{
+        background: {'#f8fafc' if is_light else '#0f172a'};
         border-radius: 8px;
         padding: 22px 26px;
-        border-left: 4px solid #00B4D8;
-        border-top: 1px solid #1e293b;
-        border-right: 1px solid #1e293b;
-        border-bottom: 1px solid #1e293b;
+        border-left: 4px solid {'#0284c7' if is_light else '#00B4D8'};
+        border-top: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
+        border-right: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
+        border-bottom: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
         height: 100%;
-    }
-    .persona-radio {
-        border-left-color: #10b981;
-    }
-    .persona-title {
+    }}
+    .persona-card div {{
+        color: {'#334155' if is_light else '#cbd5e1'} !important;
+    }}
+    .persona-radio {{
+        border-left-color: #10b981 !important;
+    }}
+    .persona-title {{
         font-size: 19px;
         font-weight: 700;
-        color: #ffffff;
+        color: {'#0f172a' if is_light else '#ffffff'} !important;
         margin-bottom: 10px;
-    }
+    }}
 
     /* High-Impact Executive KPI Cards */
-    .metric-grid {
+    .metric-grid {{
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
         gap: 16px;
         margin-bottom: 24px;
-    }
-    .metric-card {
-        background: #111827;
-        border: 1px solid #1e293b;
+    }}
+    .metric-card {{
+        background: {'#ffffff' if is_light else '#111827'};
+        border: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
         border-radius: 8px;
         padding: 20px 22px;
         transition: border-color 0.2s ease;
-    }
-    .metric-card:hover {
-        border-color: #00B4D8;
-    }
-    .metric-label {
+        box-shadow: {'0 1px 3px rgba(0,0,0,0.05)' if is_light else 'none'};
+    }}
+    .metric-card:hover {{
+        border-color: {'#0284c7' if is_light else '#00B4D8'};
+    }}
+    .metric-label {{
         font-size: 14.5px;
         text-transform: uppercase;
-        color: #94a3b8;
+        color: {'#64748b' if is_light else '#94a3b8'};
         font-weight: 700;
         letter-spacing: 0.8px;
         margin-bottom: 6px;
-    }
-    .metric-value {
+    }}
+    .metric-value {{
         font-family: 'JetBrains Mono', monospace;
         font-size: 38px;
         font-weight: 800;
-        color: #ffffff;
+        color: {'#0f172a' if is_light else '#ffffff'};
         margin-bottom: 4px;
-    }
-    .metric-desc {
+    }}
+    .metric-desc {{
         font-size: 15px;
-        color: #94a3b8;
+        color: {'#64748b' if is_light else '#94a3b8'};
         font-weight: 500;
-    }
+    }}
 
     /* Key Strategic Finding Boxes */
-    .takeaway-card {
-        background: #0f172a;
-        border-left: 5px solid #00B4D8;
-        border-top: 1px solid #1e293b;
-        border-right: 1px solid #1e293b;
-        border-bottom: 1px solid #1e293b;
+    .takeaway-card {{
+        background: {'#f0f9ff' if is_light else '#0f172a'};
+        border-left: 5px solid {'#0284c7' if is_light else '#00B4D8'};
+        border-top: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
+        border-right: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
+        border-bottom: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
         border-radius: 8px;
         padding: 24px 28px;
         margin: 24px 0;
-    }
-    .takeaway-title {
+    }}
+    .takeaway-title {{
         font-size: 21px;
         font-weight: 700;
-        color: #00B4D8;
+        color: {'#0369a1' if is_light else '#00B4D8'};
         margin-bottom: 12px;
-    }
-    .takeaway-body {
+    }}
+    .takeaway-body {{
         font-size: 18px;
         line-height: 1.8;
-        color: #f1f5f9;
-    }
-    .takeaway-body b {
-        color: #ffffff;
-    }
+        color: {'#1e293b' if is_light else '#f1f5f9'};
+    }}
+    .takeaway-body b {{
+        color: {'#0f172a' if is_light else '#ffffff'};
+    }}
 
     /* Leaderboard Podium Cards */
-    .podium-card {
-        background: #111827;
+    .podium-card {{
+        background: {'#ffffff' if is_light else '#111827'};
         border-radius: 10px;
         padding: 24px 20px;
-        border: 1px solid #1e293b;
+        border: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
         text-align: center;
         height: 100%;
         margin-top: 10px;
-    }
-    .podium-1 {
-        border-color: #f59e0b;
-        background: #141b2d;
-    }
-    .podium-badge {
+        box-shadow: {'0 1px 3px rgba(0,0,0,0.05)' if is_light else 'none'};
+    }}
+    .podium-1 {{
+        border-color: #f59e0b !important;
+        background: {'#fffbeb' if is_light else '#141b2d'} !important;
+    }}
+    .podium-badge {{
         display: inline-block;
         padding: 5px 14px;
         border-radius: 14px;
@@ -369,56 +373,141 @@ st.markdown("""
         font-weight: 700;
         letter-spacing: 0.5px;
         margin-bottom: 12px;
-    }
-    .badge-gold { background: #f59e0b; color: #000000; font-weight: 800; }
-    .badge-silver { background: #94a3b8; color: #000000; font-weight: 800; }
-    .badge-bronze { background: #b45309; color: #ffffff; font-weight: 800; }
-    .podium-img {
+    }}
+    .badge-gold {{ background: #f59e0b; color: #000000; font-weight: 800; }}
+    .badge-silver {{ background: #94a3b8; color: #000000; font-weight: 800; }}
+    .badge-bronze {{ background: #b45309; color: #ffffff; font-weight: 800; }}
+    .podium-img {{
         width: 155px;
         height: 155px;
         border-radius: 8px;
         object-fit: cover;
         margin: 12px auto;
         display: block;
-        border: 1px solid #334155;
-    }
-    .podium-song {
+        border: 1px solid {'#cbd5e1' if is_light else '#334155'};
+    }}
+    .podium-song {{
         font-size: 20px;
         font-weight: 700;
-        color: #ffffff;
+        color: {'#0f172a' if is_light else '#ffffff'};
         margin: 10px 0 4px 0;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
-    .podium-artist {
+    }}
+    .podium-artist {{
         font-size: 16.5px;
-        color: #94a3b8;
+        color: {'#64748b' if is_light else '#94a3b8'};
         margin-bottom: 12px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
-    .podium-tags {
+    }}
+    .podium-tags {{
         display: flex;
         justify-content: center;
         gap: 6px;
         flex-wrap: wrap;
-    }
+    }}
 
     /* Badges & Format Tags */
-    .pill {
+    .pill {{
         display: inline-block;
         padding: 5px 12px;
         border-radius: 6px;
         font-size: 13.5px;
         font-weight: 600;
-    }
-    .pill-explicit { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
-    .pill-clean { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); }
-    .pill-format { background: rgba(0, 180, 216, 0.15); color: #00B4D8; border: 1px solid rgba(0, 180, 216, 0.4); }
+    }}
+    .pill-explicit {{ background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }}
+    .pill-clean {{ background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); }}
+    .pill-format {{ background: {'rgba(2,132,199,0.15)' if is_light else 'rgba(0,180,216,0.15)'}; color: {'#0284c7' if is_light else '#00B4D8'}; border: 1px solid {'rgba(2,132,199,0.4)' if is_light else 'rgba(0,180,216,0.4)'}; }}
+
+    /* Executive Top Navigation Banner (Covers Top Space) */
+    .top-nav-banner {{
+        background: {'#ffffff' if is_light else '#111827'};
+        border: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
+        border-radius: 12px;
+        padding: 16px 20px;
+        box-shadow: {'0 2px 6px rgba(0,0,0,0.04)' if is_light else '0 2px 10px rgba(0,0,0,0.35)'};
+    }}
+    .top-nav-badge {{
+        background: {'#e0f2fe' if is_light else 'rgba(0,180,216,0.15)'};
+        color: {'#0284c7' if is_light else '#00B4D8'};
+        border: 1px solid {'#bae6fd' if is_light else 'rgba(0,180,216,0.35)'};
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 13.5px;
+        font-weight: 800;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        display: inline-block;
+    }}
+    .top-nav-title {{
+        font-size: 21px;
+        font-weight: 800;
+        color: {'#0f172a' if is_light else '#ffffff'};
+        letter-spacing: -0.3px;
+        display: inline-block;
+        margin-left: 8px;
+    }}
+    .top-nav-sub {{
+        font-size: 14.5px;
+        color: {'#64748b' if is_light else '#94a3b8'};
+        margin-top: 5px;
+        font-weight: 500;
+        line-height: 1.4;
+    }}
+
+    /* Top Theme Controller Card */
+    .top-theme-card {{
+        background: {'#ffffff' if is_light else '#111827'};
+        border: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
+        border-radius: 12px;
+        padding: 14px 18px;
+        box-shadow: {'0 2px 6px rgba(0,0,0,0.04)' if is_light else '0 2px 10px rgba(0,0,0,0.35)'};
+    }}
+    .top-theme-header {{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px;
+    }}
+    .top-theme-label {{
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: {'#64748b' if is_light else '#94a3b8'};
+    }}
+    .top-theme-status {{
+        font-size: 12px;
+        font-weight: 800;
+        color: {'#0284c7' if is_light else '#00B4D8'};
+    }}
+
+    /* Theme Toggle Horizontal Radio Segmented Control */
+    div[data-testid="stRadio"] div[role="radiogroup"][aria-orientation="horizontal"] {{
+        background: {'#f1f5f9' if is_light else '#090d16'} !important;
+        border: 1px solid {'#cbd5e1' if is_light else '#1e293b'} !important;
+        border-radius: 20px !important;
+        padding: 4px 6px !important;
+        gap: 6px !important;
+        display: flex !important;
+        justify-content: space-around !important;
+    }}
+    div[data-testid="stRadio"] div[role="radiogroup"][aria-orientation="horizontal"] label {{
+        margin-bottom: 0 !important;
+        padding: 2px 8px !important;
+    }}
+    div[data-testid="stRadio"] div[role="radiogroup"][aria-orientation="horizontal"] label p,
+    div[data-testid="stRadio"] div[role="radiogroup"][aria-orientation="horizontal"] label span {{
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        color: {'#0f172a' if is_light else '#f1f5f9'} !important;
+    }}
 </style>
-""", unsafe_allow_html=True)
+"""
+st.markdown(theme_css, unsafe_allow_html=True)
 
 
 # ==============================================================================
@@ -490,10 +579,13 @@ def load_and_prep_data():
 
 df_master = load_and_prep_data()
 
-# Plotly dark theme layout helper with comfortable, large fonts and explanatory subtitles
+# Plotly adaptive theme layout helper with comfortable, large fonts and explanatory subtitles
 def apply_dark_theme(fig, title="", subtitle="", height=400):
+    is_light_mode = (st.session_state.get('theme_mode') == 'Light Mode')
+    
     if subtitle:
-        title_text = f"<b>{title}</b><br><span style='font-size:14px; color:#94a3b8; font-weight:normal;'>{subtitle}</span>"
+        sub_color = '#64748b' if is_light_mode else '#94a3b8'
+        title_text = f"<b>{title}</b><br><span style='font-size:14px; color:{sub_color}; font-weight:normal;'>{subtitle}</span>"
         top_margin = 72
     elif title:
         title_text = f"<b>{title}</b>"
@@ -502,37 +594,50 @@ def apply_dark_theme(fig, title="", subtitle="", height=400):
         title_text = ""
         top_margin = 25
 
+    title_color = '#0f172a' if is_light_mode else '#ffffff'
+    plot_bg = '#f8fafc' if is_light_mode else '#0f172a'
+    paper_bg = '#ffffff' if is_light_mode else 'rgba(0,0,0,0)'
+    font_color = '#334155' if is_light_mode else '#cbd5e1'
+    grid_color = '#e2e8f0' if is_light_mode else '#1e293b'
+    zero_color = '#cbd5e1' if is_light_mode else '#334155'
+    tick_color = '#475569' if is_light_mode else '#cbd5e1'
+    hover_bg = '#ffffff' if is_light_mode else '#111827'
+    hover_border = '#cbd5e1' if is_light_mode else '#334155'
+    hover_font = '#0f172a' if is_light_mode else '#f1f5f9'
+    legend_bg = 'rgba(255,255,255,0.92)' if is_light_mode else 'rgba(17,24,39,0.7)'
+    legend_border = '#e2e8f0' if is_light_mode else '#1e293b'
+
     fig.update_layout(
         title=dict(
             text=title_text, 
-            font=dict(family='Plus Jakarta Sans', size=20, color='#ffffff'),
+            font=dict(family='Plus Jakarta Sans', size=20, color=title_color),
             y=0.96,
             x=0.01,
             xanchor='left',
             yanchor='top'
         ),
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='#0f172a',
-        font=dict(family='Plus Jakarta Sans', color='#cbd5e1', size=15),
+        paper_bgcolor=paper_bg,
+        plot_bgcolor=plot_bg,
+        font=dict(family='Plus Jakarta Sans', color=font_color, size=15),
         margin=dict(l=20, r=20, t=top_margin, b=25),
         height=height,
-        hoverlabel=dict(bgcolor='#111827', font_size=15, font_family='Plus Jakarta Sans', bordercolor='#334155'),
+        hoverlabel=dict(bgcolor=hover_bg, font_color=hover_font, font_size=15, font_family='Plus Jakarta Sans', bordercolor=hover_border),
         xaxis=dict(
-            gridcolor='#1e293b', 
-            zerolinecolor='#334155', 
-            tickfont=dict(size=14, color='#cbd5e1', family='Plus Jakarta Sans'),
-            title=dict(font=dict(size=15, color='#cbd5e1', family='Plus Jakarta Sans'))
+            gridcolor=grid_color, 
+            zerolinecolor=zero_color, 
+            tickfont=dict(size=14, color=tick_color, family='Plus Jakarta Sans'),
+            title=dict(font=dict(size=15, color=tick_color, family='Plus Jakarta Sans'))
         ),
         yaxis=dict(
-            gridcolor='#1e293b', 
-            zerolinecolor='#334155', 
-            tickfont=dict(size=14, color='#cbd5e1', family='Plus Jakarta Sans'),
-            title=dict(font=dict(size=15, color='#cbd5e1', family='Plus Jakarta Sans'))
+            gridcolor=grid_color, 
+            zerolinecolor=zero_color, 
+            tickfont=dict(size=14, color=tick_color, family='Plus Jakarta Sans'),
+            title=dict(font=dict(size=15, color=tick_color, family='Plus Jakarta Sans'))
         ),
         legend=dict(
-            font=dict(size=14, color='#cbd5e1', family='Plus Jakarta Sans'),
-            bgcolor='rgba(17,24,39,0.7)',
-            bordercolor='#1e293b',
+            font=dict(size=14, color=tick_color, family='Plus Jakarta Sans'),
+            bgcolor=legend_bg,
+            bordercolor=legend_border,
             borderwidth=1
         ),
     )
@@ -543,10 +648,10 @@ def apply_dark_theme(fig, title="", subtitle="", height=400):
 # 3. ENHANCED & WIDE SIDEBAR CONTROLS
 # ==============================================================================
 with st.sidebar:
-    st.markdown("""
-        <div style="margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid #1e293b;">
-            <div style="font-weight: 800; font-size: 22px; letter-spacing: 0.5px; color: #ffffff;">ATLANTIC RECORDS</div>
-            <div style="font-weight: 600; font-size: 13px; color: #00B4D8; letter-spacing: 1.5px; margin-top: 2px;">FRANCE MARKET STRATEGY</div>
+    st.markdown(f"""
+        <div style="margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid {'#e2e8f0' if is_light else '#1e293b'};">
+            <div style="font-weight: 800; font-size: 22px; letter-spacing: 0.5px; color: {'#0f172a' if is_light else '#ffffff'};">ATLANTIC RECORDS</div>
+            <div style="font-weight: 600; font-size: 13px; color: {'#0284c7' if is_light else '#00B4D8'}; letter-spacing: 1.5px; margin-top: 2px;">FRANCE MARKET STRATEGY</div>
         </div>
     """, unsafe_allow_html=True)
 
@@ -592,10 +697,10 @@ with st.sidebar:
 
         st.markdown(f"""
             <div class="sidebar-card">
-                <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; color: #94a3b8; font-weight: 700; margin-bottom: 6px;">
+                <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; color: {'#64748b' if is_light else '#94a3b8'}; font-weight: 700; margin-bottom: 6px;">
                     Active Data Scope
                 </div>
-                <div style="font-size: 14.5px; color: #cbd5e1; line-height: 1.6;">
+                <div style="font-size: 14.5px; color: {'#334155' if is_light else '#cbd5e1'}; line-height: 1.6;">
                     • <b>Date Span:</b> {start_date} to {end_date}<br/>
                     • <b>Format Types:</b> {', '.join([f.capitalize() for f in format_filter])}<br/>
                     • <b>Compliance Scope:</b> {content_filter}
@@ -651,7 +756,45 @@ single_share = (df['album_type'] == 'single').sum() / total_records * 100 if tot
 
 
 # ==============================================================================
-# 5. PRIMARY NAVIGATION: 7 TABS AT THE ABSOLUTE TOP OF THE MAIN AREA
+# 5. TOP EXECUTIVE BANNER & INTERFACE THEME CONTROLLER (COVERS TOP EMPTY SPACE)
+# ==============================================================================
+top_h1, top_h2 = st.columns([3.3, 1.5])
+
+with top_h1:
+    st.markdown(f"""
+        <div class="top-nav-banner">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <span class="top-nav-badge">🎵 ATLANTIC RECORDS</span>
+                <span class="top-nav-title">France Market Strategy & Executive Intelligence</span>
+            </div>
+            <div class="top-nav-sub">
+                Empirical Business Decision Platform • 555 Daily France Top 50 Chart Snapshots (27,800 Track Positions)
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+with top_h2:
+    st.markdown(f"""
+        <div class="top-theme-card">
+            <div class="top-theme-header">
+                <span class="top-theme-label">🎨 Interface Theme</span>
+                <span class="top-theme-status">● {'LIGHT' if is_light else 'DARK'} MODE</span>
+            </div>
+    """, unsafe_allow_html=True)
+    st.radio(
+        "Appearance Mode",
+        options=["Dark Mode 🌙", "Light Mode ☀️"],
+        index=1 if is_light else 0,
+        key="theme_radio_widget",
+        on_change=on_theme_toggle,
+        horizontal=True,
+        label_visibility="collapsed"
+    )
+    st.markdown("</div>", unsafe_allow_html=True)
+
+
+# ==============================================================================
+# 6. PRIMARY NAVIGATION: 7 TABS AT THE TOP OF THE MAIN AREA
 # ==============================================================================
 tabs = st.tabs([
     "Top Hits Radar",
@@ -668,15 +811,14 @@ tabs = st.tabs([
 # TAB 1: MARKET OVERVIEW
 # ------------------------------------------------------------------------------
 with tabs[0]:
-    # Top Brand Header
-    st.markdown("""
-        <div class="brand-header">
-            <div>
-                <div class="brand-title">Atlantic Records | France Market Strategy & Performance</div>
-                <div class="brand-subtitle">Empirical Analysis of France Spotify Top 50 Streaming Dynamics (May 2024 – Nov 2025)</div>
+    # Tab 1 Analytical Section Header
+    st.markdown(f"""
+        <div style="margin-bottom: 16px;">
+            <div style="font-size: 24px; font-weight: 800; color: {'#0f172a' if is_light else '#ffffff'};">
+                Top Hits Radar & Commercial Market Overview
             </div>
-            <div>
-                <span class="status-badge">France Market Intelligence</span>
+            <div style="font-size: 15.5px; color: {'#64748b' if is_light else '#94a3b8'}; margin-top: 4px;">
+                Core velocity metrics, genre compliance distribution, and high-retention repertoire leaders across Spotify France Top 50.
             </div>
         </div>
     """, unsafe_allow_html=True)
@@ -719,9 +861,9 @@ with tabs[0]:
 
     # 2. Executive Context Expander
     with st.expander("Executive Summary & Market Context (Click to expand)", expanded=False):
-        st.markdown("""<div class="story-card">
-            <h4 style="margin: 0 0 10px 0; color: #00B4D8; font-size: 19px;">The Market Dilemma: French Streaming Appetite vs. Terrestrial Radio Quotas</h4>
-            <p style="margin: 0; font-size: 16px; color: #cbd5e1; line-height: 1.7;">
+        st.markdown(f"""<div class="story-card">
+            <h4 style="margin: 0 0 10px 0; color: {'#0284c7' if is_light else '#00B4D8'}; font-size: 19px;">The Market Dilemma: French Streaming Appetite vs. Terrestrial Radio Quotas</h4>
+            <p style="margin: 0; font-size: 16px; color: {'#334155' if is_light else '#cbd5e1'}; line-height: 1.7;">
                 The French recorded music market is characterized by a strong domestic preference and a unique regulatory framework. On one side, <b>ARCOM (the French broadcast regulator)</b> enforces strict obscenity restrictions and mandates a 40% French-language music quota on terrestrial radio. On the other side, <b>streaming consumption on Spotify France is heavily driven by urban and hip-hop genres</b>, where over 56% of top-ranking tracks contain explicit lyrics.<br/><br/>
                 <b>Strategic Impact for Atlantic Records:</b> If an urban release is excessively censored, it risks losing credibility among streaming audiences. Conversely, if released without an alternative clean master, it is locked out of high-royalty daytime commercial radio rotations (NRJ, Skyrock).
             </p>
@@ -729,18 +871,18 @@ with tabs[0]:
         
         col_p1, col_p2 = st.columns(2)
         with col_p1:
-            st.markdown("""<div class="persona-card">
+            st.markdown(f"""<div class="persona-card">
                 <div class="persona-title">Segment 1: Youth / Hip-Hop Streaming Audience (15–24)</div>
-                <div style="font-size: 15px; color: #cbd5e1; line-height: 1.7;">
+                <div style="font-size: 15px; color: {'#334155' if is_light else '#cbd5e1'}; line-height: 1.7;">
                     • <b>Repertoire Focus:</b> Domestic hip-hop and trap (Werenoi, SDM, Gazo, PLK, Ninho).<br/>
                     • <b>Content Preference:</b> High tolerance for explicit content; values authentic street narratives.<br/>
                     • <b>Listening Pattern:</b> Mobile Spotify sessions, high replay frequency, sensitive to tracks exceeding 3.5 minutes.
                 </div>
             </div>""", unsafe_allow_html=True)
         with col_p2:
-            st.markdown("""<div class="persona-card persona-radio">
+            st.markdown(f"""<div class="persona-card persona-radio">
                 <div class="persona-title" style="color: #10b981;">Segment 2: Broad / Daytime Terrestrial Radio Audience (25–49)</div>
-                <div style="font-size: 15px; color: #cbd5e1; line-height: 1.7;">
+                <div style="font-size: 15px; color: {'#334155' if is_light else '#cbd5e1'}; line-height: 1.7;">
                     • <b>Repertoire Focus:</b> Mainstream pop, melodic pop-urbaine, international crossover (GIMS, Benson Boone, Dua Lipa).<br/>
                     • <b>Content Preference:</b> Clean lyrics appropriate for shared family and in-car listening.<br/>
                     • <b>Listening Pattern:</b> Morning and evening drive-time radio rotations; essential for driving long-tail publishing revenue.
@@ -780,9 +922,9 @@ with tabs[0]:
                 <div class="podium-tags">
                     <span class="pill {'pill-explicit' if p2['is_explicit'] else 'pill-clean'}">{'Explicit' if p2['is_explicit'] else 'Clean'}</span>
                     <span class="pill pill-format">{p2['album_type'].upper()}</span>
-                    <span class="pill" style="background: rgba(255,255,255,0.1); color: #fff;">{p2['duration_formatted']}</span>
+                    <span class="pill" style="background: {'rgba(0,0,0,0.06)' if is_light else 'rgba(255,255,255,0.1)'}; color: {'#334155' if is_light else '#ffffff'};">{p2['duration_formatted']}</span>
                 </div>
-                <div style="margin-top: 14px; font-size: 15px; color: #cbd5e1;">
+                <div style="margin-top: 14px; font-size: 15px; color: {'#475569' if is_light else '#cbd5e1'};">
                     Peak Rank: <b>#{p2['peak_position']}</b> • Days Charted: <b>{p2['chart_days']}</b>
                 </div>
             </div>""", unsafe_allow_html=True)
@@ -796,9 +938,9 @@ with tabs[0]:
                 <div class="podium-tags">
                     <span class="pill {'pill-explicit' if p1['is_explicit'] else 'pill-clean'}">{'Explicit' if p1['is_explicit'] else 'Clean'}</span>
                     <span class="pill pill-format">{p1['album_type'].upper()}</span>
-                    <span class="pill" style="background: rgba(255,255,255,0.1); color: #fff;">{p1['duration_formatted']}</span>
+                    <span class="pill" style="background: {'rgba(0,0,0,0.06)' if is_light else 'rgba(255,255,255,0.1)'}; color: {'#334155' if is_light else '#ffffff'};">{p1['duration_formatted']}</span>
                 </div>
-                <div style="margin-top: 14px; font-size: 15.5px; color: #f1f5f9;">
+                <div style="margin-top: 14px; font-size: 15.5px; color: {'#1e293b' if is_light else '#f1f5f9'};">
                     Days at #1: <b style="color: #f59e0b;">{p1['days_at_1']} Days</b> • Days Charted: <b>{p1['chart_days']}</b>
                 </div>
             </div>""", unsafe_allow_html=True)
@@ -812,9 +954,9 @@ with tabs[0]:
                 <div class="podium-tags">
                     <span class="pill {'pill-explicit' if p3['is_explicit'] else 'pill-clean'}">{'Explicit' if p3['is_explicit'] else 'Clean'}</span>
                     <span class="pill pill-format">{p3['album_type'].upper()}</span>
-                    <span class="pill" style="background: rgba(255,255,255,0.1); color: #fff;">{p3['duration_formatted']}</span>
+                    <span class="pill" style="background: {'rgba(0,0,0,0.06)' if is_light else 'rgba(255,255,255,0.1)'}; color: {'#334155' if is_light else '#ffffff'};">{p3['duration_formatted']}</span>
                 </div>
-                <div style="margin-top: 14px; font-size: 15px; color: #cbd5e1;">
+                <div style="margin-top: 14px; font-size: 15px; color: {'#475569' if is_light else '#cbd5e1'};">
                     Peak Rank: <b>#{p3['peak_position']}</b> • Days Charted: <b>{p3['chart_days']}</b>
                 </div>
             </div>""", unsafe_allow_html=True)
@@ -832,7 +974,7 @@ with tabs[0]:
             color='Chart Appearances',
             color_continuous_scale=[[0, '#0077b6'], [1, '#00B4D8']],
             text='Chart Appearances',
-            template='plotly_dark'
+            template=chart_template
         )
         fig_art.update_traces(
             texttemplate='%{x} days',
@@ -862,7 +1004,7 @@ with tabs[0]:
             color='rank_tier',
             color_discrete_map={'Top 10': '#f59e0b', 'Top 25': '#00B4D8', 'Top 50': '#8b5cf6'},
             points='outliers',
-            template='plotly_dark'
+            template=chart_template
         )
         fig_pop.update_traces(
             hovertemplate='<b>%{x}</b><br>Spotify Popularity: <b>%{y}/100</b><extra></extra>'
@@ -902,8 +1044,8 @@ with tabs[1]:
         fig_gauge = go.Figure(go.Indicator(
             mode="gauge+number",
             value=round(explicit_pct, 1),
-            number={'suffix': "%", 'font': {'color': '#ffffff', 'family': 'JetBrains Mono', 'size': 38}},
-            title={'text': "Explicit Lyric Proportion (Overall Selection)", 'font': {'size': 17, 'color': '#cbd5e1'}},
+            number={'suffix': "%", 'font': {'color': '#0f172a' if is_light else '#ffffff', 'family': 'JetBrains Mono', 'size': 38}},
+            title={'text': "Explicit Lyric Proportion (Overall Selection)", 'font': {'size': 17, 'color': '#475569' if is_light else '#cbd5e1'}},
             gauge={
                 'axis': {'range': [0, 100], 'tickcolor': "#94a3b8", 'tickfont': {'size': 13}},
                 'bar': {'color': '#ef4444'},
@@ -944,7 +1086,7 @@ with tabs[1]:
                 'Clean Tracks (Radio-Ready)': '#10b981'
             },
             points='outliers',
-            template='plotly_dark'
+            template=chart_template
         )
         fig_box.update_traces(
             hovertemplate='<b>%{x}</b><br>Spotify Popularity: <b>%{y}/100</b><extra></extra>'
@@ -977,7 +1119,7 @@ with tabs[1]:
             color='pct',
             color_continuous_scale=[[0, '#00B4D8'], [1, '#ef4444']],
             text='label',
-            template='plotly_dark'
+            template=chart_template
         )
         fig_tier.add_hline(
             y=40,
@@ -1017,15 +1159,15 @@ with tabs[1]:
             markers=True,
             line_shape='spline',
             color_discrete_sequence=['#ef4444'],
-            template='plotly_dark'
+            template=chart_template
         )
         fig_time.add_hline(
             y=explicit_pct,
             line_dash="dot",
-            line_color="#94a3b8",
+            line_color="#64748b" if is_light else "#94a3b8",
             annotation_text=f"Sample Mean ({explicit_pct:.1f}%)",
             annotation_position="bottom right",
-            annotation_font=dict(color="#94a3b8", size=13)
+            annotation_font=dict(color="#64748b" if is_light else "#94a3b8", size=13)
         )
         fig_time.update_traces(
             hovertemplate='<b>Month:</b> %{x}<br>Explicit Proportion: <b>%{y:.1f}%</b><extra></extra>'
@@ -1071,7 +1213,7 @@ with tabs[2]:
             names='Format',
             hole=0.55,
             color_discrete_sequence=['#8b5cf6', '#00B4D8', '#ec4899'],
-            template='plotly_dark'
+            template=chart_template
         )
         fig_fmt.update_traces(
             textposition='inside',
@@ -1099,7 +1241,7 @@ with tabs[2]:
             color='album_type',
             color_discrete_sequence=['#8b5cf6', '#00B4D8', '#ec4899'],
             text=fmt_rank['mean'].apply(lambda x: f"Avg #{x:.1f}"),
-            template='plotly_dark'
+            template=chart_template
         )
         fig_fr.update_traces(
             textposition='outside',
@@ -1148,7 +1290,7 @@ with tabs[2]:
             color_discrete_map={'Top 10': '#f59e0b', 'Top 25': '#00B4D8', 'Top 50': '#8b5cf6'},
             hover_data=['song', 'artist', 'position'],
             opacity=0.6,
-            template='plotly_dark'
+            template=chart_template
         )
         fig_ols.update_traces(
             hovertemplate='<b>%{customdata[0]}</b> by %{customdata[1]}<br>Album Tracklist: <b>%{x} songs</b><br>Popularity: <b>%{y}/100</b><br>Peak Position: <b>#%{customdata[2]}</b><extra></extra>'
@@ -1164,8 +1306,8 @@ with tabs[2]:
             showarrow=True,
             arrowhead=2,
             arrowcolor="#ef4444",
-            font=dict(color="#ffffff", size=13, family="Plus Jakarta Sans"),
-            bgcolor="rgba(239, 68, 68, 0.35)",
+            font=dict(color='#991b1b' if is_light else '#ffffff', size=13, family="Plus Jakarta Sans"),
+            bgcolor='#fee2e2' if is_light else 'rgba(239, 68, 68, 0.35)',
             bordercolor="#ef4444"
         )
         apply_dark_theme(
@@ -1208,7 +1350,7 @@ with tabs[3]:
             color='Bucket',
             color_discrete_sequence=['#00B4D8', '#8b5cf6', '#ec4899'],
             text='label',
-            template='plotly_dark'
+            template=chart_template
         )
         fig_dur.update_traces(
             textposition='outside',
@@ -1238,7 +1380,7 @@ with tabs[3]:
             color_discrete_map={True: '#ef4444', False: '#10b981'},
             hover_data=['song', 'artist'],
             opacity=0.65,
-            template='plotly_dark'
+            template=chart_template
         )
         fig_scatter_dur.add_vrect(
             x0=2.75, x1=3.25,
@@ -1278,15 +1420,15 @@ with tabs[3]:
         markers=True,
         line_shape='spline',
         color_discrete_sequence=['#00B4D8'],
-        template='plotly_dark'
+        template=chart_template
     )
     fig_dur_line.add_hline(
         y=avg_duration,
         line_dash="dot",
-        line_color="#94a3b8",
+        line_color="#64748b" if is_light else "#94a3b8",
         annotation_text=f"Sample Mean ({int(avg_duration)}m {int((avg_duration%1)*60):02d}s)",
         annotation_position="bottom right",
-        annotation_font=dict(color="#94a3b8", size=13)
+        annotation_font=dict(color="#64748b" if is_light else "#94a3b8", size=13)
     )
     fig_dur_line.update_traces(
         hovertemplate='<b>Month:</b> %{x}<br>Average Runtime: <b>%{y:.2f} mins</b><extra></extra>'
@@ -1365,7 +1507,7 @@ with tabs[4]:
             y='position',
             color='song',
             markers=True,
-            template='plotly_dark'
+            template=chart_template
         )
         fig_traj.update_traces(
             hovertemplate='<b>%{data.name}</b><br>Date: %{x|%b %d, %Y}<br>Chart Position: <b>#%{y}</b><extra></extra>'
@@ -1452,8 +1594,16 @@ with tabs[4]:
         fig_radar.add_trace(go.Scatterpolar(r=v2, theta=categories, fill='toself', name=comp_artist, line_color='#ec4899'))
         fig_radar.update_layout(
             polar=dict(
-                bgcolor='#0f172a',
-                radialaxis=dict(visible=True, range=[0, 100], gridcolor='#334155')
+                bgcolor='#f8fafc' if is_light else '#0f172a',
+                radialaxis=dict(
+                    visible=True, 
+                    range=[0, 100], 
+                    gridcolor='#cbd5e1' if is_light else '#334155',
+                    tickfont=dict(color='#475569' if is_light else '#cbd5e1')
+                ),
+                angularaxis=dict(
+                    tickfont=dict(color='#0f172a' if is_light else '#f1f5f9', size=13)
+                )
             ),
             showlegend=True,
             paper_bgcolor='rgba(0,0,0,0)'
@@ -1524,7 +1674,7 @@ with tabs[5]:
             mode="gauge+number",
             value=score,
             number={'suffix': "/100", 'font': {'color': gauge_col, 'family': 'JetBrains Mono', 'size': 40}},
-            title={'text': "Commercial Readiness Index", 'font': {'size': 16, 'color': '#cbd5e1'}},
+            title={'text': "Commercial Readiness Index", 'font': {'size': 16, 'color': '#475569' if is_light else '#cbd5e1'}},
             gauge={
                 'axis': {'range': [0, 100], 'tickcolor': "#94a3b8", 'tickfont': {'size': 13}},
                 'bar': {'color': gauge_col},
@@ -1544,7 +1694,7 @@ with tabs[5]:
         st.plotly_chart(fig_score, use_container_width=True)
         
         st.markdown(f"""
-        <div style="background: #111827; border: 1px solid #1e293b; border-radius: 8px; padding: 18px; font-size: 15.5px; line-height: 1.7; color: #f1f5f9;">
+        <div style="background: {'#ffffff' if is_light else '#111827'}; border: 1px solid {'#e2e8f0' if is_light else '#1e293b'}; border-radius: 8px; padding: 18px; font-size: 15.5px; line-height: 1.7; color: {'#1e293b' if is_light else '#f1f5f9'};">
             {'<br/>'.join(reasons)}
         </div>
         """, unsafe_allow_html=True)
