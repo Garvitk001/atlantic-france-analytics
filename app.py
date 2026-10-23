@@ -33,101 +33,442 @@ chart_template = 'plotly_white' if is_light else 'plotly_dark'
 # Professional Data Analyst CSS: Dynamic Theme System (Dark / Light) & Zero Empty Top Space
 theme_css = f"""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
-    /* Eliminate Default Streamlit Massive Top Padding (Covers Empty Space) */
+    :root {{
+        --primary-color: {'#1d4ed8' if is_light else '#00D2FF'} !important;
+        --background-color: {'#eaedf3' if is_light else '#080c14'} !important;
+        --secondary-background-color: {'#ffffff' if is_light else '#101726'} !important;
+        --text-color: {'#090e17' if is_light else '#f8fafc'} !important;
+    }}
+
+    /* Global Typography - High-Definition Executive Legibility */
+    *, *::before, *::after, html, body, [class*="css"], .stMarkdown, p, span, div, label, button {{
+        font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+        text-rendering: optimizeLegibility !important;
+    }}
+
+    /* Background Canvas - Calibrated Anti-Glare Light & Executive Dark */
+    .stApp {{
+        background: {'#eaedf3' if is_light else '#080c14'} !important;
+        color: {'#090e17' if is_light else '#f8fafc'} !important;
+    }}
+
+    /* Main Area Container - Zero Empty Top Void */
     .block-container {{
-        padding-top: 1rem !important;
+        padding-top: 0.75rem !important;
         padding-bottom: 2.5rem !important;
-        padding-left: 2rem !important;
-        padding-right: 2rem !important;
+        padding-left: 1.8rem !important;
+        padding-right: 1.8rem !important;
         max-width: 100% !important;
     }}
     header[data-testid="stHeader"] {{
         background: transparent !important;
-        height: 2.2rem !important;
+        height: 1.8rem !important;
     }}
 
-    /* Global Typography - Large, Crisp, Highly Readable */
-    html, body, [class*="css"], .stMarkdown {{
-        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
-        font-size: 18px !important;
-        color: {'#1e293b' if is_light else '#f1f5f9'} !important;
-        line-height: 1.7 !important;
-    }}
-
-    /* Background Canvas */
-    .stApp {{
-        background: {'#f8fafc' if is_light else '#090d16'} !important;
-        color: {'#1e293b' if is_light else '#f1f5f9'} !important;
-    }}
-
-    /* Streamlit Main Headings Scale */
+    /* Headings Scale - Executive Typographic Authority */
     h1, .stMarkdown h1 {{
-        font-size: 32px !important;
+        font-size: 30px !important;
         font-weight: 800 !important;
-        color: {'#0f172a' if is_light else '#ffffff'} !important;
-        line-height: 1.25 !important;
-        letter-spacing: -0.5px !important;
-        margin-top: 14px !important;
-        margin-bottom: 12px !important;
+        color: {'#090e17' if is_light else '#ffffff'} !important;
+        letter-spacing: -0.03em !important;
+        margin-top: 10px !important;
+        margin-bottom: 8px !important;
     }}
     h2, .stMarkdown h2 {{
-        font-size: 26px !important;
+        font-size: 24px !important;
         font-weight: 800 !important;
-        color: {'#0f172a' if is_light else '#ffffff'} !important;
-        line-height: 1.3 !important;
-        margin-top: 16px !important;
-        margin-bottom: 10px !important;
-    }}
-    h3, .stMarkdown h3 {{
-        font-size: 22px !important;
-        font-weight: 700 !important;
-        color: {'#1e293b' if is_light else '#f8fafc'} !important;
-        line-height: 1.35 !important;
+        color: {'#090e17' if is_light else '#ffffff'} !important;
+        letter-spacing: -0.025em !important;
         margin-top: 14px !important;
         margin-bottom: 8px !important;
     }}
-    h4, .stMarkdown h4 {{
-        font-size: 19px !important;
+    h3, .stMarkdown h3 {{
+        font-size: 20px !important;
         font-weight: 700 !important;
-        color: {'#334155' if is_light else '#e2e8f0'} !important;
-        line-height: 1.4 !important;
+        color: {'#0f172a' if is_light else '#f8fafc'} !important;
+        letter-spacing: -0.02em !important;
+        margin-top: 12px !important;
+        margin-bottom: 6px !important;
+    }}
+    h4, .stMarkdown h4 {{
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        color: {'#1e293b' if is_light else '#e2e8f0'} !important;
     }}
     p, .stMarkdown p, li, .stMarkdown li {{
-        font-size: 18px !important;
-        color: {'#1e293b' if is_light else '#f1f5f9'} !important;
-        line-height: 1.7 !important;
+        font-size: 16.5px !important;
+        color: {'#1e293b' if is_light else '#cbd5e1'} !important;
+        line-height: 1.65 !important;
     }}
     small, .stCaption, [data-testid="stCaptionContainer"] p {{
-        font-size: 15.5px !important;
-        color: {'#64748b' if is_light else '#94a3b8'} !important;
+        font-size: 14.5px !important;
+        color: {'#475569' if is_light else '#94a3b8'} !important;
         line-height: 1.5 !important;
     }}
 
     /* ========================================================
-       TOP NAVIGATION TABS: 21PX BOLD, PROMINENT & INTUITIVE
+       SIDEBAR OVERHAUL: NO TOP SPACE & FULL THEME RESPONSIVENESS
+       ======================================================== */
+    section[data-testid="stSidebar"] {{
+        width: 370px !important;
+        min-width: 370px !important;
+        background-color: {'#ffffff' if is_light else '#0b0f19'} !important;
+        border-right: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'} !important;
+        box-shadow: {'2px 0 12px rgba(15, 23, 42, 0.04)' if is_light else 'none'} !important;
+        padding-top: 0 !important;
+    }}
+    div[data-testid="stSidebarHeader"] {{
+        display: none !important;
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }}
+    div[data-testid="stSidebarContent"],
+    div[data-testid="stSidebarUserContent"],
+    section[data-testid="stSidebar"] > div:first-child,
+    section[data-testid="stSidebar"] .block-container {{
+        padding-top: 0.6rem !important;
+        padding-left: 1.15rem !important;
+        padding-right: 1.15rem !important;
+        padding-bottom: 2rem !important;
+    }}
+    section[data-testid="stSidebar"] label {{
+        font-size: 14.5px !important;
+        font-weight: 700 !important;
+        color: {'#0f172a' if is_light else '#f1f5f9'} !important;
+        margin-bottom: 4px !important;
+        letter-spacing: -0.01em !important;
+    }}
+
+    /* Sidebar Brand Plate */
+    .sidebar-brand-plate {{
+        background: {'#f8fafc' if is_light else '#111827'};
+        border: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'};
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin-bottom: 18px;
+        box-shadow: {'0 2px 6px rgba(15, 23, 42, 0.04)' if is_light else '0 2px 10px rgba(0,0,0,0.3)'};
+    }}
+    .sidebar-mini-pill {{
+        background: {'#e0f2fe' if is_light else 'rgba(0, 180, 216, 0.15)'};
+        color: {'#0369a1' if is_light else '#00B4D8'};
+        border: 1px solid {'#bae6fd' if is_light else 'rgba(0, 180, 216, 0.35)'};
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 3px 7px;
+        border-radius: 5px;
+    }}
+    .sidebar-geo-badge {{
+        font-size: 12px;
+        font-weight: 700;
+        color: {'#64748b' if is_light else '#94a3b8'};
+    }}
+    .sidebar-brand-title {{
+        font-weight: 900;
+        font-size: 22px;
+        letter-spacing: -0.02em;
+        color: {'#090e17' if is_light else '#ffffff'};
+        margin-top: 6px;
+    }}
+    .sidebar-brand-tagline {{
+        font-weight: 700;
+        font-size: 11.5px;
+        color: {'#1d4ed8' if is_light else '#00D2FF'};
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 2px;
+    }}
+
+    .sidebar-group-title {{
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: {'#1d4ed8' if is_light else '#00D2FF'};
+        margin-top: 14px;
+        margin-bottom: 6px;
+    }}
+
+    /* Sidebar Inputs Light/Dark Overrides (FIX BLACK BOXES IN LIGHT MODE) */
+    div[data-baseweb="input"],
+    div[data-baseweb="base-input"],
+    .stDateInput input,
+    .stTextInput input {{
+        background-color: {'#f8fafc' if is_light else '#111827'} !important;
+        border: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'} !important;
+        border-radius: 8px !important;
+        color: {'#090e17' if is_light else '#f8fafc'} !important;
+        font-weight: 600 !important;
+        font-size: 15px !important;
+    }}
+    div[data-baseweb="input"]:focus-within,
+    div[data-baseweb="base-input"]:focus-within {{
+        border-color: {'#1d4ed8' if is_light else '#00D2FF'} !important;
+        box-shadow: {'0 0 0 3px rgba(29, 78, 216, 0.12)' if is_light else '0 0 0 3px rgba(0, 210, 255, 0.2)'} !important;
+    }}
+    div[data-baseweb="select"] > div {{
+        background-color: {'#f8fafc' if is_light else '#111827'} !important;
+        border: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'} !important;
+        border-radius: 8px !important;
+        color: {'#090e17' if is_light else '#f8fafc'} !important;
+    }}
+    div[data-baseweb="select"] > div:focus-within {{
+        border-color: {'#1d4ed8' if is_light else '#00D2FF'} !important;
+        box-shadow: {'0 0 0 3px rgba(29, 78, 216, 0.12)' if is_light else '0 0 0 3px rgba(0, 210, 255, 0.2)'} !important;
+    }}
+    div[data-baseweb="tag"] {{
+        background-color: {'#eff6ff' if is_light else 'rgba(0, 180, 216, 0.2)'} !important;
+        border: 1px solid {'#bfdbfe' if is_light else 'rgba(0, 180, 216, 0.4)'} !important;
+        border-radius: 6px !important;
+        color: {'#1d4ed8' if is_light else '#00B4D8'} !important;
+    }}
+    div[data-baseweb="tag"] span {{
+        color: {'#1d4ed8' if is_light else '#00B4D8'} !important;
+        font-weight: 700 !important;
+        font-size: 13.5px !important;
+    }}
+    div[data-baseweb="tag"] svg {{
+        fill: {'#1d4ed8' if is_light else '#00B4D8'} !important;
+    }}
+    ul[role="listbox"],
+    div[data-baseweb="popover"],
+    div[data-baseweb="calendar"] {{
+        background-color: {'#ffffff' if is_light else '#111827'} !important;
+        border: 1px solid {'#cbd5e1' if is_light else '#1e293b'} !important;
+        border-radius: 8px !important;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12) !important;
+        color: {'#090e17' if is_light else '#f8fafc'} !important;
+    }}
+    li[role="option"] {{
+        background-color: {'#ffffff' if is_light else '#111827'} !important;
+        color: {'#090e17' if is_light else '#f8fafc'} !important;
+        font-size: 14.5px !important;
+    }}
+    li[role="option"]:hover,
+    li[role="option"][aria-selected="true"] {{
+        background-color: {'#eff6ff' if is_light else '#1e293b'} !important;
+        color: {'#1d4ed8' if is_light else '#00D2FF'} !important;
+    }}
+    div[role="radiogroup"] label {{
+        padding: 5px 8px !important;
+        border-radius: 6px !important;
+    }}
+    div[role="radiogroup"] label p {{
+        font-size: 14.5px !important;
+        font-weight: 600 !important;
+        color: {'#1e293b' if is_light else '#f1f5f9'} !important;
+    }}
+
+    /* Sidebar Live Telemetry Card */
+    .sidebar-telemetry-card {{
+        background: {'#f8fafc' if is_light else '#111827'};
+        border: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'};
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin-top: 16px;
+        margin-bottom: 14px;
+        box-shadow: {'0 2px 6px rgba(15, 23, 42, 0.04)' if is_light else 'none'};
+    }}
+    .sidebar-telemetry-header {{
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: {'#64748b' if is_light else '#94a3b8'};
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px;
+    }}
+    .sidebar-active-status {{
+        color: #059669;
+        font-weight: 800;
+    }}
+    .sidebar-telemetry-stat {{
+        font-family: 'JetBrains Mono', 'Plus Jakarta Sans', monospace;
+        font-size: 22px;
+        font-weight: 800;
+        color: {'#090e17' if is_light else '#ffffff'};
+        margin-bottom: 6px;
+    }}
+    .sidebar-telemetry-stat span {{
+        font-size: 14px;
+        font-weight: 600;
+        color: {'#64748b' if is_light else '#94a3b8'};
+    }}
+    .sidebar-telemetry-sub {{
+        font-size: 13px;
+        color: {'#334155' if is_light else '#cbd5e1'};
+        line-height: 1.55;
+    }}
+
+    /* ========================================================
+       TOP NAVIGATION BAR & THEME CONTROLLER DECK
+       ======================================================== */
+    .top-nav-banner {{
+        background: {'#ffffff' if is_light else '#101726'};
+        border: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'};
+        border-radius: 12px;
+        padding: 14px 20px;
+        box-shadow: {'0 4px 14px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.03)' if is_light else '0 4px 16px rgba(0,0,0,0.4)'};
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }}
+    .brand-monogram {{
+        background: {'linear-gradient(135deg, #1d4ed8, #2563eb)' if is_light else 'linear-gradient(135deg, #0077b6, #00D2FF)'};
+        color: #ffffff;
+        font-weight: 900;
+        font-size: 20px;
+        letter-spacing: -0.5px;
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: {'0 3px 8px rgba(29, 78, 216, 0.28)' if is_light else '0 0 14px rgba(0,210,255,0.4)'};
+        flex-shrink: 0;
+    }}
+    .top-nav-title {{
+        font-size: 20px;
+        font-weight: 800;
+        color: {'#090e17' if is_light else '#ffffff'};
+        letter-spacing: -0.025em;
+    }}
+    .top-nav-badge {{
+        background: {'#e0f2fe' if is_light else 'rgba(0,180,216,0.15)'};
+        color: {'#0369a1' if is_light else '#00B4D8'};
+        border: 1px solid {'#bae6fd' if is_light else 'rgba(0,180,216,0.35)'};
+        padding: 3px 8px;
+        border-radius: 5px;
+        font-size: 11.5px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        display: inline-block;
+    }}
+    .top-nav-sub {{
+        font-size: 13.5px;
+        color: {'#475569' if is_light else '#94a3b8'};
+        margin-top: 3px;
+        font-weight: 500;
+    }}
+    .telemetry-pill {{
+        background: {'#f1f5f9' if is_light else '#141d2e'};
+        border: 1px solid {'#cbd5e1' if is_light else '#1e293b'};
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        color: {'#334155' if is_light else '#cbd5e1'};
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }}
+    .telemetry-dot {{
+        width: 8px;
+        height: 8px;
+        background: #10b981;
+        border-radius: 50%;
+        display: inline-block;
+        box-shadow: 0 0 6px #10b981;
+    }}
+
+    .theme-deck-wrapper {{
+        background: {'#ffffff' if is_light else '#101726'};
+        border: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'};
+        border-radius: 12px;
+        padding: 12px 16px;
+        box-shadow: {'0 4px 14px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.03)' if is_light else '0 4px 16px rgba(0,0,0,0.4)'};
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }}
+    .theme-deck-header {{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px;
+    }}
+    .theme-deck-title {{
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: {'#64748b' if is_light else '#94a3b8'};
+    }}
+    .theme-deck-status {{
+        font-size: 11.5px;
+        font-weight: 800;
+        color: {'#1d4ed8' if is_light else '#00D2FF'};
+        background: {'#eff6ff' if is_light else 'rgba(0,210,255,0.15)'};
+        padding: 2px 7px;
+        border-radius: 12px;
+        border: 1px solid {'#bfdbfe' if is_light else 'rgba(0,210,255,0.3)'};
+    }}
+
+    /* Horizontal Segmented Radio Group */
+    div[data-testid="stRadio"] div[role="radiogroup"][aria-orientation="horizontal"] {{
+        background: {'#f1f5f9' if is_light else '#090d16'} !important;
+        border: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'} !important;
+        border-radius: 8px !important;
+        padding: 4px !important;
+        gap: 6px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+    }}
+    div[data-testid="stRadio"] div[role="radiogroup"][aria-orientation="horizontal"] label {{
+        flex: 1 !important;
+        justify-content: center !important;
+        margin: 0 !important;
+        padding: 6px 10px !important;
+        border-radius: 6px !important;
+        cursor: pointer !important;
+        transition: all 0.15s ease !important;
+    }}
+    div[data-testid="stRadio"] div[role="radiogroup"][aria-orientation="horizontal"] label:hover {{
+        background: {'#ffffff' if is_light else '#1e293b'} !important;
+    }}
+    div[data-testid="stRadio"] div[role="radiogroup"][aria-orientation="horizontal"] label p,
+    div[data-testid="stRadio"] div[role="radiogroup"][aria-orientation="horizontal"] label span {{
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        color: {'#090e17' if is_light else '#f8fafc'} !important;
+    }}
+
+    /* ========================================================
+       EXECUTIVE NAVIGATION TABS: SEGMENTED DECK WITH CLEAR CONTRAST
        ======================================================== */
     [data-testid="stTabs"] {{
-        margin-top: 4px !important;
-        margin-bottom: 24px !important;
+        margin-top: 10px !important;
+        margin-bottom: 20px !important;
     }}
     [data-testid="stTabs"] [data-baseweb="tab-list"],
     .stTabs [data-baseweb="tab-list"] {{
-        border-bottom: 2px solid {'#e2e8f0' if is_light else '#1e293b'} !important;
-        gap: 8px !important;
-        padding-bottom: 6px !important;
-        background: transparent !important;
+        border: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'} !important;
+        border-radius: 12px !important;
+        padding: 6px !important;
+        gap: 6px !important;
+        background-color: {'#e2e8f0' if is_light else '#0d131f'} !important;
         display: flex !important;
         flex-wrap: wrap !important;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.06) !important;
     }}
     [data-testid="stTabs"] button[data-baseweb="tab"],
     .stTabs [data-baseweb="tab"] {{
-        background-color: {'#ffffff' if is_light else '#111827'} !important;
-        border: 1px solid {'#e2e8f0' if is_light else '#1f2937'} !important;
-        border-radius: 8px 8px 0 0 !important;
-        padding: 14px 26px !important;
-        transition: all 0.2s ease-in-out !important;
+        background-color: transparent !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 10px 16px !important;
+        transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }}
     [data-testid="stTabs"] button[data-baseweb="tab"] p,
     [data-testid="stTabs"] button[data-baseweb="tab"] div,
@@ -135,26 +476,25 @@ theme_css = f"""
     .stTabs [data-baseweb="tab"] p,
     .stTabs [data-baseweb="tab"] div,
     .stTabs [data-baseweb="tab"] span {{
-        font-size: 21px !important;
+        font-size: 16px !important;
         font-weight: 700 !important;
-        letter-spacing: 0.2px !important;
-        color: {'#475569' if is_light else '#cbd5e1'} !important;
+        letter-spacing: -0.01em !important;
+        color: {'#475569' if is_light else '#94a3b8'} !important;
         line-height: 1.3 !important;
     }}
     [data-testid="stTabs"] button[data-baseweb="tab"]:hover,
     .stTabs [data-baseweb="tab"]:hover {{
-        background-color: {'#f1f5f9' if is_light else '#1e293b'} !important;
-        border-color: {'#0284c7' if is_light else '#00B4D8'} !important;
+        background-color: {'rgba(255,255,255,0.6)' if is_light else 'rgba(255,255,255,0.06)'} !important;
     }}
     [data-testid="stTabs"] button[data-baseweb="tab"]:hover p,
     .stTabs [data-baseweb="tab"]:hover p {{
-        color: {'#0284c7' if is_light else '#00B4D8'} !important;
+        color: {'#090e17' if is_light else '#ffffff'} !important;
     }}
     [data-testid="stTabs"] button[aria-selected="true"],
     .stTabs [aria-selected="true"] {{
-        background-color: {'#ffffff' if is_light else '#1e293b'} !important;
-        border: 1px solid {'#0284c7' if is_light else '#00B4D8'} !important;
-        border-bottom: 4px solid {'#0284c7' if is_light else '#00B4D8'} !important;
+        background-color: {'#ffffff' if is_light else '#00B4D8'} !important;
+        border-radius: 8px !important;
+        box-shadow: {'0 2px 8px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04)' if is_light else '0 2px 10px rgba(0, 180, 216, 0.35)'} !important;
     }}
     [data-testid="stTabs"] button[aria-selected="true"] p,
     [data-testid="stTabs"] button[aria-selected="true"] div,
@@ -162,243 +502,171 @@ theme_css = f"""
     .stTabs [aria-selected="true"] p,
     .stTabs [aria-selected="true"] div,
     .stTabs [aria-selected="true"] span {{
-        color: {'#0284c7' if is_light else '#00B4D8'} !important;
+        color: {'#1d4ed8' if is_light else '#090d16'} !important;
         font-weight: 800 !important;
     }}
 
-    /* Professional Sidebar Styling (380px wide) */
-    section[data-testid="stSidebar"] {{
-        width: 380px !important;
-        min-width: 380px !important;
-        background: {'#ffffff' if is_light else '#0d121d'} !important;
-        border-right: 1px solid {'#e2e8f0' if is_light else '#1e293b'} !important;
+    /* ========================================================
+       HIGH-IMPACT EXECUTIVE KPI CARDS: CRISP, TIGHT & CONTRASTED
+       ======================================================== */
+    .metric-grid {{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+        gap: 14px;
+        margin-bottom: 22px;
     }}
-    section[data-testid="stSidebar"] > div {{
-        width: 380px !important;
-        padding-top: 18px;
-        padding-left: 20px;
-        padding-right: 20px;
+    .metric-card {{
+        background: {'#ffffff' if is_light else '#101726'};
+        border: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'};
+        border-top: 3.5px solid {'#2563eb' if is_light else '#00D2FF'};
+        border-radius: 10px;
+        padding: 16px 18px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        box-shadow: {'0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.03)' if is_light else '0 4px 16px rgba(0, 0, 0, 0.4)'};
+        position: relative;
     }}
-    section[data-testid="stSidebar"] label,
-    section[data-testid="stSidebar"] .stMarkdown p {{
-        font-size: 17px !important;
-        font-weight: 600 !important;
-        color: {'#0f172a' if is_light else '#f1f5f9'} !important;
+    .metric-card:hover {{
+        transform: translateY(-2px);
+        box-shadow: {'0 8px 22px rgba(15, 23, 42, 0.1), 0 2px 6px rgba(15, 23, 42, 0.05)' if is_light else '0 8px 24px rgba(0, 0, 0, 0.6)'};
+        border-color: {'#2563eb' if is_light else '#00D2FF'};
     }}
-
-    /* Form Controls & Inputs */
-    .stSelectbox label, .stMultiSelect label, .stSlider label, .stRadio label, .stDateInput label {{
-        font-size: 17px !important;
-        font-weight: 600 !important;
-        color: {'#0f172a' if is_light else '#f1f5f9'} !important;
-    }}
-    div[data-baseweb="select"] *, div[data-baseweb="input"] input {{
-        font-size: 16px !important;
-        color: {'#0f172a' if is_light else '#f1f5f9'} !important;
-    }}
-    div[data-testid="stSlider"] * {{
-        font-size: 15.5px !important;
-    }}
-    div[role="radiogroup"] label * {{
-        font-size: 16.5px !important;
-        color: {'#0f172a' if is_light else '#f1f5f9'} !important;
-    }}
-    .stButton button p, .stDownloadButton button p {{
-        font-size: 17px !important;
-        font-weight: 700 !important;
-    }}
-
-    /* Streamlit Metric Overrides */
-    [data-testid="stMetricLabel"] p, [data-testid="stMetricLabel"] {{
-        font-size: 15px !important;
-        font-weight: 700 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.8px !important;
-        color: {'#64748b' if is_light else '#94a3b8'} !important;
-    }}
-    [data-testid="stMetricValue"] div, [data-testid="stMetricValue"] {{
-        font-size: 38px !important;
-        font-weight: 800 !important;
-        font-family: 'JetBrains Mono', monospace !important;
-        color: {'#0f172a' if is_light else '#ffffff'} !important;
-    }}
-    [data-testid="stMetricDelta"] div, [data-testid="stMetricDelta"] {{
-        font-size: 15px !important;
-        font-weight: 600 !important;
-    }}
-
-    /* Streamlit DataFrame / Table */
-    [data-testid="stDataFrame"] * {{
-        font-size: 15.5px !important;
-    }}
-
-    /* Sidebar Cards */
-    .sidebar-card {{
-        background: {'#f8fafc' if is_light else '#111827'};
-        border: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
-        border-radius: 8px;
-        padding: 18px;
-        margin-top: 14px;
-        margin-bottom: 16px;
-    }}
-    .sidebar-section-title {{
-        font-size: 14.5px;
+    .metric-label {{
+        font-size: 12.5px;
         text-transform: uppercase;
-        letter-spacing: 1px;
-        color: {'#0284c7' if is_light else '#00B4D8'};
-        font-weight: 700;
-        margin-bottom: 12px;
+        color: {'#64748b' if is_light else '#94a3b8'};
+        font-weight: 800;
+        letter-spacing: 0.07em;
+        margin-bottom: 6px;
+    }}
+    .metric-value {{
+        font-family: 'JetBrains Mono', 'Plus Jakarta Sans', monospace;
+        font-size: 33px;
+        font-weight: 800;
+        color: {'#090e17' if is_light else '#ffffff'};
+        letter-spacing: -0.03em;
+        margin-bottom: 4px;
+        line-height: 1.15;
+    }}
+    .metric-desc {{
+        font-size: 13.5px;
+        color: {'#475569' if is_light else '#94a3b8'};
+        font-weight: 500;
+        line-height: 1.4;
     }}
 
     /* Business Context & Persona Cards */
     .story-card {{
-        background: {'#ffffff' if is_light else '#111827'};
-        border: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
+        background: {'#ffffff' if is_light else '#101726'};
+        border: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'};
         border-radius: 10px;
-        padding: 22px 26px;
+        padding: 20px 24px;
         margin-bottom: 16px;
-        box-shadow: {'0 1px 3px rgba(0,0,0,0.05)' if is_light else 'none'};
+        box-shadow: {'0 4px 12px rgba(15, 23, 42, 0.06)' if is_light else '0 4px 16px rgba(0,0,0,0.3)'};
     }}
     .story-card p {{
-        color: {'#334155' if is_light else '#cbd5e1'} !important;
+        color: {'#1e293b' if is_light else '#cbd5e1'} !important;
     }}
     .persona-card {{
-        background: {'#f8fafc' if is_light else '#0f172a'};
-        border-radius: 8px;
-        padding: 22px 26px;
-        border-left: 4px solid {'#0284c7' if is_light else '#00B4D8'};
-        border-top: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
-        border-right: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
-        border-bottom: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
+        background: {'#ffffff' if is_light else '#0f172a'};
+        border-radius: 10px;
+        padding: 20px 24px;
+        border-left: 4px solid {'#1d4ed8' if is_light else '#00B4D8'};
+        border-top: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'};
+        border-right: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'};
+        border-bottom: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'};
+        box-shadow: {'0 4px 12px rgba(15, 23, 42, 0.05)' if is_light else 'none'};
         height: 100%;
     }}
-    .persona-card div {{
-        color: {'#334155' if is_light else '#cbd5e1'} !important;
-    }}
     .persona-radio {{
-        border-left-color: #10b981 !important;
+        border-left-color: #059669 !important;
     }}
     .persona-title {{
-        font-size: 19px;
-        font-weight: 700;
-        color: {'#0f172a' if is_light else '#ffffff'} !important;
-        margin-bottom: 10px;
-    }}
-
-    /* High-Impact Executive KPI Cards */
-    .metric-grid {{
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-        gap: 16px;
-        margin-bottom: 24px;
-    }}
-    .metric-card {{
-        background: {'#ffffff' if is_light else '#111827'};
-        border: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
-        border-radius: 8px;
-        padding: 20px 22px;
-        transition: border-color 0.2s ease;
-        box-shadow: {'0 1px 3px rgba(0,0,0,0.05)' if is_light else 'none'};
-    }}
-    .metric-card:hover {{
-        border-color: {'#0284c7' if is_light else '#00B4D8'};
-    }}
-    .metric-label {{
-        font-size: 14.5px;
-        text-transform: uppercase;
-        color: {'#64748b' if is_light else '#94a3b8'};
-        font-weight: 700;
-        letter-spacing: 0.8px;
-        margin-bottom: 6px;
-    }}
-    .metric-value {{
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 38px;
+        font-size: 18px;
         font-weight: 800;
-        color: {'#0f172a' if is_light else '#ffffff'};
-        margin-bottom: 4px;
-    }}
-    .metric-desc {{
-        font-size: 15px;
-        color: {'#64748b' if is_light else '#94a3b8'};
-        font-weight: 500;
+        color: {'#090e17' if is_light else '#ffffff'} !important;
+        margin-bottom: 8px;
     }}
 
     /* Key Strategic Finding Boxes */
     .takeaway-card {{
-        background: {'#f0f9ff' if is_light else '#0f172a'};
-        border-left: 5px solid {'#0284c7' if is_light else '#00B4D8'};
-        border-top: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
-        border-right: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
-        border-bottom: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
-        border-radius: 8px;
-        padding: 24px 28px;
-        margin: 24px 0;
+        background: {'#eff6ff' if is_light else '#0f172a'};
+        border-left: 5px solid {'#1d4ed8' if is_light else '#00B4D8'};
+        border-top: 1.5px solid {'#bfdbfe' if is_light else '#1e293b'};
+        border-right: 1.5px solid {'#bfdbfe' if is_light else '#1e293b'};
+        border-bottom: 1.5px solid {'#bfdbfe' if is_light else '#1e293b'};
+        border-radius: 10px;
+        padding: 22px 26px;
+        margin: 22px 0;
+        box-shadow: {'0 4px 12px rgba(29, 78, 216, 0.05)' if is_light else 'none'};
     }}
     .takeaway-title {{
-        font-size: 21px;
-        font-weight: 700;
-        color: {'#0369a1' if is_light else '#00B4D8'};
-        margin-bottom: 12px;
+        font-size: 20px;
+        font-weight: 800;
+        color: {'#1d4ed8' if is_light else '#00D2FF'};
+        margin-bottom: 10px;
+        letter-spacing: -0.015em;
     }}
     .takeaway-body {{
-        font-size: 18px;
-        line-height: 1.8;
+        font-size: 16.5px;
+        line-height: 1.75;
         color: {'#1e293b' if is_light else '#f1f5f9'};
     }}
     .takeaway-body b {{
-        color: {'#0f172a' if is_light else '#ffffff'};
+        color: {'#090e17' if is_light else '#ffffff'};
     }}
 
     /* Leaderboard Podium Cards */
     .podium-card {{
-        background: {'#ffffff' if is_light else '#111827'};
-        border-radius: 10px;
-        padding: 24px 20px;
-        border: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
+        background: {'#ffffff' if is_light else '#101726'};
+        border-radius: 12px;
+        padding: 22px 18px;
+        border: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'};
         text-align: center;
         height: 100%;
-        margin-top: 10px;
-        box-shadow: {'0 1px 3px rgba(0,0,0,0.05)' if is_light else 'none'};
+        margin-top: 8px;
+        box-shadow: {'0 4px 14px rgba(15, 23, 42, 0.06)' if is_light else '0 4px 16px rgba(0,0,0,0.3)'};
     }}
     .podium-1 {{
         border-color: #f59e0b !important;
-        background: {'#fffbeb' if is_light else '#141b2d'} !important;
+        background: {'#fffdf5' if is_light else '#141b2d'} !important;
+        box-shadow: {'0 6px 20px rgba(245, 158, 11, 0.15)' if is_light else '0 0 20px rgba(245, 158, 11, 0.25)'} !important;
     }}
     .podium-badge {{
         display: inline-block;
-        padding: 5px 14px;
-        border-radius: 14px;
-        font-size: 14px;
-        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 800;
         letter-spacing: 0.5px;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
     }}
     .badge-gold {{ background: #f59e0b; color: #000000; font-weight: 800; }}
     .badge-silver {{ background: #94a3b8; color: #000000; font-weight: 800; }}
     .badge-bronze {{ background: #b45309; color: #ffffff; font-weight: 800; }}
     .podium-img {{
-        width: 155px;
-        height: 155px;
-        border-radius: 8px;
+        width: 145px;
+        height: 145px;
+        border-radius: 10px;
         object-fit: cover;
-        margin: 12px auto;
+        margin: 10px auto;
         display: block;
         border: 1px solid {'#cbd5e1' if is_light else '#334155'};
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }}
     .podium-song {{
-        font-size: 20px;
-        font-weight: 700;
-        color: {'#0f172a' if is_light else '#ffffff'};
-        margin: 10px 0 4px 0;
+        font-size: 19px;
+        font-weight: 800;
+        color: {'#090e17' if is_light else '#ffffff'};
+        margin: 8px 0 3px 0;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }}
     .podium-artist {{
-        font-size: 16.5px;
-        color: {'#64748b' if is_light else '#94a3b8'};
-        margin-bottom: 12px;
+        font-size: 15.5px;
+        font-weight: 600;
+        color: {'#475569' if is_light else '#94a3b8'};
+        margin-bottom: 10px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -413,98 +681,14 @@ theme_css = f"""
     /* Badges & Format Tags */
     .pill {{
         display: inline-block;
-        padding: 5px 12px;
-        border-radius: 6px;
-        font-size: 13.5px;
-        font-weight: 600;
-    }}
-    .pill-explicit {{ background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }}
-    .pill-clean {{ background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); }}
-    .pill-format {{ background: {'rgba(2,132,199,0.15)' if is_light else 'rgba(0,180,216,0.15)'}; color: {'#0284c7' if is_light else '#00B4D8'}; border: 1px solid {'rgba(2,132,199,0.4)' if is_light else 'rgba(0,180,216,0.4)'}; }}
-
-    /* Executive Top Navigation Banner (Covers Top Space) */
-    .top-nav-banner {{
-        background: {'#ffffff' if is_light else '#111827'};
-        border: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
-        border-radius: 12px;
-        padding: 16px 20px;
-        box-shadow: {'0 2px 6px rgba(0,0,0,0.04)' if is_light else '0 2px 10px rgba(0,0,0,0.35)'};
-    }}
-    .top-nav-badge {{
-        background: {'#e0f2fe' if is_light else 'rgba(0,180,216,0.15)'};
-        color: {'#0284c7' if is_light else '#00B4D8'};
-        border: 1px solid {'#bae6fd' if is_light else 'rgba(0,180,216,0.35)'};
         padding: 4px 10px;
         border-radius: 6px;
-        font-size: 13.5px;
-        font-weight: 800;
-        letter-spacing: 0.8px;
-        text-transform: uppercase;
-        display: inline-block;
-    }}
-    .top-nav-title {{
-        font-size: 21px;
-        font-weight: 800;
-        color: {'#0f172a' if is_light else '#ffffff'};
-        letter-spacing: -0.3px;
-        display: inline-block;
-        margin-left: 8px;
-    }}
-    .top-nav-sub {{
-        font-size: 14.5px;
-        color: {'#64748b' if is_light else '#94a3b8'};
-        margin-top: 5px;
-        font-weight: 500;
-        line-height: 1.4;
-    }}
-
-    /* Top Theme Controller Card */
-    .top-theme-card {{
-        background: {'#ffffff' if is_light else '#111827'};
-        border: 1px solid {'#e2e8f0' if is_light else '#1e293b'};
-        border-radius: 12px;
-        padding: 14px 18px;
-        box-shadow: {'0 2px 6px rgba(0,0,0,0.04)' if is_light else '0 2px 10px rgba(0,0,0,0.35)'};
-    }}
-    .top-theme-header {{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 6px;
-    }}
-    .top-theme-label {{
-        font-size: 13px;
+        font-size: 12.5px;
         font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-        color: {'#64748b' if is_light else '#94a3b8'};
     }}
-    .top-theme-status {{
-        font-size: 12px;
-        font-weight: 800;
-        color: {'#0284c7' if is_light else '#00B4D8'};
-    }}
-
-    /* Theme Toggle Horizontal Radio Segmented Control */
-    div[data-testid="stRadio"] div[role="radiogroup"][aria-orientation="horizontal"] {{
-        background: {'#f1f5f9' if is_light else '#090d16'} !important;
-        border: 1px solid {'#cbd5e1' if is_light else '#1e293b'} !important;
-        border-radius: 20px !important;
-        padding: 4px 6px !important;
-        gap: 6px !important;
-        display: flex !important;
-        justify-content: space-around !important;
-    }}
-    div[data-testid="stRadio"] div[role="radiogroup"][aria-orientation="horizontal"] label {{
-        margin-bottom: 0 !important;
-        padding: 2px 8px !important;
-    }}
-    div[data-testid="stRadio"] div[role="radiogroup"][aria-orientation="horizontal"] label p,
-    div[data-testid="stRadio"] div[role="radiogroup"][aria-orientation="horizontal"] label span {{
-        font-size: 15px !important;
-        font-weight: 700 !important;
-        color: {'#0f172a' if is_light else '#f1f5f9'} !important;
-    }}
+    .pill-explicit {{ background: rgba(220, 38, 38, 0.12); color: #dc2626; border: 1px solid rgba(220, 38, 38, 0.3); }}
+    .pill-clean {{ background: rgba(5, 150, 105, 0.12); color: #059669; border: 1px solid rgba(5, 150, 105, 0.3); }}
+    .pill-format {{ background: {'#e0f2fe' if is_light else 'rgba(0,180,216,0.15)'}; color: {'#0369a1' if is_light else '#00B4D8'}; border: 1px solid {'#bae6fd' if is_light else 'rgba(0,180,216,0.4)'}; }}
 </style>
 """
 st.markdown(theme_css, unsafe_allow_html=True)
@@ -649,9 +833,13 @@ def apply_dark_theme(fig, title="", subtitle="", height=400):
 # ==============================================================================
 with st.sidebar:
     st.markdown(f"""
-        <div style="margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid {'#e2e8f0' if is_light else '#1e293b'};">
-            <div style="font-weight: 800; font-size: 22px; letter-spacing: 0.5px; color: {'#0f172a' if is_light else '#ffffff'};">ATLANTIC RECORDS</div>
-            <div style="font-weight: 600; font-size: 13px; color: {'#0284c7' if is_light else '#00B4D8'}; letter-spacing: 1.5px; margin-top: 2px;">FRANCE MARKET STRATEGY</div>
+        <div class="sidebar-brand-plate">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                <span class="sidebar-mini-pill">WARNER MUSIC GROUP</span>
+                <span class="sidebar-geo-badge">PARIS, FR 🇫🇷</span>
+            </div>
+            <div class="sidebar-brand-title">ATLANTIC RECORDS</div>
+            <div class="sidebar-brand-tagline">FRANCE REPERTOIRE INTELLIGENCE</div>
         </div>
     """, unsafe_allow_html=True)
 
@@ -659,13 +847,13 @@ with st.sidebar:
         min_date = df_master['date'].min().date()
         max_date = df_master['date'].max().date()
         
-        st.markdown('<div class="sidebar-section-title">Data Filter Parameters</div>', unsafe_allow_html=True)
-        
+        st.markdown('<div class="sidebar-group-title">📅 Observation Horizon</div>', unsafe_allow_html=True)
         date_selection = st.date_input(
             "Observation Time Window",
             value=[min_date, max_date],
             min_value=min_date,
-            max_value=max_date
+            max_value=max_date,
+            label_visibility="collapsed"
         )
         if isinstance(date_selection, (list, tuple)) and len(date_selection) == 2:
             start_date, end_date = date_selection[0], date_selection[1]
@@ -674,6 +862,7 @@ with st.sidebar:
         else:
             start_date, end_date = min_date, max_date
             
+        st.markdown('<div class="sidebar-group-title">🎯 Chart Depth & Compliance</div>', unsafe_allow_html=True)
         tier_filter = st.multiselect(
             "Chart Depth Tier",
             options=['Top 10', 'Top 25', 'Top 50'],
@@ -681,40 +870,43 @@ with st.sidebar:
         )
         
         content_filter = st.radio(
-            "Content Compliance (Explicit / Clean)",
+            "Content Compliance (ARCOM Broadcast Quota)",
             options=["All Tracks", "Clean Tracks Only", "Explicit Tracks Only"],
             index=0
         )
         
         available_formats = sorted(df_master['album_type'].unique())
+        st.markdown('<div class="sidebar-group-title">💿 Format & Repertoire Search</div>', unsafe_allow_html=True)
         format_filter = st.multiselect(
             "Release Format",
             options=available_formats,
             default=available_formats
         )
         
-        search_query = st.text_input("Filter by Track or Artist", placeholder="e.g. Werenoi, Ninho, Gazo")
+        search_query = st.text_input("Track or Artist Search", placeholder="e.g. Werenoi, Ninho, Gazo")
 
         st.markdown(f"""
-            <div class="sidebar-card">
-                <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; color: {'#64748b' if is_light else '#94a3b8'}; font-weight: 700; margin-bottom: 6px;">
-                    Active Data Scope
+            <div class="sidebar-telemetry-card">
+                <div class="sidebar-telemetry-header">
+                    <span>ACTIVE SAMPLE SCOPE</span>
+                    <span class="sidebar-active-status">● LIVE FILTER</span>
                 </div>
-                <div style="font-size: 14.5px; color: {'#334155' if is_light else '#cbd5e1'}; line-height: 1.6;">
-                    • <b>Date Span:</b> {start_date} to {end_date}<br/>
-                    • <b>Format Types:</b> {', '.join([f.capitalize() for f in format_filter])}<br/>
+                <div class="sidebar-telemetry-stat">555 <span>Chart Days</span></div>
+                <div class="sidebar-telemetry-sub">
+                    • <b>Date Span:</b> {start_date} → {end_date}<br/>
+                    • <b>Formats:</b> {', '.join([f.capitalize() for f in format_filter])}<br/>
                     • <b>Compliance Scope:</b> {content_filter}
                 </div>
             </div>
         """, unsafe_allow_html=True)
 
-        with st.expander("About This Analysis"):
+        with st.expander("ℹ️ About Dataset & Methodology"):
             st.markdown("""
-            **Project Overview:**
+            **Intelligence Architecture:**
             - **Dataset:** 555 daily France Spotify Top 50 chart snapshots (27,800 recorded track positions).
             - **Analytical Purpose:** Assist Atlantic Records A&R and commercial strategy teams in navigating French regulatory quotas (ARCOM broadcast rules), optimal album track counts, and duration sweet spots.
             """)
-        st.caption("Atlantic Recording Corporation | Market Intelligence")
+        st.caption("Atlantic Records France | Commercial Strategy Terminal")
 
 
 # ==============================================================================
@@ -758,28 +950,37 @@ single_share = (df['album_type'] == 'single').sum() / total_records * 100 if tot
 # ==============================================================================
 # 5. TOP EXECUTIVE BANNER & INTERFACE THEME CONTROLLER (COVERS TOP EMPTY SPACE)
 # ==============================================================================
-top_h1, top_h2 = st.columns([3.3, 1.5])
+top_h1, top_h2 = st.columns([3.4, 1.4])
 
 with top_h1:
     st.markdown(f"""
         <div class="top-nav-banner">
-            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                <span class="top-nav-badge">🎵 ATLANTIC RECORDS</span>
-                <span class="top-nav-title">France Market Strategy & Executive Intelligence</span>
-            </div>
-            <div class="top-nav-sub">
-                Empirical Business Decision Platform • 555 Daily France Top 50 Chart Snapshots (27,800 Track Positions)
+            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <div class="brand-monogram">AR</div>
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <span class="top-nav-title">ATLANTIC RECORDS</span>
+                            <span class="top-nav-badge">FRANCE STRATEGY & PERFORMANCE</span>
+                        </div>
+                        <div class="top-nav-sub">
+                            Executive A&R Decision Platform • 555 Daily France Spotify Top 50 Snapshots (27,800 Tracks)
+                        </div>
+                    </div>
+                </div>
+                <div class="telemetry-pill">
+                    <span class="telemetry-dot"></span> <b>ACTIVE REPERTOIRE</b>
+                </div>
             </div>
         </div>
     """, unsafe_allow_html=True)
 
 with top_h2:
     st.markdown(f"""
-        <div class="top-theme-card">
-            <div class="top-theme-header">
-                <span class="top-theme-label">🎨 Interface Theme</span>
-                <span class="top-theme-status">● {'LIGHT' if is_light else 'DARK'} MODE</span>
-            </div>
+        <div class="theme-deck-header">
+            <span class="theme-deck-title">INTERFACE THEME</span>
+            <span class="theme-deck-status">{'☀️ LIGHT' if is_light else '🌙 DARK'}</span>
+        </div>
     """, unsafe_allow_html=True)
     st.radio(
         "Appearance Mode",
@@ -790,20 +991,19 @@ with top_h2:
         horizontal=True,
         label_visibility="collapsed"
     )
-    st.markdown("</div>", unsafe_allow_html=True)
 
 
 # ==============================================================================
 # 6. PRIMARY NAVIGATION: 7 TABS AT THE TOP OF THE MAIN AREA
 # ==============================================================================
 tabs = st.tabs([
-    "Top Hits Radar",
-    "Content Compliance",
-    "Release Formats",
-    "Song Duration",
-    "Artist Hub",
-    "Release Simulator",
-    "Data Explorer"
+    "🏆 Top Hits Radar",
+    "⚖️ Content Compliance",
+    "💿 Release Formats",
+    "⏱️ Song Duration",
+    "🎤 Artist Hub",
+    "🎯 Release Simulator",
+    "📋 Data Explorer"
 ])
 
 
@@ -814,10 +1014,10 @@ with tabs[0]:
     # Tab 1 Analytical Section Header
     st.markdown(f"""
         <div style="margin-bottom: 16px;">
-            <div style="font-size: 24px; font-weight: 800; color: {'#0f172a' if is_light else '#ffffff'};">
+            <div style="font-size: 24px; font-weight: 800; color: {'#090e17' if is_light else '#ffffff'};">
                 Top Hits Radar & Commercial Market Overview
             </div>
-            <div style="font-size: 15.5px; color: {'#64748b' if is_light else '#94a3b8'}; margin-top: 4px;">
+            <div style="font-size: 15.5px; color: {'#475569' if is_light else '#94a3b8'}; margin-top: 4px;">
                 Core velocity metrics, genre compliance distribution, and high-retention repertoire leaders across Spotify France Top 50.
             </div>
         </div>
@@ -826,34 +1026,34 @@ with tabs[0]:
     # 1. High-Impact KPI Row
     st.markdown(f"""
     <div class="metric-grid">
-        <div class="metric-card">
+        <div class="metric-card" style="border-top: 3.5px solid {'#2563eb' if is_light else '#00D2FF'};">
             <div class="metric-label">Observed Chart Entries</div>
             <div class="metric-value">{total_records:,}</div>
             <div class="metric-desc">Across {df['date'].nunique()} daily chart dates</div>
         </div>
-        <div class="metric-card">
+        <div class="metric-card" style="border-top: 3.5px solid {'#7c3aed' if is_light else '#a855f7'};">
             <div class="metric-label">Repertoire Diversity</div>
             <div class="metric-value">{unique_tracks} / {unique_artists}</div>
             <div class="metric-desc">Unique songs / artists charted</div>
         </div>
-        <div class="metric-card">
+        <div class="metric-card" style="border-top: 3.5px solid {'#dc2626' if is_light else '#ef4444'};">
             <div class="metric-label">Explicit Share</div>
-            <div class="metric-value" style="color: #ef4444;">{explicit_pct:.1f}%</div>
+            <div class="metric-value" style="color: {'#dc2626' if is_light else '#ef4444'};">{explicit_pct:.1f}%</div>
             <div class="metric-desc">Top 50 streaming volume</div>
         </div>
-        <div class="metric-card">
+        <div class="metric-card" style="border-top: 3.5px solid {'#059669' if is_light else '#10b981'};">
             <div class="metric-label">Clean Repertoire Share</div>
-            <div class="metric-value" style="color: #10b981;">{clean_pct:.1f}%</div>
+            <div class="metric-value" style="color: {'#059669' if is_light else '#10b981'};">{clean_pct:.1f}%</div>
             <div class="metric-desc">Universal radio-ready catalog</div>
         </div>
-        <div class="metric-card">
+        <div class="metric-card" style="border-top: 3.5px solid {'#1d4ed8' if is_light else '#00B4D8'};">
             <div class="metric-label">Average Track Duration</div>
-            <div class="metric-value" style="color: #00B4D8;">{avg_duration:.2f}m</div>
+            <div class="metric-value" style="color: {'#1d4ed8' if is_light else '#00B4D8'};">{avg_duration:.2f}m</div>
             <div class="metric-desc">Mean duration across chart</div>
         </div>
-        <div class="metric-card">
+        <div class="metric-card" style="border-top: 3.5px solid {'#d97706' if is_light else '#f59e0b'};">
             <div class="metric-label">Standalone Single Share</div>
-            <div class="metric-value" style="color: #f59e0b;">{single_share:.1f}%</div>
+            <div class="metric-value" style="color: {'#b45309' if is_light else '#f59e0b'};">{single_share:.1f}%</div>
             <div class="metric-desc">Non-album release format</div>
         </div>
     </div>
@@ -1694,7 +1894,7 @@ with tabs[5]:
         st.plotly_chart(fig_score, use_container_width=True)
         
         st.markdown(f"""
-        <div style="background: {'#ffffff' if is_light else '#111827'}; border: 1px solid {'#e2e8f0' if is_light else '#1e293b'}; border-radius: 8px; padding: 18px; font-size: 15.5px; line-height: 1.7; color: {'#1e293b' if is_light else '#f1f5f9'};">
+        <div style="background: {'#ffffff' if is_light else '#111827'}; border: 1.5px solid {'#cbd5e1' if is_light else '#1e293b'}; border-radius: 10px; padding: 18px 20px; font-size: 15.5px; line-height: 1.7; color: {'#1e293b' if is_light else '#f1f5f9'}; box-shadow: {'0 4px 12px rgba(15, 23, 42, 0.05)' if is_light else 'none'};">
             {'<br/>'.join(reasons)}
         </div>
         """, unsafe_allow_html=True)
